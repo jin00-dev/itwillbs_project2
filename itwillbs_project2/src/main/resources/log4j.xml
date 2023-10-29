@@ -11,35 +11,13 @@
 	</appender>
 	
 	<!-- Application Loggers(user) -->
-	<logger name="com.project2.user.controller">
+	<logger name="com.project2.controller">
 		<level value="debug" />
 	</logger>
-	<logger name="com.project2.user.persistence">
+	<logger name="com.project2.persistence">
 		<level value="debug" />
 	</logger>
-	<logger name="com.project2.user.service">
-		<level value="debug" />
-	</logger>
-	
-	<!-- Application Loggers(board) -->
-	<logger name="com.project2.board.controller">
-		<level value="debug" />
-	</logger>
-	<logger name="com.project2.board.persistence">
-		<level value="debug" />
-	</logger>
-	<logger name="com.project2.board.service">
-		<level value="debug" />
-	</logger>
-	
-	<!-- Application Loggers(exp) -->
-	<logger name="com.project2.exp.controller">
-		<level value="debug" />
-	</logger>
-	<logger name="com.project2.exp.persistence">
-		<level value="debug" />
-	</logger>
-	<logger name="com.project2.exp.service">
+	<logger name="com.project2.service">
 		<level value="debug" />
 	</logger>
 	

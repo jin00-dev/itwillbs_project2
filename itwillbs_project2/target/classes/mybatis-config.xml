@@ -7,9 +7,7 @@
 <configuration>
 	
 	<typeAliases>
-		<package name="com.project2.member.domain"/>
-		<package name="com.project2.board.domain"/>
-		<package name="com.project2.exp.domain"/>
+		<package name="com.project2.domain"/>
 	</typeAliases>
 
 </configuration>
