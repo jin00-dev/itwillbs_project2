@@ -10,9 +10,15 @@
 		</layout>
 	</appender>
 	
-	<!-- Application Loggers -->
+	<!-- Application Loggers(user) -->
 	<logger name="com.project2.controller">
-		<level value="info" />
+		<level value="debug" />
+	</logger>
+	<logger name="com.project2.persistence">
+		<level value="debug" />
+	</logger>
+	<logger name="com.project2.service">
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
@@ -34,7 +40,7 @@
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="warn" />
+		<priority value="info" />
 		<appender-ref ref="console" />
 	</root>
 	
