@@ -16,15 +16,23 @@ import com.project2.domain.ExpVO;
 import com.project2.service.ExpService;
 
 @Controller
-@RequestMapping("/exp/*")
-public class ExpController {
+public class MainController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ExpController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	@Autowired
 	private ExpService service;
 	
-	
+	//회원가입 -------------------------------------
+	@GetMapping("/")
+	public String mainGET(Model model) {
+		
+		List<ExpVO> list = service.getExpList();
+		
+		model.addAttribute("list", list);
+		
+		return "/home";
+	}
 	
 	
 	
