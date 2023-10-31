@@ -5,5 +5,18 @@
 
 <mapper namespace="com.project2.mapper.PaymentMapper">
 
+<select id="paymenttiket" resultType="">
+select e.exp_name, p.payment_num, u.user_place_name, u.user_phone, e.exp_capacity, e.exp_price, 
+p.order_num, u.user_name, p.payment_method, p.payment_date, u.user_id 
+from user u 
+left join experience e 
+on u.user_num = e.user_num 
+left join order_board o 
+on e.user_num = o.user_num 
+left join payment p 
+on o.order_num = p.order_num 
+where u.user_id = #{user_id}
+</select>
+
 
 </mapper>
