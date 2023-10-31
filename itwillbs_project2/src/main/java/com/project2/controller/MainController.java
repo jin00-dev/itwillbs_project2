@@ -23,11 +23,32 @@ public class MainController {
 	
 	//메인페이지 -------------------------------------
 	@GetMapping("/")
-	public String mainGET(Model model,ExpVO vo, Criteria cri) throws Exception{
-		if(vo.getExp_category() == null) {
+	public String mainGET(Model model,
+			String category,String region1,String region2, String sort, Criteria cri) throws Exception{
+		ExpVO vo = new ExpVO();
+		
+		//category exp_category
+		//region exp_region,exp_name
+		//sort exp_ad_state 1(cnt), 2(star), 3(price desc), 4(price asc)
+		
+		if(category == null) {
 			vo.setExp_category("공예");
 			vo.setExp_region("전체");
+		}else {
+			vo.setExp_category(category);
 		}
+		
+		if(sort == null) {
+			vo.setExp_ad_state("cnt");
+		}else {
+			vo.setExp_ad_state(sort);
+		}
+		
+		if(region1 != null && region2 != null) {
+			vo.setExp_region(region1);
+			vo.setExp_name(region2);
+		}
+		
 		
 		logger.debug("@@@@@@@@@@@@@"+ vo);
 		List<ExpVO> list = service.getExpList(vo);

@@ -75,7 +75,9 @@
 <!-- script  -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
-
+var category = ${param.category};
+var region = ${param.region};
+var sort = ${param.sort};
 
 //클래스 세부 카테고리 동작----------------------------------------------------
 $('#category a[class="nav-link"]').hover(function(){
