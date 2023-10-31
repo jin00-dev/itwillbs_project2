@@ -23,10 +23,10 @@ public class ExpServiceImpl implements ExpService {
 	
 	//회원목록 조회
 	@Override
-	public List<ExpVO> getExpList() {
+	public List<ExpVO> getExpList(ExpVO vo) throws Exception{
 		logger.debug("getMemberList() 호출");
 		
-		return dao.getExpList();
+		return dao.getExpList(vo);
 	}
 
 	

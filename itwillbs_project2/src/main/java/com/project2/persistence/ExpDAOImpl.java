@@ -1,8 +1,6 @@
 package com.project2.persistence;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -11,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project2.domain.ExpVO;
-import com.project2.domain.MemberVO;
 
 //@Repository : 스프링이 해당객체를 DAO로 인식하도록 함
 
@@ -28,22 +25,15 @@ public class ExpDAOImpl implements ExpDAO {
 	private static final String NAMESPACE
 	      ="com.project2.mapper.ExpMapper.";
 	
-	
-	
-	
-
-
-	
-	
-		
-	
 
 	@Override
-	public List<ExpVO> getExpList() {
+	public List<ExpVO> getExpList(ExpVO vo) throws Exception{
 		System.out.println(" DAOImpl : getMemberList() 호출");
 		
+		if(vo.getExp_region().equals("전체"))
+			return sqlSession.selectList(NAMESPACE + "selectExpReAll",vo);
 		
-		return sqlSession.selectList(NAMESPACE + "selectExp");
+		return sqlSession.selectList(NAMESPACE + "selectExp",vo);
 	}
 
 	

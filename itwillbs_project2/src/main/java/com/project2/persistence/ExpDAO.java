@@ -9,7 +9,7 @@ public interface ExpDAO {
 	
 	
 	// 회원목록 조회
-	public List<ExpVO> getExpList(); 
+	public List<ExpVO> getExpList(ExpVO vo) throws Exception; 
 	
 
 }

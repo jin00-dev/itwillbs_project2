@@ -6,7 +6,15 @@
 <mapper namespace="com.project2.mapper.ExpMapper">
 
 	<select id="selectExp" resultType="ExpVO">
-		select * from experience
+		select * from experience 
+	where exp_category = #{exp_category} and 
+			substr(exp_region,1,2) in (#{exp_region},#{exp_name}) 
+	order by 
+	</select>
+	
+	<select id="selectExpReAll" resultType="ExpVO">
+		select * from experience where exp_category = #{exp_category}
+	
 	</select>
 
 	

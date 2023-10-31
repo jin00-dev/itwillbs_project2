@@ -8,6 +8,6 @@ public interface ExpService {
 	
 	
 	//
-	public List<ExpVO> getExpList();
+	public List<ExpVO> getExpList(ExpVO vo) throws Exception;
 	
 }

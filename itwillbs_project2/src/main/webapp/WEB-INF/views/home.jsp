@@ -6,7 +6,7 @@
 <%@include file="./include/header.jsp"%>
 <div>
 		<ul class="nav justify-content-center" id="category">
-			<li class="nav-item"><a class="nav-link" href="#" id="clicked" style="font-weight: 900">공예</a></li>
+			<li class="nav-item"><a class="nav-link" href="#" id="clicked1" style="font-weight: 900">공예</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">운동</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">쿠킹</a></li>
 			<li class="nav-item"><a class="nav-link" href="#">뷰티</a></li>
@@ -15,9 +15,9 @@
 <!-- Section-->
 <div>
 	<ul class="nav" id="region">
-		<li class="nav-item"><a class="nav-link" href="#" id="clicked" style="color: red">전체</a></li>
+		<li class="nav-item"><a class="nav-link" href="#" id="clicked2" style="color: red">전체</a></li>
 		<li class="nav-item"><a class="nav-link" href="#">서울경기</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">경상대구부산</a></li>
+		<li class="nav-item"><a class="nav-link" href="#">경상부산</a></li>
 		<li class="nav-item"><a class="nav-link" href="#">충청대전</a></li>
 		<li class="nav-item"><a class="nav-link" href="#">전라강원</a></li>
 		<li class="nav-item"><a class="nav-link" href="#">제주</a></li>
@@ -75,18 +75,20 @@
 <!-- script  -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
+
+
 //클래스 세부 카테고리 동작----------------------------------------------------
 $('#category a[class="nav-link"]').hover(function(){
 	$(this).css('font-weight','900');
 },function(){
 	 // 마우스를 뗐을 때, 클릭된 링크는 빨간색을 유지하고 나머지는 파란색으로 변경
-    $('#category a[class="nav-link"]').not('#clicked').css('font-weight','100');
+    $('#category a[class="nav-link"]').not('#clicked1').css('font-weight','100');
 });
 //클래스 세부 내역 클릭시
 $('#category a[class="nav-link"]').click(function(){
 	// 모든 링크의 아이디를 "clicked"로 변경
-	$('#category a[class="nav-link"]').removeAttr('id','clicked');
-	$(this).attr('id','clicked');
+	$('#category a[class="nav-link"]').removeAttr('id','clicked1');
+	$(this).attr('id','clicked1');
 	$(this).css('font-weight','900');
 });
 
@@ -95,14 +97,14 @@ $('#region a[class="nav-link"]').hover(function() {
         $(this).css('color', 'red');
     }, function() {
         // 마우스를 뗐을 때, 클릭된 링크는 빨간색을 유지하고 나머지는 파란색으로 변경
-        $('#region a[class="nav-link"]').not('#clicked').css('color', 'blue');
+        $('#region a[class="nav-link"]').not('#clicked2').css('color', 'blue');
     });
 
 // 클릭 이벤트 핸들러
 $('#region a[class="nav-link"]').click(function() {
     // 모든 링크의 아이디를 "clicked"로 변경
-    $('#region a[class="nav-link"]').removeAttr('id','clicked');
-    $(this).attr('id','clicked');
+    $('#region a[class="nav-link"]').removeAttr('id','clicked2');
+    $(this).attr('id','clicked2');
     $(this).css('color', 'red');
 });
 
