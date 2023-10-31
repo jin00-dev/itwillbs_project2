@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- /mappers/memberMapper.xml -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<!--    namespace정보는 외부에서 해당 mapper(xml)를 찾을 수 있는 이름 -->
+  <mapper namespace="com.project2.mapper.MemberMapper">
+  
+  <insert id="insertMember">
+  	insert into tbl_member
+  	(
+  	user_id,
+  	user_pw,
+  	user_name,
+  	user_phone
+  	) 
+  	values
+  	(
+  	#{user_id},
+  	#{user_pw},
+  	#{user_name},
+  	#{user_phone}
+  	)
+  </insert>
+  
+  
+  
+  </mapper>
