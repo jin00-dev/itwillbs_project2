@@ -5,10 +5,10 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <!--    namespace정보는 외부에서 해당 mapper(xml)를 찾을 수 있는 이름 -->
-  <mapper namespace="com.project2.mapper.MemberMapper">
+  <mapper namespace="com.project2.mapper.UserMapper">
   
-  <insert id="insertMember">
-  	insert into tbl_member
+  <insert id="insertUser">
+  	insert into c6d2305t2_2.user
   	(
   	user_id,
   	user_pw,
@@ -24,6 +24,9 @@
   	)
   </insert>
   
-  
+  <select id="loginUser" resultType="com.project2.domain.UserVO">
+  	select * from c6d2305t2_2.user 
+  	where user_id=#{user_id} and user_pw=#{user_pw}
+  </select>
   
   </mapper>

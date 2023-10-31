@@ -33,7 +33,7 @@ public class DataSourceTest {
 	
 //	@Test
 	public void ds_test() {
-		logger.debug("ds_test �떎�뻾 ");
+		logger.debug("ds_test 실행 ");
 		
 		try {
 			Connection con = ds.getConnection();
@@ -44,8 +44,8 @@ public class DataSourceTest {
 	}
 	
 	@Test
-	public void sql援щЦ�떎�뻾�뀒�뒪�듃() {
-		logger.debug("sql 援щЦ �떎�뻾 �뀒�뒪�듃");
+	public void sql구문실행테스트() {
+		logger.debug("sql 구문 실행 테스트");
 		
 		logger.debug(tdao.getTime());
 	}
