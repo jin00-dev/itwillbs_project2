@@ -5,8 +5,11 @@
   
 <mapper namespace="com.project2.mapper.ExpMapper">
 
-	<select id="selectExpPop" resultType="ExpVO">
-		select e.exp_num, e.user_num,e.exp_name,e.exp_date,e.exp_price,e.exp_region,e.exp_category,e.exp_capacity,e.exp_ad_state,e.exp_summary_img,e.exp_detail_img,
+	<select id="selectExpList" resultType="ExpVO">
+		select e.exp_num, e.user_num,e.exp_name,e.exp_date,
+		e.exp_price,e.exp_region,e.exp_category,e.exp_capacity,
+		e.exp_ad_state,e.exp_summary_img,e.exp_detail_img,
+		e.exp_view_cnt,e.exp_ad_state
 		o.order_cnt,
 		r.rev_star 
 		from experience e left join order_board o 
@@ -14,32 +17,9 @@
 		left join review r 
 		on e.exp_num = r.exp_num 
 		where e.exp_category = #{exp_category} and substr(e.exp_region,1,2) in (#{exp_region},#{exp_name}) 
-		order by #{exp_ad_state}
+		order by ${exp_ad_state}
 	</select>
 	
-	<select id="selectExpReAll" resultType="ExpVO">
-		select e.exp_num, e.user_num,e.exp_name,e.exp_date,e.exp_price,e.exp_region,e.exp_category,e.exp_capacity,e.exp_ad_state,e.exp_summary_img,e.exp_detail_img,
-		o.order_cnt,
-		r.rev_star 
-		from experience e left join order_board o 
-		on e.exp_num = o.exp_num 
-		left join review r 
-		on e.exp_num = r.exp_num 
-		where e.exp_category = #{exp_category} 
-		order by #{exp_ad_state}
-	</select>
-
-	<select id="selectExpCateAll" resultType="ExpVO">
-		select e.exp_num, e.user_num,e.exp_name,e.exp_date,e.exp_price,e.exp_region,e.exp_category,e.exp_capacity,e.exp_ad_state,e.exp_summary_img,e.exp_detail_img,
-		o.order_cnt,
-		r.rev_star 
-		from experience e left join order_board o 
-		on e.exp_num = o.exp_num 
-		left join review r 
-		on e.exp_num = r.exp_num 
-		where substr(e.exp_region,1,2) in (#{exp_region},#{exp_name}) 
-		order by #{exp_ad_state}
-	</select>
 	
 	
 </mapper>

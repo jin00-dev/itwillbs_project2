@@ -52,7 +52,7 @@
 		</div>
 	</nav>
 	<div class="navbar navbar-light bg-light">
-		<a class="navbar-brand" href="#"> <img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top"> 
+		<a class="navbar-brand" href="#"> <img src="" alt="" width="30" height="24" class="d-inline-block align-text-top"> 
 		세모클래스
 		</a>
 		<form class="d-flex justify-content-center">
@@ -62,11 +62,13 @@
 		<div style="width: 9%">
 		</div>
 	</div>
+	<c:set var="path" value="${requestScope['javax.servlet.forward.servlet_path']}"/>
 	<div>
-		<ul class="nav nav nav-tabs justify-content-center">
-			<li class="nav-item"><a class="nav-link" href="#">체험</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">내주변 체험</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">이벤트</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">고객지원</a></li>
+		<ul class="nav nav nav-pills justify-content-center">
+			<li class="nav-item"><a class="nav-link ${path == '/' ? 'active' : ''}" href="/?category=공예&region1=서울&region2=경기">체험</a></li>
+			<li class="nav-item"><a class="nav-link ${path == '' ? 'active' : ''}" href="/exp/test">내주변 체험</a></li>
+			<li class="nav-item"><a class="nav-link ${path == '' ? 'active' : ''}" href="#">이벤트</a></li>
+			<li class="nav-item"><a class="nav-link ${path == '' ? 'active' : ''}" href="#">고객지원</a></li>
 		</ul>
 	</div>
+	

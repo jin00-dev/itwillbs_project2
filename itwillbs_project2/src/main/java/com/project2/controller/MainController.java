@@ -31,22 +31,37 @@ public class MainController {
 		//region exp_region,exp_name
 		//sort exp_ad_state 1(cnt), 2(star), 3(price desc), 4(price asc)
 		
-		if(category == null) {
+		if(category == null || category == "") {
 			vo.setExp_category("공예");
-			vo.setExp_region("전체");
 		}else {
 			vo.setExp_category(category);
 		}
 		
-		if(sort == null) {
-			vo.setExp_ad_state("cnt");
-		}else {
-			vo.setExp_ad_state(sort);
+		if(sort == null || sort =="") {
+			sort = "cnt";
 		}
 		
-		if(region1 != null && region2 != null) {
+		if(region1 == null || region2 == null || region1 == "" || region2 =="") {
+			vo.setExp_region("서울");
+			vo.setExp_name("경기");
+		}else {
 			vo.setExp_region(region1);
 			vo.setExp_name(region2);
+		}
+		
+		switch(sort){
+		case "cnt":
+			vo.setExp_ad_state("e.exp_view_cnt desc");
+			break;
+		case "star":
+			vo.setExp_ad_state("r.rev_star desc");
+			break;
+		case "priceDesc":
+			vo.setExp_ad_state("e.exp_price desc");
+			break;
+		case "priceAsc":
+			vo.setExp_ad_state("e.exp_price");
+			break;
 		}
 		
 		

@@ -3713,6 +3713,7 @@ textarea.form-control-lg {
   text-align: center;
 }
 
+
 .nav-fill .nav-item .nav-link,
 .nav-justified .nav-item .nav-link {
   width: 100%;
@@ -10823,4 +10824,16 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+
+
+
+/* 언더라인 추가 -장 */
+.nav-underline .nav-link {
+  border-bottom: 2px solid transparent;
+}
+
+.nav-underline .nav-link:hover,
+.nav-underline .nav-link.active {
+  border-bottom: 2px solid #007bff;
 }

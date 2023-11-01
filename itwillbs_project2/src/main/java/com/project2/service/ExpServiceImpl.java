@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.project2.domain.ExpVO;
 import com.project2.persistence.ExpDAO;
-import com.project2.persistence.MemberDAO;
 
 @Service
 public class ExpServiceImpl implements ExpService {

@@ -4,32 +4,32 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!-- header-->
 <%@include file="./include/header.jsp"%>
-<div>
-		<ul class="nav justify-content-center" id="category">
-			<li class="nav-item"><a class="nav-link" href="#" id="clicked1" style="font-weight: 900">공예</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">운동</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">쿠킹</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">뷰티</a></li>
+	<div>
+		<ul class="nav nav-underline justify-content-center">
+			<li class="nav-item"><a class="nav-link ${param.category == '공예' ? 'active' : ''}" href="/?category=공예" id="clicked1" >공예</a></li>
+			<li class="nav-item"><a class="nav-link ${param.category == '운동' ? 'active' : ''}" href="/?category=운동">운동</a></li>
+			<li class="nav-item"><a class="nav-link ${param.category == '쿠킹' ? 'active' : ''}" href="/?category=쿠킹">쿠킹</a></li>
+			<li class="nav-item"><a class="nav-link ${param.category == '뷰티' ? 'active' : ''}" href="/?category=뷰티">뷰티</a></li>
 		</ul>
 	</div>
+	
 <!-- Section-->
 <div>
-	<ul class="nav" id="region">
-		<li class="nav-item"><a class="nav-link" href="#" id="clicked2" style="color: red">전체</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">서울경기</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">경상부산</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">충청대전</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">전라강원</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">제주</a></li>
-		</ul>
+	<ul class="nav nav nav-tabs">
+		<li class="nav-item"><a class="nav-link ${param.region1 == '서울' ? 'active' : ''}" href="/?category=${param.category }&region1=서울&region2=경기&sort=${param.sort}" id="clicked2">서울경기</a></li>
+		<li class="nav-item"><a class="nav-link ${param.region1 == '경상' ? 'active' : ''}" href="/?category=${param.category }&region1=경상&region2=부산&sort=${param.sort}">경상부산</a></li>
+		<li class="nav-item"><a class="nav-link ${param.region1 == '충청' ? 'active' : ''}" href="/?category=${param.category }&region1=충청&region2=대전&sort=${param.sort}">충청대전</a></li>
+		<li class="nav-item"><a class="nav-link ${param.region1 == '전라' ? 'active' : ''}" href="/?category=${param.category }&region1=전라&region2=강원&sort=${param.sort}">전라강원</a></li>
+		<li class="nav-item"><a class="nav-link ${param.region1 == '제주' ? 'active' : ''}" href="/?category=${param.category }&region1=제주&region2=/&sort=${param.sort}">제주</a></li>
+	</ul>
 	<ul class="nav justify-content-end">
 		<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">정렬기준</a>
 			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#">인기순</a></li>
-				<li><a class="dropdown-item" href="#">별점순</a></li>
-				<li><a class="dropdown-item" href="#">최고가</a></li>
-				<li><a class="dropdown-item" href="#">최저가</a></li>
+				<li><a class="dropdown-item" href="/?category=${param.category }&region1=${param.region1 }&region2=${param.region2 }&sort=cnt">인기순</a></li>
+				<li><a class="dropdown-item" href="/?category=${param.category }&region1=${param.region1 }&region2=${param.region2 }&sort=star">별점순</a></li>
+				<li><a class="dropdown-item" href="/?category=${param.category }&region1=${param.region1 }&region2=${param.region2 }&sort=priceDesc">최고가</a></li>
+				<li><a class="dropdown-item" href="/?category=${param.category }&region1=${param.region1 }&region2=${param.region2 }&sort=priceAsc">최저가</a></li>
 			</ul>
 		</li>
 		
@@ -49,17 +49,23 @@
 							<!-- Product details-->
 							<div class="card-body p-4">
 								<div class="text-center">
+									<!-- region -->
+									${list.exp_region } <br>
+									<!-- category -->
+									${list.exp_category } <br>
 									<!-- Product name-->
 									<h5 class="fw-bolder">${list.exp_name }</h5>
+									<!-- star point -->
+									별 ${list.rev_star }<br>									
 									<!-- Product price-->
-									<fmt:formatNumber>${list.exp_price }</fmt:formatNumber>원 
+									<fmt:formatNumber>${list.exp_price }</fmt:formatNumber>원 <br>
 								</div>
 							</div>
 							<!-- Product actions-->
-							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-								<div class="text-center">
-									<a class="btn btn-outline-dark mt-auto" href="#">장바구니로</a>
-								</div>
+						    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent"> 
+<!-- 							<div class="text-center"> -->
+<!-- 									<a class="btn btn-outline-dark mt-auto" href="#">장바구니로</a>  -->
+<!-- 								</div> -->
 							</div>
 						</div>
 					</div>
@@ -75,12 +81,9 @@
 <!-- script  -->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
-var category = ${param.category};
-var region = ${param.region};
-var sort = ${param.sort};
 
 //클래스 세부 카테고리 동작----------------------------------------------------
-$('#category a[class="nav-link"]').hover(function(){
+/*$('#category a[class="nav-link"]').hover(function(){
 	$(this).css('font-weight','900');
 },function(){
 	 // 마우스를 뗐을 때, 클릭된 링크는 빨간색을 유지하고 나머지는 파란색으로 변경
@@ -91,7 +94,6 @@ $('#category a[class="nav-link"]').click(function(){
 	// 모든 링크의 아이디를 "clicked"로 변경
 	$('#category a[class="nav-link"]').removeAttr('id','clicked1');
 	$(this).attr('id','clicked1');
-	$(this).css('font-weight','900');
 });
 
 //지역 선택창 동작---------------------------------------------------------------
@@ -107,7 +109,6 @@ $('#region a[class="nav-link"]').click(function() {
     // 모든 링크의 아이디를 "clicked"로 변경
     $('#region a[class="nav-link"]').removeAttr('id','clicked2');
     $(this).attr('id','clicked2');
-    $(this).css('color', 'red');
 });
-
+*/
 </script>

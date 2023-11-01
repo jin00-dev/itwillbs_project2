@@ -35,24 +35,7 @@ public class ExpDAOImpl implements ExpDAO {
 		//sort exp_ad_state 1(cnt), 2(star), 3(price desc), 4(price asc)
 		
 		
-		//정렬기준 ---------------
-		//인기순
-		if(vo.getExp_ad_state().equals("cnt")) {
-			vo.setExp_ad_state("r.rev_");
-		}
-		//별점순
-		else if(vo.getExp_ad_state().contentEquals("star")) {
-		}
-		//최고가
-		else if(vo.getExp_ad_state().contentEquals("price desc")) {
-		}
-		//최저가
-		else if(vo.getExp_ad_state().contentEquals("price asc")) {
-		}
-		
-		//지역전체
-		if(vo.getExp_region().equals("전체"))
-			return sqlSession.selectList(NAMESPACE + "selectExpReAll",vo);
+		return sqlSession.selectList(NAMESPACE + "selectExpList",vo);
 		
 	}
 
