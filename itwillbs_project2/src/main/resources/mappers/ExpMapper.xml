@@ -9,7 +9,7 @@
 		select e.exp_num, e.user_num,e.exp_name,e.exp_date,
 		e.exp_price,e.exp_region,e.exp_category,e.exp_capacity,
 		e.exp_ad_state,e.exp_summary_img,e.exp_detail_img,
-		e.exp_view_cnt,e.exp_ad_state
+		e.exp_view_cnt,e.exp_ad_state,
 		o.order_cnt,
 		r.rev_star 
 		from experience e left join order_board o 
