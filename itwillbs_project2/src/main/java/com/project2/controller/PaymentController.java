@@ -23,10 +23,23 @@ public class PaymentController {
 		return "/pm/paymentList";
 	}
 	
-	@RequestMapping(value = "/paymentList", method = RequestMethod.POST)
-	public String afterPaymentList() {
-		logger.debug("afterPaymentList() 메서드 호출");
-		return "";
+//	@RequestMapping(value = "/paymentList", method = RequestMethod.POST)
+//	public String afterPaymentList() {
+//		logger.debug("afterPaymentList() 메서드 호출");
+//		return "";
+//	}
+	
+	// 결제하기 페이지 이동
+	@RequestMapping(value = "/payment")
+	public String paymentGET() {
+		logger.debug("actionPayment() 메서드 호출");
+		return "/pm/actionPayment";
+
+	}
+	
+	@RequestMapping(value = "/hostList")
+	public String hostList() {
+		return "/pm/hostList";
 	}
 
 }
