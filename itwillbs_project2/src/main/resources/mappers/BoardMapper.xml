@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- boardMapper.xml -->
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project2.mapper.BoardMapper">
+
+	<!-- 컬럼명과 VO객체를 매핑설정(기본값 생략) -->
+	<resultMap type="com.project2.domain.BoardVO" id="boardMap">
+		<result property="enf_notice_num" column="enf_notice_num" />
+		<result property="enf_content" column="enf_content" />
+		<result property="enf_title" column="enf_title" />
+		<result property="enf_regdate" column="enf_regdate" />
+
+	</resultMap>
+
+	<!-- 최대 글번호 조회 -->
+	<select id="getMaxNoticeNum" resultType="int">
+		SELECT
+		IFNULL(MAX(enf_notice_num), 0) FROM event_notice_faq_board
+	</select>
+	<!-- 최대 글번호 조회 -->
+
+	<!-- 글쓰기 -->
+	<insert id="createBoard">
+		INSERT INTO event_notice_faq_board
+		(enf_category,
+		enf_notice_num, enf_title,
+		enf_content, enf_event_type)
+		VALUES
+		(1,
+		#{enf_notice_num}, #{enf_title}, #{enf_content}, 0);
+	</insert>
+	<!-- 글쓰기 -->
+
+	<!-- 글 목록 조회 -->
+	<select id="getListAll" resultType="BoardVO"
+		resultMap="boardMap">
+		select * from event_notice_faq_board
+		order by enf_regdate
+		desc
+	</select>
+	<!-- 글 목록 조회 -->
+
+	<!-- 글 조회수 1증가 -->
+	<update id="increaseViewCount">
+		update event_notice_faq_board set
+		enf_viewcnt=enf_viewcnt+1
+		where enf_notice_num = #{enf_notice_num}
+	</update>
+	<!-- 글 조회수 1증가 -->
+
+	<!-- 특정 글정보를 조회 -->
+	<select id="getBoard" resultType="BoardVO">
+		select * from
+		event_notice_faq_board
+		where enf_notice_num = #{enf_notice_num}
+	</select>
+	<!-- 특정 글정보를 조회 -->
+
+	<!-- 특정 글정보 수정 -->
+	<update id="updateBoard">
+		update event_notice_faq_board set
+		enf_title =
+		#{enf_title},
+		enf_content = #{enf_content},
+		enf_regdate =
+		CURRENT_TIMESTAMP,
+		enf_updatedate = CURRENT_TIMESTAMP
+		where
+		enf_notice_num = #{enf_notice_num}
+	</update>
+	<!-- 특정 글정보 수정 -->
+
+	<!-- 특정 글 삭제 -->
+	<delete id="removeBoard">
+		delete from event_notice_faq_board
+		where enf_notice_num = #{enf_notice_num}
+	</delete>
+	<!-- 특정 글 삭제 -->
+
+
+
+</mapper>
