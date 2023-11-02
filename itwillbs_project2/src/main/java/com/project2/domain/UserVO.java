@@ -15,7 +15,8 @@ public class UserVO {
 	private Timestamp user_regdate;
 	private Timestamp user_last_access;
 	private Integer user_type;
-	private Integer user_report_state;
+	private String user_place_name;
+	private Integer user_report_cnt;
 	private Integer user_delete_state;
 	
 	

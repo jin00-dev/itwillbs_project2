@@ -1,5 +1,7 @@
 package com.project2.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -34,6 +36,51 @@ public class UserServiceImpl implements UserService{
 		
 		
 		return resultVO;
+	}
+
+
+
+	@Override
+	public UserVO userInfo(String id) {
+		logger.debug("  userInfo(String id) 호출 ");
+		
+		//디비동작 (DAO)중에서 회원정보 조회
+	UserVO resultVO = mdao.getUser(id);
+		
+		return resultVO;
+		//return mdao.getMember(id);;
+	}
+
+
+
+	@Override
+	public void userUpdate(UserVO updateVO) {
+		logger.debug(" userUpdate(updateVO) 호출 ");
+		
+		mdao.updateUser(updateVO);
+		
+	}
+
+
+
+	@Override
+	public int userDelete(UserVO deleteVO) {
+		logger.debug(" userDelete(deleteVO) 호출 ");
+		
+		int result = mdao.deleteUser(deleteVO);
+		
+		return result;
+	}
+
+
+
+	@Override
+	public List<UserVO> userList() {
+		logger.debug(" userList() 호출 ");
+		
+		List<UserVO> userList = mdao.getUserList();
+		
+		return userList;
 	}
 	
 	

@@ -1,5 +1,7 @@
 package com.project2.persistence;
 
+import java.util.List;
+
 import com.project2.domain.UserVO;
 
 public interface UserDAO {
@@ -12,4 +14,16 @@ public interface UserDAO {
 	
 	// 회원정보 조회
 		public UserVO getUser(String sessionUserid);
+		
+		// 회원정보 수정
+		public void  updateUser(UserVO updateVO);
+		
+		// 회원정보 삭제
+		public int deleteUser(UserVO delVO);	
+		
+		// 회원목록 조회
+		public List<UserVO> getUserList(); 
+		
+		
+		
 }

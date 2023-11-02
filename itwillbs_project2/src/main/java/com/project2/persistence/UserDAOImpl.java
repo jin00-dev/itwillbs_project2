@@ -1,5 +1,7 @@
 package com.project2.persistence;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -49,6 +51,35 @@ public class UserDAOImpl implements UserDAO{
 		public UserVO getUser(String sessionUserid) {
 			System.out.println(" DAOImpl : getUser(String sessionUserid)  호출 ");
 			return sqlSession.selectOne(NAMESPACE + ".getUser", sessionUserid);
+		}
+
+		@Override
+		public void updateUser(UserVO updateVO) {
+			System.out.println(" DAOImpl : updateUser(UserVO updateVO) 호출");
+			
+			// SQL구문 호출
+			sqlSession.update(NAMESPACE + ".updateUser", updateVO);
+			
+			System.out.println(" DAOImpl : 수정완료! ");
+			
+			
+		}
+
+		@Override
+		public int deleteUser(UserVO delVO) {
+			System.out.println(" DAOImpl : 삭제 시작 ");
+			
+			// 정상적으로 삭제 1, 삭제실패 0
+			// SQL구문 호출		
+			return sqlSession.delete(NAMESPACE + ".deleteUser",delVO);
+		}
+
+		@Override
+		public List<UserVO> getUserList() {
+			System.out.println(" DAOImpl : getUserList() 호출");
+			
+			
+			return sqlSession.selectList(NAMESPACE + ".getUserList");
 		}
 
 	
