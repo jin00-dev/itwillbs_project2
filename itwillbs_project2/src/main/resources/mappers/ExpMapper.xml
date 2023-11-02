@@ -20,6 +20,8 @@
 		order by ${exp_ad_state}
 	</select>
 	
+	<select id="selectExpOne" resultType="ExpVO">
 	
+	</select>
 	
 </mapper>
