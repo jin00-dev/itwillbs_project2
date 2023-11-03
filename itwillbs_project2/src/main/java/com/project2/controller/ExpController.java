@@ -24,6 +24,11 @@ public class ExpController {
 	@Autowired
 	private ExpService service;
 	
+	@GetMapping("/exp/info")
+	public String infoGET(ExpVO vo) {
+		
+		return "/exp/info";
+	}
 	
 	
 	

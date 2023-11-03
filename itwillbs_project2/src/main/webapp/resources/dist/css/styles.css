@@ -10827,8 +10827,8 @@ textarea.form-control-lg {
 }
 
 
-
-/* 언더라인 추가 -장 */
+/* 추가--by장----------- */
+/* 언더라인 추가 */
 .nav-underline .nav-link {
   border-bottom: 2px solid transparent;
 }
@@ -10837,3 +10837,10 @@ textarea.form-control-lg {
 .nav-underline .nav-link.active {
   border-bottom: 2px solid #007bff;
 }
+/* 이미지 옆으로 배치 */
+.card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+}
+
+/* 추가--by장----------- */

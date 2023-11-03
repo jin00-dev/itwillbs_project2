@@ -18,7 +18,8 @@ public class ExpVO {
 	private String exp_summary_img;
 	private String exp_detail_img;
 	
-	private Timestamp exp_date;
+	private Timestamp exp_start_date;
+	private Timestamp exp_end_date;
 
 	//정렬기준
 	private int order_cnt;
