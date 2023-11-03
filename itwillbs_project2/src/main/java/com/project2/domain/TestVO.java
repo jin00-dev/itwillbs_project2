@@ -38,5 +38,9 @@ public class TestVO {
 	private int user_type;
 	private int user_report_state;
 	private int user_delete_state;
+	
+	//order_board
+
+	private int order_cnt;
 
 }

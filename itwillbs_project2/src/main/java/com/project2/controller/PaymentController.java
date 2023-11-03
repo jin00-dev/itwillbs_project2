@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.itwillbs.domain.MemberVO;
 import com.project2.domain.TestVO;
 import com.project2.service.paymentService;
 
@@ -26,38 +25,44 @@ public class PaymentController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 	
-	// 결제한 회원의 상세 리스트 출력
+	
+	// 마이페이지 - 예매내역 ( 한명의 회원이 주문한 모든 클래스 리스트)
 	@RequestMapping(value = "/paymentList")
-	public String payment(Model model, TestVO vo, HttpSession session) {
+	public String hostaymentList(TestVO vo, Model model) {
+		return "/pm/paymentList";
+	}
+	
+	// 주문한 내역 하나를 눌렀을때 상세 리스트 출력
+	@RequestMapping(value = "/paymentInfo")
+	public String paymentInfo(Model model, TestVO vo, HttpSession session) {
 		String id = (String)session.getAttribute("user_id");
-		model.addAttribute("testVO", vo);
+		logger.debug("vo : "+vo);
 		try {
 			TestVO resultVO = pService.boardPaymentList(vo);
+			model.addAttribute("testVO", resultVO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		logger.debug("paymentList view 호출");
-		return "/pm/paymentList";
+		return "/pm/paymentInfo";
 	}
 	
-//	@RequestMapping(value = "/paymentList", method = RequestMethod.POST)
-//	public String afterPaymentList() {
-//		logger.debug("afterPaymentList() 메서드 호출");
-//		return "";
-//	}
 	
-	// 결제하기 페이지 이동
+	// 결제하기 버튼 링크로 가기
 	@RequestMapping(value = "/payment")
 	public String paymentGET() {
 		logger.debug("actionPayment() 메서드 호출");
 		return "/pm/actionPayment";
-
 	}
 	
-	@RequestMapping(value = "/hostList")
-	public String hostList() {
+	// 한 사업자 클래스를 예매한 모든 회원의 리스트 출력
+	@RequestMapping(value = "/hostPage")
+	public String hostPaymentList() {
 		return "/pm/hostList";
 	}
+	
+	
+
 	
 	
 	

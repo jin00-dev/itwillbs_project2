@@ -5,33 +5,27 @@
 
 <mapper namespace="com.project2.mapper.PaymentMapper">
 
-<!-- 	<resultMap type="ExpVO" id="ListMap"> -->
-<!-- 		<result column="exp_num" property="exp_num" /> -->
-<!-- 		<result column="user_num" property="user_num" /> -->
-<!-- 		<result column="exp_name" property="exp_name" /> -->
-<!-- 		<result column="exp_date" property="exp_date" /> -->
-<!-- 		<result column="exp_price" property="exp_price" /> -->
-<!-- 		<result column="exp_region" property="exp_region" /> -->
-<!-- 		<result column="exp_category" property="exp_category" /> -->
-<!-- 		<result column="capacity" property="capacity" /> -->
-<!-- 		<result column="exp_ad_state" property="exp_ad_state" /> -->
-<!-- 		<result column="exp_summary_img" property="exp_summary_img" /> -->
-<!-- 		<result column="exp_detail_img" property="exp_detail_img" /> -->
-	
-<!-- 	</resultMap> -->
+<!-- <resultMap type="com.itwillbs.domain.MemberVO" id="memberMap"> -->
+<!--   <id property="userid" column="userid"/> -->
+<!--   	 <result property="userid" column="userid"/> -->
+<!--   	 <result property="userpw" column="userpw"/> -->
+<!--   	 <result property="username" column="username"/> -->
+<!--   	 <result property="useremail" column="useremail"/> -->
+<!--   	 <result property="regdate" column="regdate"/> -->
+<!--   	 <result property="updatedate" column="updatedate"/>  -->
+<!--   	 1:다 -->
+<!--   	<collection property="authList" resultMap="authMap"></collection> -->
+<!--   </resultMap> -->
+  
+<!--   <resultMap type="com.itwillbs.domain.AuthVO" id="authMap"> -->
+<!--   		<result property="userid" column="userid"/> -->
+<!--   		<result property="auth" column="auth"/>   -->
+<!--   </resultMap> -->
 
-<select id="paymenttiket" resultType="testVO">
-select e.exp_name, p.payment_num, u.user_place_name, u.user_phone, e.exp_capacity, e.exp_price, 
-p.order_num, u.user_name, p.payment_method, p.payment_date, u.user_id 
-from user u 
-left join experience e 
-on u.user_num = e.user_num 
-left join order_board o 
-on e.user_num = o.user_num 
-left join payment p 
-on o.order_num = p.order_num 
-where u.user_id = #{user_id}
-</select>
+
+	<!-- 클래스를 주문한 사람 상세 내역 -->
+
+
 
 
 
