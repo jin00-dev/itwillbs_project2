@@ -9,38 +9,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project2.domain.ExpVO;
+import com.project2.domain.RevVO;
 
 //@Repository : 스프링이 해당객체를 DAO로 인식하도록 함
 
 @Repository
 public class ExpDAOImpl implements ExpDAO {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ExpDAOImpl.class);
-	
+
 	@Autowired
 	private SqlSession sqlSession;
 	// => 디비연결정보 있음(연결,해제 자동)
-	
-	// memberMapper의 namespace정보 저장
-	private static final String NAMESPACE
-	      ="com.project2.mapper.ExpMapper.";
-	
 
-	@Override
-	public List<ExpVO> getExpList(ExpVO vo) throws Exception{
+	// memberMapper의 namespace정보 저장
+	private static final String NAMESPACE = "com.project2.mapper.ExpMapper.";
+
+	public List<ExpVO> getExpList(ExpVO vo) throws Exception {
 		System.out.println(" DAOImpl : getMemberList() 호출");
-		
-		//category exp_category
-		//region exp_region,exp_name
-		//sort exp_ad_state 1(cnt), 2(star), 3(price desc), 4(price asc)
-		
-		
-		return sqlSession.selectList(NAMESPACE + "selectExpList",vo);
-		
+
+		// category exp_category
+		// region exp_region,exp_name
+		// sort exp_ad_state 1(cnt), 2(star), 3(price desc), 4(price asc)
+
+		return sqlSession.selectList(NAMESPACE + "expList", vo);
+
 	}
 
-	
-	
-	
+	@Override
+	public List<RevVO> getExpRevList(Integer exp_num) throws Exception {
+		System.out.println(" DAOImpl : getExpRevList() 호출");
+		return sqlSession.selectList(NAMESPACE + "expRevList", exp_num);
+	}
 
-}//DAOImpl
+	@Override
+	public double getExpRevAvg(Integer exp_num) throws Exception {
+		System.out.println(" DAOImpl : getExpRevAvg() 호출");
+		return sqlSession.selectOne(NAMESPACE + "avgRevRating", exp_num);
+	}
+
+}// DAOImpl

@@ -5,12 +5,12 @@
   
 <mapper namespace="com.project2.mapper.ExpMapper">
 
-	<select id="selectExpList" resultType="ExpVO">
+
+	<select id="expList" resultType="ExpVO">
 		select e.exp_num, e.user_num,e.exp_name,e.exp_start_date,exp_end_date,
 		e.exp_price,e.exp_region,e.exp_category,e.exp_capacity,
 		e.exp_ad_state,e.exp_summary_img,e.exp_detail_img,
 		e.exp_view_cnt,e.exp_ad_state,
-		o.order_cnt,
 		r.rev_star 
 		from experience e left join order_board o 
 		on e.exp_num = o.exp_num 
@@ -20,8 +20,16 @@
 		order by ${exp_ad_state}
 	</select>
 	
-	<select id="selectExpOne" resultType="ExpVO">
+	<select id="expRevList" resultType="RevVO">
+		select u.user_name, r.rev_content, r.rev_regdate, r.rev_star, r.rev_img 
+		from review r left join userTable u on r.user_num = u.user_num 
+		where r.exp_num = #{exp_num}
+	</select>
 	
+	<select id="avgRevRating" resultType="double">
+		select avg(rev_star) 
+		from review 
+		where exp_num = #{exp_num}
 	</select>
 	
 </mapper>
