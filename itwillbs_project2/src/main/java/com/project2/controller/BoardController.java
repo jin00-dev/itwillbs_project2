@@ -117,7 +117,7 @@ public class BoardController {
 	@RequestMapping(value = "/read", method = RequestMethod.GET)
 	public void readGET(@RequestParam("enf_notice_num") int enf_notice_num, HttpSession session, Model model)
 			throws Exception { 
-
+ 
 		logger.debug("readGET() 호출 ");
 
 		// 전달정보 저장(bno)
