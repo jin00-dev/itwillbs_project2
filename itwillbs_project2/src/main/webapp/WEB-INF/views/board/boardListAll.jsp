@@ -18,15 +18,16 @@
 			</ul>
 		</td>
 		<td>
-			
+
 			<table class="table">
-			
+
 				<h3>공지사항</h3>
-				
-				
-				<%-- <c:if test="${sessionScope.user_id == 'admin'}">  --%>
-					<a href="/board/insert">글쓰기</a>
-				<%-- </c:if> --%>
+
+
+				<c:if
+			test="${sessionScope.user_id != null && sessionScope.user_id.equals('admin')}">
+				<a href="/board/insert">글쓰기</a>
+				</c:if>
 				<tr>
 					<th>제목</th>
 					<th>작성일</th>
@@ -35,7 +36,8 @@
 
 				<!-- 공지사항 고정 -->
 				<c:forEach var="vo" items="${boardListAll}">
-					<c:if test="${pinnedNotices.contains(vo.enf_notice_num)}">
+					<c:if
+						test="${vo.enf_category == 1 && pinnedNotices.contains(vo.enf_notice_num)}">
 						<tr style="font-weight: bold;">
 							<td><a
 								href="/board/read?enf_notice_num=${vo.enf_notice_num}">📌
@@ -49,7 +51,8 @@
 
 				<!-- 일반 공지사항 -->
 				<c:forEach var="vo" items="${boardListAll}">
-					<c:if test="${!pinnedNotices.contains(vo.enf_notice_num)}">
+					<c:if
+						test="${vo.enf_category == 1 && !pinnedNotices.contains(vo.enf_notice_num)}">
 						<tr>
 							<td><a
 								href="/board/read?enf_notice_num=${vo.enf_notice_num}">${vo.enf_title }</a></td>
@@ -57,18 +60,18 @@
 									pattern="yy-MM-dd" /></td>
 							<td>${vo.enf_viewcnt}</td>
 						</tr>
-					</c:if> 
+					</c:if>
 				</c:forEach>
-			</table> 
-			
+			</table>
+
 			<form action="">
 				<input type="search">
 				<button type="submit">검색</button>
 			</form>
-			
+
 		</td>
 	</tr>
-</table> 
+</table>
 
 <!-- footer -->
 <%@include file="/WEB-INF/views/include/footer.jsp"%>

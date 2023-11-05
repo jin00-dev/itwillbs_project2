@@ -83,4 +83,58 @@ public class BoardDAOImpl implements BoardDAO {
  
 		return sqlSession.delete(NAMESPACE + ".removeBoard", enf_notice_num);
 	}
+	
+///////////////////////////////////이벤트///////////////////////////////////////////// 
+	
+	@Override
+	public void evinsert(BoardVO vo) throws Exception {
+	    logger.debug(" event insert -> DAO 호출 ");
+	    
+	    Integer maxEnfEventNum = sqlSession.selectOne(NAMESPACE + ".getMaxEnfEventNum");
+	    if (maxEnfEventNum == null) {
+	        maxEnfEventNum = 0;
+	    }
+	    vo.setEnf_event_num(maxEnfEventNum + 1);
+	    
+	    sqlSession.insert(NAMESPACE + ".createEvent", vo);
+	}  
+	
+	@Override
+	public List<BoardVO> getEvListAll() throws Exception {
+		logger.debug(" getEvListAll() 호출 - 연결된 매퍼 호출 ");
+
+		logger.debug(" 결과를 서비스로 리턴 ");
+		return sqlSession.selectList(NAMESPACE + ".getEvListAll");
+	}
+
+	@Override
+	public Integer getMaxEnfEventNum() throws Exception {
+		 
+		return sqlSession.selectOne(NAMESPACE + ".getMaxEnfEventNum");
+	}
+	
+	@Override
+	public BoardVO evGetBoard(Integer enf_event_num) throws Exception {
+		logger.debug(" evGetBoard() 호출 - 연결된 매퍼 호출 ");
+
+		logger.debug(" 결과를 서비스로 리턴 ");
+		return sqlSession.selectOne(NAMESPACE + ".evGetBoard", enf_event_num);
+	}
+
+	@Override
+	public void eventUpdateBoard(BoardVO vo) throws Exception {
+		
+		sqlSession.update(NAMESPACE + ".eventUpdateBoard", vo);
+	}
+
+	@Override
+	public int eventRemoveBoard(Integer enf_event_num) throws Exception {
+		
+		
+		return sqlSession.delete(NAMESPACE + ".eventRemoveBoard", enf_event_num);
+	}
+
+	
+	
+	
 }

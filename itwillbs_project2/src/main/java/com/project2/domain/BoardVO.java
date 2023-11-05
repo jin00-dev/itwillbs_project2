@@ -2,6 +2,8 @@ package com.project2.domain;
 
 import java.sql.Timestamp;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -23,12 +25,6 @@ public class BoardVO {
         this.enf_notice_num = enf_notice_num;
     }
 
-	
-	
-	
-	 
-	
-	
-	
+    private MultipartFile file;
 	
 }

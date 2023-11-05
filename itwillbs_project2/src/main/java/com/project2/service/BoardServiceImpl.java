@@ -58,6 +58,49 @@ public class BoardServiceImpl implements BoardService {
 		logger.debug(" removeBoard(Integer enf_notice_num)  호출 ");
 
 		return bdao.removeBoard(enf_notice_num);
+	} 
+	
+///////////////////////////////////이벤트/////////////////////////////////////////////
+	
+	@Override
+	public Integer getMaxEnfEventNum() throws Exception {
+	    return bdao.getMaxEnfEventNum();
 	}
+	
+	@Override
+	public void evinsert(BoardVO vo) throws Exception {
+		bdao.evinsert(vo);
+
+	}
+
+	@Override
+	public List<BoardVO> evListAll() throws Exception {
+		logger.debug(" 컨트롤러가 서비스를 호출 ");
+
+		logger.debug(" DAO의 결과를 받아서 컨트롤러 전달");
+		return bdao.getEvListAll();
+	}
+	
+	@Override
+	public BoardVO evGetBoard(Integer enf_event_num) throws Exception {
+		logger.debug(" getBoard(Integer enf_event_num) 호출 ");
+
+		return bdao.evGetBoard(enf_event_num); 
+	}
+
+	@Override
+	public void eventUpdateBoard(BoardVO vo) throws Exception {
+		bdao.eventUpdateBoard(vo);
+	}
+
+	@Override 
+	public int eventRemoveBoard(Integer enf_event_num) throws Exception {
+		
+		return bdao.eventRemoveBoard(enf_event_num);
+	}
+	
+	
+	
+	
 
 }

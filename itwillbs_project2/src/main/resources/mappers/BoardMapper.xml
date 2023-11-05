@@ -9,6 +9,7 @@
 	<!-- 컬럼명과 VO객체를 매핑설정(기본값 생략) -->
 	<resultMap type="com.project2.domain.BoardVO" id="boardMap">
 		<result property="enf_notice_num" column="enf_notice_num" />
+		<result property="enf_event_num" column="enf_event_num" />
 		<result property="enf_content" column="enf_content" />
 		<result property="enf_title" column="enf_title" />
 		<result property="enf_regdate" column="enf_regdate" />
@@ -27,10 +28,10 @@
 		INSERT INTO event_notice_faq_board
 		(enf_category,
 		enf_notice_num, enf_title,
-		enf_content, enf_event_type)
+		enf_content, enf_event_type, enf_updatedate)
 		VALUES
 		(1,
-		#{enf_notice_num}, #{enf_title}, #{enf_content}, 0);
+		#{enf_notice_num}, #{enf_title}, #{enf_content}, 0, null);
 	</insert>
 	<!-- 글쓰기 -->
 
@@ -76,10 +77,66 @@
 	<!-- 특정 글 삭제 -->
 	<delete id="removeBoard">
 		delete from event_notice_faq_board
-		where enf_notice_num = #{enf_notice_num}
+		where
+		enf_notice_num = #{enf_notice_num}
 	</delete>
 	<!-- 특정 글 삭제 -->
 
+	<!-- 이벤트 -->
+
+	<select id="getMaxEnfEventNum" resultType="java.lang.Integer">
+		SELECT MAX(enf_event_num) FROM event_notice_faq_board;
+	</select>
+
+	<!-- 이벤트 글쓰기 -->
+	<insert id="createEvent"
+		parameterType="com.project2.domain.BoardVO">
+		INSERT INTO event_notice_faq_board
+		(enf_category, enf_event_num, enf_title, enf_content, enf_viewcnt, enf_updatedate,
+		enf_event_type, enf_img)
+		VALUES
+		(0, #{enf_event_num}, #{enf_title}, #{enf_content}, 0, null,
+		#{enf_event_type}, #{enf_img});
+	</insert>
+
+	<!-- 글 목록 조회 -->
+	<select id="getEvListAll" resultType="BoardVO"
+		resultMap="boardMap">
+		select * from event_notice_faq_board
+		order by enf_regdate
+		desc
+	</select>
+	<!-- 글 목록 조회 -->
+
+	<!-- 특정 글정보를 조회 -->
+	<select id="evGetBoard" resultType="BoardVO">
+		select * from
+		event_notice_faq_board
+		where enf_event_num = #{enf_event_num}
+	</select>
+	<!-- 특정 글정보를 조회 -->
+
+	<!-- 게시물 업데이트 쿼리 -->
+	<update id="eventUpdateBoard"
+		parameterType="com.project2.domain.BoardVO">
+		UPDATE event_notice_faq_board
+		SET enf_title = #{enf_title},
+		enf_content = #{enf_content},
+		<if test="enf_img != null">
+			enf_img = #{enf_img},
+		</if>
+		enf_regdate = CURRENT_TIMESTAMP,
+		enf_updatedate = CURRENT_TIMESTAMP
+		WHERE enf_event_num = #{enf_event_num}
+	</update>
+
+	<!-- 특정 글 삭제 -->
+	<delete id="eventRemoveBoard">
+		delete from event_notice_faq_board
+		where
+		enf_event_num = #{enf_event_num}
+	</delete>
+	<!-- 특정 글 삭제 -->
 
 
 </mapper>

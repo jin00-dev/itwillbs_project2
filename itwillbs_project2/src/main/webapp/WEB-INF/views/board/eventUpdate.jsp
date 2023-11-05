@@ -5,13 +5,13 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- header-->
-<%@include file="/WEB-INF/views/include/header.jsp"%> 
+<%@include file="/WEB-INF/views/include/header.jsp"%>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
 	<div>
-		<h3>공지사항 수정</h3>
+		<h3>이벤트 수정</h3>
 
-		<!-- 공지사항 제목 -->
+		<!-- 이벤트 제목 -->
 		<div>
 			<label>제목:</label> <input type="text" name="enf_title"
 				value="${resultVO.enf_title}">
@@ -23,6 +23,17 @@
 					pattern="yyyy-MM-dd" /></span>
 		</div>
 
+		<!-- 기존 이미지 표시 (수정하지 않을 경우에 대비) -->
+		<div>
+			<label>현재 이미지:</label> <img src="/resources/event_img/${resultVO.enf_img}"
+				alt="현재 이미지" /> 
+				
+			<!-- 기존 이미지 URL을 hidden field로 전송 -->
+			<input type="hidden" name="enf_img"
+				value="${resultVO.enf_img}">
+		</div>
+
+
 		<!-- 공지사항 내용 -->
 		<div>
 			<label for="enf_content">내용:</label>
@@ -32,33 +43,16 @@
 		</div>
 
 		<!-- hidden field for enf_notice_num -->
-		<input type="hidden" name="enf_notice_num"
-			value="${resultVO.enf_notice_num}">
+		<input type="hidden" name="enf_event_num"
+			value="${resultVO.enf_event_num}">
+	</div>
+
+	<!-- 버튼 -->
+	<div> 
+		<button type="submit">수정하기</button>
+		<button type="submit">수정취소</button>
+	</div>
 </form>
-<!-- 버튼 -->
-<div>
-	<button type="submit" class="btn-update">수정하기</button>
-	<button type="submit" class="btn-cancel">수정취소</button>
-</div> 
-
-<!-- <script type="text/javascript">
-    $(document).ready(function() {
-        var updateForm = $('#updateForm');
-
-        // 수정하기 버튼 클릭
-        $('.btn-update').click(function() {
-            updateForm.submit();
-        });
-
-        // 취소하기 버튼 클릭
-        $('.btn-cancel').click(function() {
-            location.href = '/board/read';
-        }); 
-    });
-</script> -->
-
-
-
 
 <!-- footer -->
 <%@include file="/WEB-INF/views/include/footer.jsp"%>
