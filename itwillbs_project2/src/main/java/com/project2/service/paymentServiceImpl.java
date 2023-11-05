@@ -1,5 +1,7 @@
 package com.project2.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -23,6 +25,18 @@ public class paymentServiceImpl implements paymentService {
 	@Override
 	public TestVO boardPaymentList(TestVO vo) throws Exception {
 		return pdao.boardPaymentList(vo);
+	}
+
+
+	@Override
+	public List<TestVO> paymentList(TestVO vo) throws Exception {
+		return pdao.paymentList(vo);
+	}
+
+
+	@Override
+	public List<TestVO> hostList(TestVO vo) throws Exception {
+		return pdao.hostList(vo);
 	}
 
 	

@@ -25,7 +25,39 @@
 
 	<!-- 클래스를 주문한 사람 상세 내역 -->
 
-
+	<!-- 회원의 모든 결제 예매 리스트 -->
+	<select id="paymentList" resultType="com.project2.domain.TestVO">
+		select u.user_id, u.user_num, e.exp_name, e.exp_summary_img, e.exp_num, e.exp_capacity, e.exp_price, o.order_num 
+		from userTable u 
+		left join order_board o 
+		on u.user_num = o.user_num 
+		left join experience e 
+		on o.exp_num = e.exp_num 
+		where user_id=#{user_id}
+	</select>
+	
+	
+	<!-- 한 회원의 결제 상세내역 -->
+	<select id="paymentInfo" resultType="com.project2.domain.TestVO">
+		select u.user_num, o.payment_state, e.exp_name, e.exp_place,e.exp_region, e.exp_phone, e.exp_num, o.order_cnt, o.payment_price, o.payment_method, o.payment_date 
+		from userTable u 
+		left join order_board o 
+		on u.user_num = o.user_num 
+		left join experience e 
+		on o.exp_num = e.exp_num 
+		where u.user_num=#{user_num} and o.order_num=#{order_num}
+	</select>
+	
+	<!-- 사업자가 신청한 클래스의 모든 예약자 리스트로 조회 -->
+	<select id="hostList" resultType="com.project2.domain.TestVO">
+		select e.exp_name, e.exp_num, u.user_name, u.user_num, u.user_phone, o.order_cnt, o.payment_price, o.order_num, o.order_date, o.payment_state
+		from order_board o 
+		left join experience e 
+		on o.exp_num = e.exp_num 
+		left join userTable u 
+		on o.user_num = u.user_num 
+		where e.exp_num in(select exp_num from experience where user_num = #{user_num});
+	</select>
 
 
 
