@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.project2.domain.Criteria;
 import com.project2.domain.ExpVO;
-import com.project2.service.ExpService;
+import com.project2.service.ExpServiceImpl;
 
 @Controller
 public class MainController {
@@ -19,7 +19,7 @@ public class MainController {
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	@Autowired
-	private ExpService service;
+	private ExpServiceImpl service;
 	
 	//메인페이지 -------------------------------------
 	@GetMapping("/")
@@ -38,23 +38,20 @@ public class MainController {
 		}
 		
 		if(sort == null || sort =="") {
-			sort = "cnt";
+			sort = "star";
 		}
 		
 		if(region1 == null || region2 == null || region1 == "" || region2 =="") {
-			vo.setExp_region("서울");
-			vo.setExp_name("경기");
+			vo.setExp_region("전체");
+			vo.setExp_name("");
 		}else {
 			vo.setExp_region(region1);
 			vo.setExp_name(region2);
 		}
 		
 		switch(sort){
-		case "cnt":
-			vo.setExp_ad_state("e.exp_view_cnt desc");
-			break;
 		case "star":
-			vo.setExp_ad_state("r.rev_star desc");
+			vo.setExp_ad_state("avg(r.rev_star) desc");
 			break;
 		case "priceDesc":
 			vo.setExp_ad_state("e.exp_price desc");

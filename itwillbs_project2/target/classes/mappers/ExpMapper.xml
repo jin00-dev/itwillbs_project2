@@ -10,14 +10,33 @@
 		select e.exp_num, e.user_num,e.exp_name,e.exp_start_date,exp_end_date,
 		e.exp_price,e.exp_region,e.exp_category,e.exp_capacity,
 		e.exp_ad_state,e.exp_summary_img,e.exp_detail_img,
-		e.exp_view_cnt,e.exp_ad_state,
-		r.rev_star 
+		e.exp_ad_state,avg(r.rev_star) "rev_avgStar" 
 		from experience e left join order_board o 
 		on e.exp_num = o.exp_num 
 		left join review r 
 		on e.exp_num = r.exp_num 
 		where e.exp_category = #{exp_category} and substr(e.exp_region,1,2) in (#{exp_region},#{exp_name}) 
-		order by ${exp_ad_state}
+		group by e.exp_num
+        order by ${exp_ad_state};
+	</select>
+
+	<select id="expListAllRegion" resultType="ExpVO">
+		select e.exp_num, e.user_num,e.exp_name,e.exp_start_date,exp_end_date,
+		e.exp_price,e.exp_region,e.exp_category,e.exp_capacity,
+		e.exp_ad_state,e.exp_summary_img,e.exp_detail_img,
+		e.exp_ad_state,avg(r.rev_star) "rev_avgStar" 
+		from experience e left join order_board o 
+		on e.exp_num = o.exp_num 
+		left join review r 
+		on e.exp_num = r.exp_num 
+		where e.exp_category = #{exp_category}  
+		group by e.exp_num
+        order by ${exp_ad_state};
+	</select>
+	
+	<select id="expOne" resultType="expVO">
+		select * from experience 
+		where exp_num= #{exp_num} 
 	</select>
 	
 	<select id="expRevList" resultType="RevVO">
@@ -27,9 +46,14 @@
 	</select>
 	
 	<select id="avgRevRating" resultType="double">
-		select avg(rev_star) 
+		select COALESCE(AVG(rev_star), 0)  
 		from review 
 		where exp_num = #{exp_num}
 	</select>
+	
+	<insert id="insertReview">
+		insert into review 
+		values(default, #{user_num}, #{exp_num}, #{rev_content},default, #{rev_star}, #{rev_img})
+	</insert>
 	
 </mapper>

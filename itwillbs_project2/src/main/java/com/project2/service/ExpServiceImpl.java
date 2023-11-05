@@ -9,32 +9,41 @@ import org.springframework.stereotype.Service;
 
 import com.project2.domain.ExpVO;
 import com.project2.domain.RevVO;
-import com.project2.persistence.ExpDAO;
+import com.project2.persistence.ExpDAOImpl;
 
-@Service
-public class ExpServiceImpl implements ExpService {
+@Service(value = "expService")
+public class ExpServiceImpl {
 
 	private static final Logger logger = LoggerFactory.getLogger(ExpServiceImpl.class);
 
 	@Autowired
-	private ExpDAO dao;
+	private ExpDAOImpl dao;
 
 	// 회원목록 조회
-	@Override
 	public List<ExpVO> getExpList(ExpVO vo) throws Exception {
 		logger.debug("getMemberList() 호출");
 
 		return dao.getExpList(vo);
 	}
 
-	@Override
+	// 1개 개시물 리뷰목록 가저오기
 	public List<RevVO> getExpRevList(Integer exp_num) throws Exception {
 		return dao.getExpRevList(exp_num);
 	}
 
-	@Override
+	// 1개 개시물 리뷰별점 평균
 	public double getExpRevAvg(Integer exp_num) throws Exception {
 		return dao.getExpRevAvg(exp_num);
+	}
+	
+	//1개 개시물 정보가저오기
+	public ExpVO getExpOne(Integer exp_num) throws Exception {
+		return dao.getExpOne(exp_num);
+	}
+	
+	//리뷰 작성
+	public int insertReview(RevVO vo) throws Exception{
+		return dao.insertReview(vo);
 	}
 
 }///////

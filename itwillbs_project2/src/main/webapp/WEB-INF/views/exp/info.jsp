@@ -16,72 +16,103 @@
 <!-- Vue.js 스크립트 불러오기 -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
 
+<!-- 로그인 테스트 -->
+<%
+	session.setAttribute("user_num", "1");
+	session.setAttribute("user_name", "김소예");
+	session.setAttribute("user_type", "1");
+%>
 <!-- Section-->
 <section class="py-5">
-	<!-- 요약정보 및 결제 -->
-	<div class="container-fluid">
-		<div class="row justify-content-center">
-			<div class="col-6">
-				<!-- 첫 번째 섹션 내용 -->
-				<section>
-					<div class="card">
-						<div class="card-horizontal">
-							<div class="img-square-wrapper">
-								<img src="https://dummyimage.com/300x300/dee2e6/6c757d.jpg" class="card-img-left" alt="...">
-							</div>
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-								<a href="#" class="btn btn-primary">Go somewhere</a>
+	<!-- 상단 전체 박스 -->
+	<div class="border-top p-5 col-md-8 mx-auto">
+		<!-- 요약정보 및 결제 -->
+		<div class="container-fluid">
+			<div class="row justify-content-center">
+				<div class="col-6">
+					<!-- 왼쪽 ------------------------>
+					<div class="container border">
+						<div class="col-md-6 m-3">
+							<img class="img-fluid" src="https://dummyimage.com/400x500/dee2e6/6c757d.jpg" class="card-img-left" alt="...">
+						</div>
+						<div class="col-md-6 m-3">
+							<div class="row p-3">
+								<span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">${expVO.exp_region.substring(0,2) }</span> <span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">${expVO.exp_category }</span>
+								<h4 class="mx-1 my-1">${expVO.exp_name }</h4>
 							</div>
 						</div>
 					</div>
-				</section>
-			</div>
-			<div class="col-6">
-				<!-- 두 번째 섹션 내용 -->
-				<section>
-					<div class="card">
-
-						<div class="card-body">
-							<div id="calendar" style="position: relative;"></div>
-							<h5 class="card-title">Card title</h5>
-							<div id="selectedDateResult"></div>
-							<div id="totalQuantityResult"></div>
-							<div id="totalPriceResult"></div>
-							<a href="#" class="btn btn-primary">Go somewhere</a>
+				</div>
+				<div class="col-6">
+					<!-- 오른쪽 ------------->
+					<div class="container border">
+						<div class="m-3" id="calendar" style="position: relative;"></div>
+						<div id="selectedDateResult"></div>
+						<div id="totalQuantityResult"></div>
+						<div id="totalPriceResult"></div>
+						<div class="p-2">
+							<h5 class="">수량 선택</h5>
+							<p>
+								가격:
+								<fmt:formatNumber>${expVO.exp_price}</fmt:formatNumber>
+								원
+							</p>
+							<div class="quantity">
+								<button class="btn btn-secondary" id="decrease">-</button>
+								<span id="quantity">1</span>
+								<button class="btn btn-secondary" id="increase">+</button>
+							</div>
+							<p class="border-bottom p-2 fw-bolder fs-3">
+								총 결제금액 <span id="totalPrice"><fmt:formatNumber>${expVO.exp_price}</fmt:formatNumber>원</span>
+							</p>
+						</div>
+						<div class="p-2 d-grid gap-2 col-6 mx-auto">
+							<a href="#" class="btn btn-danger btn-lg">결제하기</a>
 						</div>
 					</div>
-				</section>
+				</div>
 			</div>
 		</div>
 	</div>
 </section>
 <!-- 하단메뉴 전체 섹션 -->
-<section class="py-5">
+<section class="">
 	<div class="col-md-8 mx-auto p-5 border ">
 		<!-- 하단메뉴(네비게이션) -->
 		<div>
-			<ul class="nav nav-underline justify-content-center">
-				<li class="nav-item mx-4"><a class="nav-link ${param.category == '안내' || param.category == null ? 'active' : ''}" href="/exp/info?exp_num=${param.exp_num}&category=안내"><h4>안내</h4></a></li>
-				<li class="nav-item mx-4"><a class="nav-link ${param.category == '후기' ? 'active' : ''}" href="/exp/info?exp_num=${param.exp_num}&category=후기"><h4>후기(${rList.size() < 0 && empty rList ? 0 : rList.size() })</h4></a></li>
-				<li class="nav-item mx-4"><a class="nav-link ${param.category == '장소' ? 'active' : ''}" href="/exp/info?exp_num=${param.exp_num}&category=장소"><h4>장소</h4></a></li>
-				<li class="nav-item mx-4"><a class="nav-link ${param.category == '환불규정' ? 'active' : ''}" href="/exp/info?exp_num=${param.exp_num}&category=환불규정"><h4>환불규정</h4></a></li>
+			<ul class="nav nav-underline justify-content-center" id="botNavBar">
+				<li class="nav-item mx-4"><h4>
+						<a class="nav-link active" style="cursor: pointer;">안내</a>
+					</h4></li>
+				<li class="nav-item mx-4"><h4>
+						<a class="nav-link" id="botNavRev" style="cursor: pointer;">후기(${rList.size() < 0 && empty rList ? 0 : rList.size() })</a>
+					</h4></li>
+				<li class="nav-item mx-4"><h4>
+						<a class="nav-link " style="cursor: pointer;">장소</a>
+					</h4></li>
+				<li class="nav-item mx-4"><h4>
+						<a class="nav-link " style="cursor: pointer;">환불규정</a>
+					</h4></li>
 			</ul>
 		</div>
-
 		<!-- 하단메뉴 내용 -->
-		<div class="tab-content justify-content-center">
-			<div class="tab-pane ${param.category == '안내' || param.category == null ? 'active' : ''}">
-				<!-- '안내' 탭 내용을 여기에 넣으세요 -->
-				11111111111
+		<div class="tab-content justify-content-center" id="botNavMenu">
+			<div class="tab-pane active" id="bnm1">
+				<div class="container">
+					<div class="text-center" id="image-container" style="overflow: hidden; max-height: 1000px; margin: 0 auto">
+						<img class="img-fluid " src="https://dummyimage.com/800x5000/dee2e6/6c757d.jpg" class="card-img-left" alt="...">
+					</div>
+					<div class="d-flex justify-content-center">
+						<button id="show-more-button" class="btn btn-light">더 보기</button>
+					</div>
+				</div>
 			</div>
-			<div class="tab-pane ${param.category == '후기' ? 'active' : ''}">
+			<div class="tab-pane active" id="bnm2">
 				<div class="container">
 					<div class="row p-3">
 						<div class="col-md-6 text-center">
 							<h4>평균 별점</h4>
-							<p class="display-4" id="avgStar">${avgStar }</p>
+							<p class="display-4" id="avgStar"><fmt:formatNumber type="number" maxFractionDigits="2">${avgStar}</fmt:formatNumber></p>
 							<div class="justify-content-center">
 								<div class="star-ratings " id="app">
 									<div class="star-ratings-fill" :style="{ width: ratingToPercent + '%' }">
@@ -92,7 +123,7 @@
 									</div>
 								</div>
 							</div>
-							<h5>${rList.size() < 0 && empty rList ? 0 : rList.size() }</h5>
+							<h5>${rList.size() < 0 && empty rList ? 0 : rList.size() }명</h5>
 						</div>
 						<div class="col-md-6">
 							<table class="table table-borderless">
@@ -109,7 +140,7 @@
 										<td class="align-middle col-2"><span>4점</span></td>
 										<td class="align-middle">
 											<div class="progress">
-												<div class="progress-bar bg-warning" id="4point" style="width: 50%" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5"></div>
+												<div class="progress-bar bg-warning" id="4point" style="width:" aria-valuenow="4" aria-valuemin="0" aria-valuemax="5"></div>
 											</div>
 										</td>
 									</tr>
@@ -117,7 +148,7 @@
 										<td class="align-middle col-2"><span>3점</span></td>
 										<td class="align-middle">
 											<div class="progress">
-												<div class="progress-bar bg-warning" id="3point" style="width: 25%" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5"></div>
+												<div class="progress-bar bg-warning" id="3point" style="width:" aria-valuenow="3" aria-valuemin="0" aria-valuemax="5"></div>
 											</div>
 										</td>
 									</tr>
@@ -125,7 +156,7 @@
 										<td class="align-middle col-2"><span>2점</span></td>
 										<td class="align-middle">
 											<div class="progress">
-												<div class="progress-bar bg-warning" id="2point" style="width: 10%" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5"></div>
+												<div class="progress-bar bg-warning" id="2point" style="width:" aria-valuenow="2" aria-valuemin="0" aria-valuemax="5"></div>
 											</div>
 										</td>
 									</tr>
@@ -133,7 +164,7 @@
 										<td class="align-middle col-2"><span>1점</span></td>
 										<td class="align-middle">
 											<div class="progress">
-												<div class="progress-bar bg-warning" id="1point" style="width: 5%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5"></div>
+												<div class="progress-bar bg-warning" id="1point" style="width:" aria-valuenow="1" aria-valuemin="0" aria-valuemax="5"></div>
 											</div>
 										</td>
 									</tr>
@@ -142,10 +173,14 @@
 						</div>
 					</div>
 				</div>
+				<!-- 후기 작성 버튼  -->
+				<div class="text-end m-2">
+					<a class="btn btn-primary" id="reviewForm">후기 작성</a>
+				</div>
 				<!-- review 하나 -->
 				<c:set var="revNum" value="0" />
 				<c:forEach var="review" items="${rList }">
-					<div class="border-top">
+					<div class="border-top p-1">
 						<div class="row">
 							<div class="col-md-3">
 								<!-- 별점 -->
@@ -161,26 +196,59 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="container">
-								<span class="d-inline-block text-truncate" style="max-width: 90%;" id="myText"> ${review.rev_content } </span> <span class="text-info toggle-button" style="cursor: pointer;" id="toggleButton"> 더보기 </span>
+							<div class="container1">
+								<span class="d-inline-block text-truncate" style="max-width: 90%;"> ${review.rev_content } </span> <span class="text-info toggle-button" style="cursor: pointer;"> 더보기 </span>
+							</div>
+							<div class="text-end m-2">
+								<a class="btn btn-light">수정</a> <a class="btn btn-secondary">삭제</a> <a class="btn btn-danger">신고</a>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12">
 								<!-- 이미지 -->
 								<c:if test="${review.rev_img ne null }">
-									<img src="${review.rev_img }" alt="이미지 설명">
+									<%-- <img src="${review.rev_img }" alt="이미지 설명"> --%>
+									<img src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt="이미지 설명">
 								</c:if>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
 			</div>
-			<div class="tab-pane ${param.category == '장소' ? 'active' : ''}">
+			<!-- 리뷰 작성 -------------------------------------------------->
+			<div class="tab-pane" id="bnm5">
+				<div class="border-top">
+					<form action="/exp/reviewInsert?exp_num=${param.exp_num }" method="post">
+
+						<div class="card-header">
+							<h3 class="card-title">후기를 작성해주세요</h3>
+							<div class="rating">
+								<span class="star-1" data-rating="1">★</span> <span class="star-2" data-rating="2">★</span> <span class="star-3" data-rating="3">★</span> <span class="star-4" data-rating="4">★</span> <span class="star-5" data-rating="5">★</span>
+							</div>
+							<input type="hidden" name="rev_star" value="" class="selected-rating" />
+						</div>
+						<div class="card-body">
+							<textarea class="form-control mb-2" name="rev_content" rows="10" placeholder="후기를 작성해주세요 ..."></textarea>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="custom-file">
+										<input type="file" name="rev_img" class="custom-file-input" id="exampleInputFile">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-footer text-end">
+							<button type="submit" class="btn btn-primary ">후기작성</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<div class="tab-pane" id="bnm3">
 				<!-- '장소' 탭 내용을 여기에 넣으세요 -->
 				33333333
 			</div>
-			<div class="tab-pane ${param.category == '환불규정' ? 'active' : ''}">
+			<div class="tab-pane" id="bnm4">
 				<div class="container">
 					<br>
 					<h2>안내사항(수정필요)</h2>
@@ -214,6 +282,11 @@
 			</div>
 		</div>
 	</div>
+
+
+
+
+
 </section>
 <!-- footer -->
 <%@include file="../include/footer.jsp"%>
@@ -256,10 +329,36 @@
 .star {
 	color: gold; /* 별 색상 */
 }
+
+.rating {
+	font-size: 24px;
+	cursor: pointer;
+}
+
+[class^="star-"] {
+	color: #ccc;
+	transition: color 0.2s;
+	cursor: pointer;
+}
+
+[class^="star-"].selected {
+	color: #f5a623;
+}
+
 -->
 </style>
 <!-- script  -->
 <script type="text/javascript">
+	//리뷰쓰기 성공 실패 알림
+	$(document).ready(function() {
+		var isRev = '${isInsertReview}';
+		
+		if(isRev =='false'){
+			alert('리뷰쓰기 실패');
+		}else if(isRev =='true'){
+			alert('리뷰쓰기 성공');
+		}
+	});
 	//달력 -------------------------------------------------------------------
 	document.addEventListener("DOMContentLoaded", function() {
 		flatpickr("#calendar", {
@@ -325,34 +424,122 @@
         }
         return stars;
     }
+
+    $(document).ready(function() {
+    	  let selectedRating = 0;
+
+    	  // 별점에 마우스를 올리면 해당 별점까지 하이라이트
+    	  $('[class^="star-"]').on('mouseenter', function() {
+    	    const rating = $(this).data('rating');
+    	    highlightStars(rating);
+    	  });
+
+    	  // 별점에서 마우스가 나가면 선택된 별점까지 하이라이트
+    	  $('[class^="star-"]').on('mouseleave', function() {
+    	    highlightStars(selectedRating);
+    	  });
+
+    	  // 별점을 클릭하면 선택한 별점을 저장
+    	  $('[class^="star-"]').on('click', function() {
+    	    selectedRating = $(this).data('rating');
+    	    $('.selected-rating').val(selectedRating);
+    	  });
+
+    	  function highlightStars(rating) {
+    	    $('[class^="star-"]').removeClass('selected');
+    	    $('[class^="star-"]').each(function() {
+    	      if ($(this).data('rating') <= rating) {
+    	        $(this).addClass('selected');
+    	      }
+    	    });
+    	  }
+    	});
+
 	
 	//리뷰 긴글 접기 펴기 -----------------------------------------------------------------
-	$(document).ready(function() {
-    $('.container').each(function() {
-        const container = $(this);
-        const text = container.find('.text-truncate');
-        const toggleButton = container.find('.toggle-button');
+		$(document).ready(function() {
+		    $('.container1').each(function() {
+		        const container = $(this);
+		        const text = container.find('.text-truncate');
+		        const toggleButton = container.find('.toggle-button');
+		       
+		        toggleButton.hide(); // 초기에는 숨김
+		        if (text.length > 0) { // 요소가 존재하는지 확인
+		            // 텍스트가 max-width를 초과하는지 확인
+		            if (text[0].scrollWidth > text.innerWidth()) {
+		                toggleButton.show(); // 초과하면 "더보기" 버튼 보이기
+		            }
+		            // "더보기" 버튼 클릭 시
+		            toggleButton.click(function() {
+		                text.toggleClass('text-truncate'); // text-truncate 클래스를 토글
+		                if (text.hasClass('text-truncate')) {
+		                    toggleButton.text('더보기');
+		                } else {
+		                    toggleButton.text('간략히');
+		                }
+		            });
+		        }
+		    });
+		    //긴글 처리후 숨기기
+		    $('#bnm2').removeClass('active');
+		});
+    
+	//상품 개수 및 가격 ---------------------------------------------------------------------
+    // 초기 상품 정보 설정
+    let price = ${expVO.exp_price}; // 상품 가격
+    let quantity = 1; // 상품 수량
 
-        toggleButton.hide(); // 초기에는 숨김
+    // HTML 요소 가져오기
+    const decreaseButton = $("#decrease");
+    const increaseButton = $("#increase");
+    const quantityDisplay = $("#quantity");
+    const totalPriceDisplay = $("#totalPrice");
 
-        if (text.length > 0) { // 요소가 존재하는지 확인
-            // 텍스트가 max-width를 초과하는지 확인
-            if (text[0].scrollWidth > text.innerWidth()) {
-                toggleButton.show(); // 초과하면 "더보기" 버튼 보이기
-            }
-
-            // "더보기" 버튼 클릭 시
-            toggleButton.click(function() {
-                text.toggleClass('text-truncate'); // text-truncate 클래스를 토글
-                if (text.hasClass('text-truncate')) {
-                    toggleButton.text('더보기');
-                } else {
-                    toggleButton.text('간략히');
-                }
-            });
+    // 수량 감소 버튼 클릭 이벤트 처리
+    decreaseButton.click(function () {
+        if (quantity > 1) {
+            quantity--;
+            updateTotalPrice();
         }
     });
-});
+
+    // 수량 증가 버튼 클릭 이벤트 처리
+    increaseButton.click(function () {
+        quantity++;
+        updateTotalPrice();
+    });
+
+    // 총 가격 업데이트 함수
+    function updateTotalPrice() {
+        totalPrice = price * quantity;
+        quantityDisplay.text(quantity);
+        var formattedPrice = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(totalPrice);
+        totalPriceDisplay.text(formattedPrice.replace('₩', '')+"원");
+    }
+  
+    //하단 네비게이션 바 제어 -------------------------------------------------------------
+    $('#botNavBar li h4 a').click(function(){
+    	$('#botNavBar li h4 a').removeClass('active');
+    	$('#botNavMenu div[class^=tab-pane]').removeClass('active');
+    	$(this).addClass('active');
+    	
+    	if($(this).text().startsWith('안내')) $('#bnm1').addClass('active');
+    	if($(this).text().startsWith('후기')) $('#bnm2').addClass('active');
+    	if($(this).text().startsWith('장소')) $('#bnm3').addClass('active');
+    	if($(this).text().startsWith('환불규정')) $('#bnm4').addClass('active');
+    });
+	//리뷰 작성칸 제어    
+    $('#reviewForm').click(function(){
+    	$('#botNavMenu div[class^=tab-pane]').removeClass('active');
+    	$('#bnm5').addClass('active');
+    });
     
- 
+    //안내 컨텐츠 사이즈 조절 -------------------------------------------------------------
+    $("#show-more-button").click(function () {
+        var imageContainer = $("#image-container");
+        imageContainer.css("max-height", "none");
+        $("#show-more-button").hide();
+    });
+
+
 </script>

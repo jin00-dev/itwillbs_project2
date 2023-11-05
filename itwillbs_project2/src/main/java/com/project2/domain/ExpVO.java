@@ -22,8 +22,8 @@ public class ExpVO {
 	private Timestamp exp_end_date;
 
 	//정렬기준
-	private int order_cnt;
 	private int rev_star;
+	private double rev_avgStar;
 	//exp_price;
 	
 	

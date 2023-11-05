@@ -24,25 +24,25 @@
 		<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
 			<ul class="navbar-nav me-2 mb-2 mb-lg-0">
 				<c:choose>
-					<c:when test="${empty user_id }">
+					<c:when test="${empty user_num }">
 						<li class="nav-item"><a class="nav-link" href="#!">회원가입</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">로그인</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
 					</c:when>
 					<c:when test="${user_type eq 0 }">
-						<li class="nav-item"><a class="nav-link" >${user_id }님 환영합니다</a></li>
+						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">로그아웃</a></li>
 					</c:when>
 					<c:when test="${user_type eq 1 }">
-						<li class="nav-item"><a class="nav-link" >${user_id }님 환영합니다</a></li>
+						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">로그아웃</a></li>
 					</c:when>
 					<c:when test="${user_type eq 2 }">
-						<li class="nav-item"><a class="nav-link" >${user_id }님 환영합니다</a></li>
+						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">관리자페이지</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">로그아웃</a></li>
@@ -52,7 +52,7 @@
 		</div>
 	</nav>
 	<div class="navbar navbar-light bg-light">
-		<a class="navbar-brand" href="#"> <img src="" alt="" width="30" height="24" class="d-inline-block align-text-top"> 
+		<a class="navbar-brand" href="/"> <img src="" alt="" width="30" height="24" class="d-inline-block align-text-top"> 
 		세모클래스
 		</a>
 		<form class="d-flex justify-content-center">

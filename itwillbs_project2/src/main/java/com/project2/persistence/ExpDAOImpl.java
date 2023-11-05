@@ -11,10 +11,12 @@ import org.springframework.stereotype.Repository;
 import com.project2.domain.ExpVO;
 import com.project2.domain.RevVO;
 
+import lombok.val;
+
 //@Repository : 스프링이 해당객체를 DAO로 인식하도록 함
 
-@Repository
-public class ExpDAOImpl implements ExpDAO {
+@Repository(value = "expDAO")
+public class ExpDAOImpl {
 
 	private static final Logger logger = LoggerFactory.getLogger(ExpDAOImpl.class);
 
@@ -25,27 +27,39 @@ public class ExpDAOImpl implements ExpDAO {
 	// memberMapper의 namespace정보 저장
 	private static final String NAMESPACE = "com.project2.mapper.ExpMapper.";
 
+	// 게시물리스트
 	public List<ExpVO> getExpList(ExpVO vo) throws Exception {
-		System.out.println(" DAOImpl : getMemberList() 호출");
+		logger.debug(" DAOImpl : getExpList() 호출");
 
-		// category exp_category
-		// region exp_region,exp_name
-		// sort exp_ad_state 1(cnt), 2(star), 3(price desc), 4(price asc)
-
+		if(vo.getExp_region().equals("전체")) {
+			return sqlSession.selectList(NAMESPACE + "expListAllRegion", vo);
+		}
 		return sqlSession.selectList(NAMESPACE + "expList", vo);
 
 	}
 
-	@Override
+	//1개 개시물 리뷰목록 가저오기
 	public List<RevVO> getExpRevList(Integer exp_num) throws Exception {
-		System.out.println(" DAOImpl : getExpRevList() 호출");
+		logger.debug(" DAOImpl : getExpRevList() 호출");
 		return sqlSession.selectList(NAMESPACE + "expRevList", exp_num);
 	}
 
-	@Override
+	//1개 개시물 리뷰평균
 	public double getExpRevAvg(Integer exp_num) throws Exception {
-		System.out.println(" DAOImpl : getExpRevAvg() 호출");
+		logger.debug(" DAOImpl : getExpRevAvg() 호출");
 		return sqlSession.selectOne(NAMESPACE + "avgRevRating", exp_num);
+	}
+
+	//1개 개시물 정보가저오기
+	public ExpVO getExpOne(Integer exp_num) throws Exception {
+		logger.debug(" DAOImpl : getExpOne() 호출");
+		return sqlSession.selectOne(NAMESPACE + "expOne", exp_num);
+	}
+	
+	//리뷰 작성
+	public int insertReview(RevVO vo) throws Exception{
+		logger.debug(" DAOImpl :  insertReview() 호출");
+		return sqlSession.insert(NAMESPACE + "insertReview", vo);
 	}
 
 }// DAOImpl

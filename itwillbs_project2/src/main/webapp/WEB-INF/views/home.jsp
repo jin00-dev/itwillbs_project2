@@ -6,7 +6,7 @@
 <%@include file="./include/header.jsp"%>
 	<div>
 		<ul class="nav nav-underline justify-content-center">
-			<li class="nav-item"><a class="nav-link ${param.category == '공예' || param.category == null ? 'active' : ''}" href="/?category=공예" id="clicked1" >공예</a></li>
+			<li class="nav-item"><a class="nav-link ${param.category == '공예' || param.category == null || param.category == '' ? 'active' : ''}" href="/?category=공예" id="clicked1" >공예</a></li>
 			<li class="nav-item"><a class="nav-link ${param.category == '운동' ? 'active' : ''}" href="/?category=운동">운동</a></li>
 			<li class="nav-item"><a class="nav-link ${param.category == '쿠킹' ? 'active' : ''}" href="/?category=쿠킹">쿠킹</a></li>
 			<li class="nav-item"><a class="nav-link ${param.category == '뷰티' ? 'active' : ''}" href="/?category=뷰티">뷰티</a></li>
@@ -16,7 +16,8 @@
 <!-- Section-->
 <div>
 	<ul class="nav nav-tabs">
-		<li class="nav-item"><a class="nav-link ${param.region1 == '서울' || param.region1 == null ? 'active' : ''}" href="/?category=${param.category }&region1=서울&region2=경기&sort=${param.sort}" id="clicked2">서울경기</a></li>
+		<li class="nav-item"><a class="nav-link ${param.region1 == '전체' || param.region1 == null || param.region1 == '' ? 'active' : ''}" href="/?category=${param.category }&region1=전체&sort=${param.sort}" id="clicked2">전체지역</a></li>
+		<li class="nav-item"><a class="nav-link ${param.region1 == '서울' ? 'active' : ''}" href="/?category=${param.category }&region1=서울&region2=경기&sort=${param.sort}" id="clicked2">서울경기</a></li>
 		<li class="nav-item"><a class="nav-link ${param.region1 == '경상' ? 'active' : ''}" href="/?category=${param.category }&region1=경상&region2=부산&sort=${param.sort}">경상부산</a></li>
 		<li class="nav-item"><a class="nav-link ${param.region1 == '충청' ? 'active' : ''}" href="/?category=${param.category }&region1=충청&region2=대전&sort=${param.sort}">충청대전</a></li>
 		<li class="nav-item"><a class="nav-link ${param.region1 == '전라' ? 'active' : ''}" href="/?category=${param.category }&region1=전라&region2=강원&sort=${param.sort}">전라강원</a></li>
@@ -26,13 +27,11 @@
 		<li class="nav-item dropdown">
 			<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">정렬기준</a>
 			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="/?category=${param.category }&region1=${param.region1 }&region2=${param.region2 }&sort=cnt">인기순</a></li>
 				<li><a class="dropdown-item" href="/?category=${param.category }&region1=${param.region1 }&region2=${param.region2 }&sort=star">별점순</a></li>
 				<li><a class="dropdown-item" href="/?category=${param.category }&region1=${param.region1 }&region2=${param.region2 }&sort=priceDesc">최고가</a></li>
 				<li><a class="dropdown-item" href="/?category=${param.category }&region1=${param.region1 }&region2=${param.region2 }&sort=priceAsc">최저가</a></li>
 			</ul>
 		</li>
-		
 	</ul>
 </div>
 
@@ -64,7 +63,7 @@
 												<!-- Product name-->
 												<h5 class="fw-bolder">${list.exp_name }</h5>
 												<!-- star point -->
-												별 ${list.rev_star }<br>									
+												★ ${list.rev_avgStar == 0? 0 : list.rev_avgStar }<br>									
 												<!-- Product price-->
 												<fmt:formatNumber>${list.exp_price }</fmt:formatNumber>원 <br>
 											</div>
@@ -104,7 +103,7 @@
 											<!-- Product name-->
 											<h5 class="fw-bolder">${list.exp_name }</h5>
 											<!-- star point -->
-											별 ${list.rev_star }<br>									
+											★ ${list.rev_avgStar == 0? 0 : list.rev_avgStar }<br>									
 											<!-- Product price-->
 											<fmt:formatNumber>${list.exp_price }</fmt:formatNumber>원 <br>
 										</div>
