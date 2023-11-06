@@ -18,11 +18,11 @@
 
 <!-- 로그인 테스트 -->
 <%
-		session.setAttribute("user_num", "1");
-		session.setAttribute("user_id", "test1");
-		session.setAttribute("user_name", "김소예");
-		session.setAttribute("user_type", "1");
-// 		session.invalidate();
+	session.setAttribute("user_num", "1");
+	session.setAttribute("user_id", "test1");
+	session.setAttribute("user_name", "김소예");
+	session.setAttribute("user_type", "1");
+	// 		session.invalidate();
 %>
 <!-- Section-->
 <section class="py-5">
@@ -51,8 +51,7 @@
 						<!-- 달력 -->
 						<div class="m-3" id="calendar" style="position: relative;"></div>
 						<!-- <div id="selectedDateResult"></div> -->
-						<input type="hidden" value="null" id="selectedDateResult">
-						<input type="hidden" value="null" id="totalQuantityValue">
+						<input type="hidden" value="null" id="selectedDateResult"> <input type="hidden" value="null" id="totalQuantityValue">
 						<div id="totalQuantityResult"></div>
 						<div id="totalPriceResult"></div>
 						<div class="p-2">
@@ -341,11 +340,59 @@
 	</div>
 
 
-
-
-
-
 </section>
+<button onclick="cancelPay()">환불하기</button>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script>
+
+function cancelPay() {
+    jQuery.ajax({
+      // 예: http://www.myservice.com/payments/cancel
+      "url": "https://api.iamport.kr/payments/cancel", 
+      "type": "POST",
+      "contentType": "application/json",
+      "data": JSON.stringify({
+        "merchant_uid": "IMP470", // 예: ORD20180131-0000011
+        "cancel_request_amount": 100, // 환불금액
+        "reason": "테스트 결제 환불", // 환불사유
+        // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
+        "refund_holder": "홍길동", 
+        // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
+        "refund_bank": "88", 
+        // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
+        "refund_account": "56211105948400" 
+      }),
+      "dataType": "json"
+    });
+  }
+// function cancelPay() {
+// 	  jQuery.ajax({
+// 	    url: "/exp/cancel", // 환불정보를 수신할 가맹점 서비스 URL
+// 	    type: "POST",
+// 	    contentType: "application/json",
+// 	    data: JSON.stringify({
+// 	      merchant_uid: "IMP470", // 결제건의 주문번호
+// 	      cancel_request_amount: 2000, // 환불금액
+// 	      reason: "테스트 결제 환불", // 환불사유
+// 	      refund_holder: "홍길동", // 가상계좌 환불 시 필수입력: 환불 수령계좌 예금주
+// 	      refund_bank: "88", // 가상계좌 환불 시 필수입력: 환불 수령계좌 은행코드
+// 	      refund_account: "56211105948400" // 가상계좌 환불 시 필수입력: 환불 수령계좌 번호
+// 	    }),
+// 	    dataType: "json"
+// 	  }).done(function(result) { // 환불 성공시 로직 
+// 	    console.log("환불 성공", result);
+// 	    // 환불에 성공한 경우에 실행할 추가 로직
+// 	  }).fail(function(error) { // 환불 실패시 로직
+// 	    console.error("환불 실패", error);
+// 	    console.log("에러 응답 메시지:", error);
+// 	  });
+// 	}
+
+</script>
+
+
+
 <!-- footer -->
 <%@include file="../include/footer.jsp"%>
 
@@ -481,6 +528,7 @@
 	        });
 		}
     }
+
 	//달력 -------------------------------------------------------------------
 	document.addEventListener("DOMContentLoaded", function() {
 		flatpickr("#calendar", {

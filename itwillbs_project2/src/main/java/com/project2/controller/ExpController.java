@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.project2.domain.CancelPay;
 import com.project2.domain.ExpVO;
 import com.project2.domain.OrderVO;
 import com.project2.domain.PaymentVO;
@@ -237,6 +238,13 @@ public class ExpController {
 		return false;
 	}
 	
+	//test
+	@PostMapping("/cancel")
+	@ResponseBody
+	public CancelPay cancelPay(CancelPay vo) {
+		logger.debug("merchant_uid : "+ vo);
+		return vo;
+	}
 	
 	
 	
