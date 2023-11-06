@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project2.domain.ExpVO;
+import com.project2.domain.ReportVO;
 import com.project2.domain.RevVO;
+import com.project2.domain.UserVO;
 
 import lombok.val;
 
@@ -60,6 +62,23 @@ public class ExpDAOImpl {
 	public int insertReview(RevVO vo) throws Exception{
 		logger.debug(" DAOImpl :  insertReview() 호출");
 		return sqlSession.insert(NAMESPACE + "insertReview", vo);
+	}
+	//신고 작성
+	public int insertReport(ReportVO vo) throws Exception{
+		logger.debug(" DAOImpl :  insertReport() 호출");
+		return sqlSession.insert(NAMESPACE + "insertReport", vo);
+	}
+	
+	//리뷰 작성자 번호 조회
+	public int getRevUserNum(int rev_num) throws Exception{
+		logger.debug(" DAOImpl :  getRevUserNum() 호출");
+		return sqlSession.selectOne(NAMESPACE + "getRevUserNum", rev_num);
+	}
+	
+	//유저 한명 정보
+	public UserVO getUserOne(int user_num) throws Exception {
+		logger.debug(" DAOImpl :  getUserOne() 호출");
+		return sqlSession.selectOne(NAMESPACE + "getUserOne", user_num);
 	}
 
 }// DAOImpl

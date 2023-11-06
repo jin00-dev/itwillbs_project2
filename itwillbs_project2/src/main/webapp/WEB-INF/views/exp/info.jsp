@@ -18,9 +18,10 @@
 
 <!-- 로그인 테스트 -->
 <%
-	session.setAttribute("user_num", "1");
-	session.setAttribute("user_name", "김소예");
-	session.setAttribute("user_type", "1");
+		session.setAttribute("user_num", "1");
+		session.setAttribute("user_name", "김소예");
+		session.setAttribute("user_type", "1");
+	// 	session.invalidate();
 %>
 <!-- Section-->
 <section class="py-5">
@@ -31,7 +32,7 @@
 			<div class="row justify-content-center">
 				<div class="col-6">
 					<!-- 왼쪽 ------------------------>
-					<div class="container border">
+					<div class="container border" style="min-width: 300px">
 						<div class="col-md-6 m-3">
 							<img class="img-fluid" src="https://dummyimage.com/400x500/dee2e6/6c757d.jpg" class="card-img-left" alt="...">
 						</div>
@@ -45,9 +46,11 @@
 				</div>
 				<div class="col-6">
 					<!-- 오른쪽 ------------->
-					<div class="container border">
+					<div class="container border" style="min-width: 300px">
+						<!-- 달력 -->
 						<div class="m-3" id="calendar" style="position: relative;"></div>
-						<div id="selectedDateResult"></div>
+						<!-- <div id="selectedDateResult"></div> -->
+						<input type="hidden" value="" id="selectedDateResult">
 						<div id="totalQuantityResult"></div>
 						<div id="totalPriceResult"></div>
 						<div class="p-2">
@@ -62,12 +65,13 @@
 								<span id="quantity">1</span>
 								<button class="btn btn-secondary" id="increase">+</button>
 							</div>
+							<input type="hidden" id="totalPriceValue" value="${expVO.exp_price}">
 							<p class="border-bottom p-2 fw-bolder fs-3">
 								총 결제금액 <span id="totalPrice"><fmt:formatNumber>${expVO.exp_price}</fmt:formatNumber>원</span>
 							</p>
 						</div>
 						<div class="p-2 d-grid gap-2 col-6 mx-auto">
-							<a href="#" class="btn btn-danger btn-lg">결제하기</a>
+							<a class="btn btn-danger btn-lg" onclick="requestPay()">결제하기</a>
 						</div>
 					</div>
 				</div>
@@ -112,7 +116,9 @@
 					<div class="row p-3">
 						<div class="col-md-6 text-center">
 							<h4>평균 별점</h4>
-							<p class="display-4" id="avgStar"><fmt:formatNumber type="number" maxFractionDigits="2">${avgStar}</fmt:formatNumber></p>
+							<p class="display-4" id="avgStar">
+								<fmt:formatNumber type="number" maxFractionDigits="2">${avgStar}</fmt:formatNumber>
+							</p>
 							<div class="justify-content-center">
 								<div class="star-ratings " id="app">
 									<div class="star-ratings-fill" :style="{ width: ratingToPercent + '%' }">
@@ -200,7 +206,13 @@
 								<span class="d-inline-block text-truncate" style="max-width: 90%;"> ${review.rev_content } </span> <span class="text-info toggle-button" style="cursor: pointer;"> 더보기 </span>
 							</div>
 							<div class="text-end m-2">
-								<a class="btn btn-light">수정</a> <a class="btn btn-secondary">삭제</a> <a class="btn btn-danger">신고</a>
+								<c:if test="${sessionScope.user_num eq review.user_num }">
+									<a class="btn btn-light" id="reviewUpdate${review.rev_num }" title="${review.rev_num }">수정</a>
+									<a class="btn btn-secondary" href="/exp/revDel?rev_num=${review.rev_num }">삭제</a>
+								</c:if>
+								<c:if test="${sessionScope.user_num ne review.user_num }">
+									<a class="btn btn-danger" id="reviewReport${review.rev_num }" title="${review.rev_num }">신고</a>
+								</c:if>
 							</div>
 						</div>
 						<div class="row">
@@ -214,35 +226,6 @@
 						</div>
 					</div>
 				</c:forEach>
-			</div>
-			<!-- 리뷰 작성 -------------------------------------------------->
-			<div class="tab-pane" id="bnm5">
-				<div class="border-top">
-					<form action="/exp/reviewInsert?exp_num=${param.exp_num }" method="post">
-
-						<div class="card-header">
-							<h3 class="card-title">후기를 작성해주세요</h3>
-							<div class="rating">
-								<span class="star-1" data-rating="1">★</span> <span class="star-2" data-rating="2">★</span> <span class="star-3" data-rating="3">★</span> <span class="star-4" data-rating="4">★</span> <span class="star-5" data-rating="5">★</span>
-							</div>
-							<input type="hidden" name="rev_star" value="" class="selected-rating" />
-						</div>
-						<div class="card-body">
-							<textarea class="form-control mb-2" name="rev_content" rows="10" placeholder="후기를 작성해주세요 ..."></textarea>
-							<div class="form-group">
-								<div class="input-group">
-									<div class="custom-file">
-										<input type="file" name="rev_img" class="custom-file-input" id="exampleInputFile">
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="card-footer text-end">
-							<button type="submit" class="btn btn-primary ">후기작성</button>
-						</div>
-
-					</form>
-				</div>
 			</div>
 			<div class="tab-pane" id="bnm3">
 				<!-- '장소' 탭 내용을 여기에 넣으세요 -->
@@ -280,8 +263,81 @@
 					</div>
 				</div>
 			</div>
+			<!-- 리뷰 작성 수정 삭제 신고 ------------------------------------>
+			<!-- 리뷰 작성 -------------------------------------------------->
+			<div class="tab-pane" id="bnm5">
+				<div class="border-top">
+					<form action="/exp/reviewInsert?exp_num=${param.exp_num }" method="post">
+						<div class="card-header">
+							<h3 class="card-title">후기를 작성해주세요</h3>
+							<div class="rating">
+								<span class="star-1" data-rating="1">★</span> <span class="star-2" data-rating="2">★</span> <span class="star-3" data-rating="3">★</span> <span class="star-4" data-rating="4">★</span> <span class="star-5" data-rating="5">★</span>
+							</div>
+							<input type="hidden" name="rev_star" value="" class="selected-rating" />
+						</div>
+						<div class="card-body">
+							<textarea class="form-control mb-2" name="rev_content" rows="10" placeholder="후기를 작성해주세요 ..."></textarea>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="custom-file">
+										<input type="file" name="rev_img" class="custom-file-input" id="exampleInputFile">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-footer text-end">
+							<button type="submit" class="btn btn-primary ">후기작성</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- 리뷰 수정 -------------------------------------------------->
+			<div class="tab-pane" id="bnm6">
+				<div class="border-top">
+					<form action="" method="post" id="frUpdate">
+						<div class="card-header">
+							<h3 class="card-title">후기를 수정해주세요</h3>
+							<div class="rating">
+								<span class="star-1" data-rating="1">★</span> <span class="star-2" data-rating="2">★</span> <span class="star-3" data-rating="3">★</span> <span class="star-4" data-rating="4">★</span> <span class="star-5" data-rating="5">★</span>
+							</div>
+							<input type="hidden" name="rev_star" value="" class="selected-rating" />
+						</div>
+						<div class="card-body">
+							<textarea class="form-control mb-2" name="rev_content" rows="10" placeholder="후기를 작성해주세요 ..."></textarea>
+							<div class="form-group">
+								<div class="input-group">
+									<div class="custom-file">
+										<input type="file" name="rev_img" class="custom-file-input" id="exampleInputFile">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="card-footer text-end">
+							<button type="submit" class="btn btn-primary ">후기수정</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- 리뷰 신고 -------------------------------------------------->
+			<div class="tab-pane" id="bnm7">
+				<div class="border-top">
+					<form action="" method="post" id="frReport">
+						<div class="card-header">
+							<h3 class="card-title">후기를 신고해주세요</h3>
+						</div>
+						<div class="card-body">
+							<textarea class="form-control mb-2" name="report_content" rows="10" placeholder="신고내용을 작성해주세요 ..."></textarea>
+						</div>
+						<div class="card-footer text-end">
+							<button type="submit" class="btn btn-primary ">후기신고</button>
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
+
 	</div>
+
 
 
 
@@ -344,12 +400,12 @@
 [class^="star-"].selected {
 	color: #f5a623;
 }
-
 -->
 </style>
 <!-- script  -->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script type="text/javascript">
-	//리뷰쓰기 성공 실패 알림
+	//리뷰쓰기 수정 신고 성공 실패 알림
 	$(document).ready(function() {
 		var isRev = '${isInsertReview}';
 		
@@ -358,20 +414,72 @@
 		}else if(isRev =='true'){
 			alert('리뷰쓰기 성공');
 		}
+		
+		var isReport = '${isInsertReport}';
+		
+		if(isReport =='false'){
+			alert('신고 실패');
+		}else if(isReport =='true'){
+			alert('신고 성공');
+		}
 	});
+	
+	//결제 ------------------------------------------------------------------------
+	
+	var IMP = window.IMP; 
+	IMP.init('imp14397622');
+	
+	var today = new Date();   
+    var hours = today.getHours(); 
+    var minutes = today.getMinutes();  
+    var seconds = today.getSeconds();  
+    var milliseconds = today.getMilliseconds();
+    var makeMerchantUid = hours +  minutes + seconds + milliseconds;
+	
+	function requestPay() {
+		if(${userVO.user_id == null}){
+			alert('로그인을 해주세요');
+		}else{
+	        IMP.request_pay({
+	            pg : 'html5_inicis',
+	            pay_method : 'card',
+	            merchant_uid: "IMP"+makeMerchantUid, 
+	            name : '${expVO.exp_name}',
+	            custom_data : $('#selectedDateResult').val(),
+	            //amount : $('#totalPriceValue').val(),
+	            amount : 100,
+	            buyer_email : '${userVO.user_id}',
+	            buyer_name : '${userVO.user_name}',
+	            buyer_tel : '${userVO.user_phone}'
+	            //buyer_addr : '서울특별시 강남구 삼성동',
+	            //buyer_postcode : '123-456'
+	        }, function (rsp) { // callback
+	            if (rsp.success) {
+	                console.log(rsp);
+	            } else {
+	                console.log(rsp);
+	                alert(rsp.error_msg);
+	            }
+	        });
+		}
+    }
 	//달력 -------------------------------------------------------------------
 	document.addEventListener("DOMContentLoaded", function() {
 		flatpickr("#calendar", {
-			enable : [ {
-				from : "2023-11-01",
-				to : "2023-11-15"
-			} ],
-			defaultDate : "today", // 초기 날짜 설정
-			altFormat : "F j, Y", // 텍스트 입력 형식 설정
-			dateFormat : "Y-m-d", // 선택된 날짜 형식 설정
-			inline : true, // inline 모드 활성화
-			minDate : "2023-11-01", // 최소 선택 가능 날짜 설정
-			maxDate : "2023-11-15" // 최대 선택 가능 날짜 설정
+		    enable: [{
+		        from: "${expVO.exp_start_date}",
+		        to: "${expVO.exp_end_date}"
+		    }],
+		    defaultDate: "today",
+		    altFormat: "Y-m-d",
+		    dateFormat: "Y-m-d",
+		    inline: true,
+		    minDate: "${expVO.exp_start_date}",
+		    maxDate: "${expVO.exp_end_date}",
+		    onChange: function(selectedDates, dateStr, instance) {
+		    	let formattedDate = instance.formatDate(selectedDates[0], "Y-m-d");
+		    	$('#selectedDateResult').val(formattedDate);
+		    }
 		});
 	});
 	
@@ -513,6 +621,7 @@
     function updateTotalPrice() {
         totalPrice = price * quantity;
         quantityDisplay.text(quantity);
+        $('#totalPriceValue').val(totalPrice);
         var formattedPrice = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(totalPrice);
         totalPriceDisplay.text(formattedPrice.replace('₩', '')+"원");
     }
@@ -532,6 +641,20 @@
     $('#reviewForm').click(function(){
     	$('#botNavMenu div[class^=tab-pane]').removeClass('active');
     	$('#bnm5').addClass('active');
+    });
+	//리뷰 수정칸 제어    
+    $('[id^=reviewUpdate]').click(function(){
+    	var rev_num= $(this).attr('title');
+    	$('#botNavMenu div[class^=tab-pane]').removeClass('active');
+    	$('#bnm6').addClass('active');
+    	$('#frUpdate').attr('action','/exp/revUpdate?exp_num=${param.exp_num}&rev_num='+rev_num);
+    });
+	//리뷰 신고칸 제어    
+    $('[id^=reviewReport]').click(function(){
+    	var rev_num= $(this).attr('title');
+    	$('#botNavMenu div[class^=tab-pane]').removeClass('active');
+    	$('#bnm7').addClass('active');
+    	$('#frReport').attr('action','/exp/revReport?exp_num=${param.exp_num}&rev_num='+rev_num);
     });
     
     //안내 컨텐츠 사이즈 조절 -------------------------------------------------------------

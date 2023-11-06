@@ -12,9 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project2.domain.ExpVO;
+import com.project2.domain.ReportVO;
 import com.project2.domain.RevVO;
+import com.project2.domain.UserVO;
 import com.project2.service.ExpServiceImpl;
 
 @Controller
@@ -28,13 +31,18 @@ public class ExpController {
 
 	//클래스 상세페이지
 	@GetMapping("/exp/info")
-	public String infoGET(ExpVO vo, Model model) {
+	public String infoGET(ExpVO vo, Model model, HttpSession session) {
 		
 		if(vo.getExp_num() == 0) {
 			return "redirect:/";
 		}
 		
+		
 		try {
+			if(session.getAttribute("user_num") !=null) {
+				UserVO uVo =service.getUserOne(Integer.parseInt( (String) session.getAttribute("user_num") ));
+				model.addAttribute(uVo);
+			}
 			ExpVO expOne = service.getExpOne(vo.getExp_num());
 			List<RevVO> rList = service.getExpRevList(vo.getExp_num());
 			double avgStar = service.getExpRevAvg(vo.getExp_num());
@@ -78,13 +86,13 @@ public class ExpController {
 		return "/exp/info";
 	}
 	
-	//리뷰 작성 페이지
+	//리뷰 작성
 	@PostMapping("/reviewInsert")
-	public String insertRevGET(RevVO vo, HttpSession session,Model model) {
+	public String insertRevGET(RevVO vo, HttpSession session,Model model, RedirectAttributes re) {
 		logger.debug("리뷰작성 실행");
 		
-		if(session.getAttribute("user_num") == null){
-			model.addAttribute("isInsertReview", false);
+		if(session.getAttribute("user_id") == null){
+			re.addFlashAttribute("isInsertReview", false);
 			return "redirect:/exp/info?exp_num="+vo.getExp_num();
 		}
 		
@@ -94,14 +102,44 @@ public class ExpController {
 			int result = service.insertReview(vo);
 			
 			if(result ==1 ) {
-				model.addAttribute("isInsertReview", true);
+				re.addFlashAttribute("isInsertReview", true);
 				return "redirect:/exp/info?exp_num="+vo.getExp_num();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		model.addAttribute("isInsertReview", false);
+		re.addFlashAttribute("isInsertReview", false);
 		return "redirect:/exp/info?exp_num="+vo.getExp_num();
 	}
+	
+	//리뷰 신고 작성
+	@PostMapping("/revReport")
+	public String insertReport(ReportVO vo, HttpSession session, RedirectAttributes re) {
+		//신고자
+		vo.setReport_user_num(Integer.parseInt( (String) session.getAttribute("user_num") ));
+		
+		try {
+			//신고 당하는 사람
+			vo.setUser_num(service.getRevUserNum(vo.getRev_num()));
+			
+			//신고 게시판 작성
+			int result = service.insertReport(vo);
+			
+			if(result ==1 ) {
+				re.addFlashAttribute("isInsertReport", true);
+				return "redirect:/exp/info?exp_num="+vo.getExp_num();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		re.addFlashAttribute("isInsertReport", false);
+		return "redirect:/exp/info?exp_num="+vo.getExp_num();
+	}
+	
+	
+	
+	
+	
 
 }// controller

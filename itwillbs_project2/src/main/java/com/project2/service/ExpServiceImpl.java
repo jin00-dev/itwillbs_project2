@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project2.domain.ExpVO;
+import com.project2.domain.ReportVO;
 import com.project2.domain.RevVO;
+import com.project2.domain.UserVO;
 import com.project2.persistence.ExpDAOImpl;
 
 @Service(value = "expService")
@@ -19,7 +21,7 @@ public class ExpServiceImpl {
 	@Autowired
 	private ExpDAOImpl dao;
 
-	// 회원목록 조회
+	//
 	public List<ExpVO> getExpList(ExpVO vo) throws Exception {
 		logger.debug("getMemberList() 호출");
 
@@ -35,15 +37,30 @@ public class ExpServiceImpl {
 	public double getExpRevAvg(Integer exp_num) throws Exception {
 		return dao.getExpRevAvg(exp_num);
 	}
-	
-	//1개 개시물 정보가저오기
+
+	// 1개 개시물 정보가저오기
 	public ExpVO getExpOne(Integer exp_num) throws Exception {
 		return dao.getExpOne(exp_num);
 	}
-	
-	//리뷰 작성
-	public int insertReview(RevVO vo) throws Exception{
+
+	// 리뷰 작성
+	public int insertReview(RevVO vo) throws Exception {
 		return dao.insertReview(vo);
+	}
+
+	// 리뷰 작성자 번호 가저오기
+	public int getRevUserNum(int rev_num) throws Exception {
+		return dao.getRevUserNum(rev_num);
+	}
+
+	// 신고 작성
+	public int insertReport(ReportVO vo) throws Exception {
+		return dao.insertReport(vo);
+	}
+
+	// 유저 한명 정보
+	public UserVO getUserOne(int user_num) throws Exception {
+		return dao.getUserOne(user_num);
 	}
 
 }///////

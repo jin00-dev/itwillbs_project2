@@ -40,7 +40,7 @@
 	</select>
 	
 	<select id="expRevList" resultType="RevVO">
-		select u.user_name, r.rev_content, r.rev_regdate, r.rev_star, r.rev_img 
+		select u.user_name,r.user_num, r.rev_num, r.rev_content, r.rev_regdate, r.rev_star, r.rev_img 
 		from review r left join userTable u on r.user_num = u.user_num 
 		where r.exp_num = #{exp_num}
 	</select>
@@ -55,5 +55,18 @@
 		insert into review 
 		values(default, #{user_num}, #{exp_num}, #{rev_content},default, #{rev_star}, #{rev_img})
 	</insert>
+	
+	<insert id="insertReport">
+		insert into user_report 
+		values(default, #{rev_num}, #{user_num}, #{report_user_num},#{report_content}, default, default,default )
+	</insert>
+	
+	<select id="getRevUserNum" resultType="int">
+		select user_num from review where rev_num =#{rev_num}
+	</select>
+	
+	<select id="getUserOne" resultType="UserVO">
+		select * from userTable where user_num = #{user_num}
+	</select>
 	
 </mapper>
