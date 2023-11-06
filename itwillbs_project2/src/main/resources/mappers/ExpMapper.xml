@@ -69,4 +69,23 @@
 		select * from userTable where user_num = #{user_num}
 	</select>
 	
+	<update id="updateReview">
+		update review set 
+		rev_content = #{rev_content}, rev_star = #{rev_star}, rev_img = #{rev_img} 
+		where rev_num = #{rev_num} and user_num = #{user_num} 
+	</update>
+	
+	<delete id="deleteReview">
+		delete from review where rev_num = #{rev_num} and user_num = #{user_num} 
+	</delete>
+	
+	<insert id="insertOrderBoard">
+		insert into order_board values 
+		(default,#{order_id},#{user_num},#{exp_num},default,#{order_date},#{payment_id},#{payment_price},#{payment_state},default,#{payment_pg},#{payment_method})
+	</insert>
+	
+	<select id="getExpNumOne" resultType="int">
+		select exp_num from experience where exp_name = #{exp_name} 
+	</select>
+	
 </mapper>

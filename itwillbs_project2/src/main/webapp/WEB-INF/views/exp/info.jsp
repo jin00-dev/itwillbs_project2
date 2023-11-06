@@ -19,9 +19,10 @@
 <!-- 로그인 테스트 -->
 <%
 		session.setAttribute("user_num", "1");
+		session.setAttribute("user_id", "test1");
 		session.setAttribute("user_name", "김소예");
 		session.setAttribute("user_type", "1");
-	// 	session.invalidate();
+// 		session.invalidate();
 %>
 <!-- Section-->
 <section class="py-5">
@@ -50,7 +51,8 @@
 						<!-- 달력 -->
 						<div class="m-3" id="calendar" style="position: relative;"></div>
 						<!-- <div id="selectedDateResult"></div> -->
-						<input type="hidden" value="" id="selectedDateResult">
+						<input type="hidden" value="null" id="selectedDateResult">
+						<input type="hidden" value="null" id="totalQuantityValue">
 						<div id="totalQuantityResult"></div>
 						<div id="totalPriceResult"></div>
 						<div class="p-2">
@@ -208,7 +210,7 @@
 							<div class="text-end m-2">
 								<c:if test="${sessionScope.user_num eq review.user_num }">
 									<a class="btn btn-light" id="reviewUpdate${review.rev_num }" title="${review.rev_num }">수정</a>
-									<a class="btn btn-secondary" href="/exp/revDel?rev_num=${review.rev_num }">삭제</a>
+									<a class="btn btn-secondary" href="/exp/revDel?rev_num=${review.rev_num }&exp_num=${param.exp_num}">삭제</a>
 								</c:if>
 								<c:if test="${sessionScope.user_num ne review.user_num }">
 									<a class="btn btn-danger" id="reviewReport${review.rev_num }" title="${review.rev_num }">신고</a>
@@ -407,21 +409,21 @@
 <script type="text/javascript">
 	//리뷰쓰기 수정 신고 성공 실패 알림
 	$(document).ready(function() {
-		var isRev = '${isInsertReview}';
-		
-		if(isRev =='false'){
-			alert('리뷰쓰기 실패');
-		}else if(isRev =='true'){
-			alert('리뷰쓰기 성공');
-		}
-		
-		var isReport = '${isInsertReport}';
-		
-		if(isReport =='false'){
-			alert('신고 실패');
-		}else if(isReport =='true'){
-			alert('신고 성공');
-		}
+	    if (${not empty isRogin}) {
+	        var isRogin = "${isRogin}"; // 문자열에서 불리언으로 변환
+	        if (isRogin === "false") {
+	            alert('로그인 해주세요');
+	        }
+	    }
+	
+	    if (${not empty isWork}) {
+	        var isWork = "${isWork}"; // 문자열에서 불리언으로 변환
+	        if (isWork === "false") {
+	            alert('작업쓰기 실패');
+	        } else if (isWork === "true") {
+	            alert('작업 성공');
+	        }
+	    }
 	});
 	
 	//결제 ------------------------------------------------------------------------
@@ -437,7 +439,9 @@
     var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 	
 	function requestPay() {
-		if(${userVO.user_id == null}){
+		if($('#selectedDateResult').val() === "null"){
+			alert('날짜를 선택해 주세요');
+		}else if(${userVO.user_id == null}){
 			alert('로그인을 해주세요');
 		}else{
 	        IMP.request_pay({
@@ -446,8 +450,11 @@
 	            merchant_uid: "IMP"+makeMerchantUid, 
 	            name : '${expVO.exp_name}',
 	            custom_data : $('#selectedDateResult').val(),
-	            //amount : $('#totalPriceValue').val(),
-	            amount : 100,
+	            amount : $('#totalPriceValue').val(),
+// 	            amount : 100,
+				code : "${param.exp_num}",
+				unitPrice : ${expVO.exp_price} ,
+				quantity : $('totalQuantityValue').val(),
 	            buyer_email : '${userVO.user_id}',
 	            buyer_name : '${userVO.user_name}',
 	            buyer_tel : '${userVO.user_phone}'
@@ -456,6 +463,17 @@
 	        }, function (rsp) { // callback
 	            if (rsp.success) {
 	                console.log(rsp);
+	                $.ajax({
+	                    type: 'POST',
+	                    url: '/exp/payment',
+	                    data: rsp,
+	                    success: function (response) {
+	                        console.log(response);
+	                    },
+	                    error: function (error) {
+	                        console.error(error);
+	                    }
+	                });
 	            } else {
 	                console.log(rsp);
 	                alert(rsp.error_msg);
@@ -470,7 +488,7 @@
 		        from: "${expVO.exp_start_date}",
 		        to: "${expVO.exp_end_date}"
 		    }],
-		    defaultDate: "today",
+		    //defaultDate: "today",
 		    altFormat: "Y-m-d",
 		    dateFormat: "Y-m-d",
 		    inline: true,
@@ -622,6 +640,7 @@
         totalPrice = price * quantity;
         quantityDisplay.text(quantity);
         $('#totalPriceValue').val(totalPrice);
+        $('#totalQuantityValue').val(quantity);
         var formattedPrice = new Intl.NumberFormat('ko-KR', { style: 'currency', currency: 'KRW' }).format(totalPrice);
         totalPriceDisplay.text(formattedPrice.replace('₩', '')+"원");
     }

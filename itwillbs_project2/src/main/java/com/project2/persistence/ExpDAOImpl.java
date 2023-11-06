@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project2.domain.ExpVO;
+import com.project2.domain.OrderVO;
 import com.project2.domain.ReportVO;
 import com.project2.domain.RevVO;
 import com.project2.domain.UserVO;
@@ -63,6 +64,19 @@ public class ExpDAOImpl {
 		logger.debug(" DAOImpl :  insertReview() 호출");
 		return sqlSession.insert(NAMESPACE + "insertReview", vo);
 	}
+
+	//리뷰 작성
+	public int updateReview(RevVO vo) throws Exception{
+		logger.debug(" DAOImpl :  updateReview() 호출");
+		return sqlSession.insert(NAMESPACE + "updateReview", vo);
+	}
+
+	//리뷰 삭제
+	public int deleteReview(RevVO vo) throws Exception{
+		logger.debug(" DAOImpl :  deleteReview() 호출");
+		return sqlSession.insert(NAMESPACE + "deleteReview", vo);
+	}
+	
 	//신고 작성
 	public int insertReport(ReportVO vo) throws Exception{
 		logger.debug(" DAOImpl :  insertReport() 호출");
@@ -79,6 +93,18 @@ public class ExpDAOImpl {
 	public UserVO getUserOne(int user_num) throws Exception {
 		logger.debug(" DAOImpl :  getUserOne() 호출");
 		return sqlSession.selectOne(NAMESPACE + "getUserOne", user_num);
+	}
+	
+	//체험 번호 하나
+	public int getExpNumOne(String exp_name) throws Exception {
+		logger.debug(" DAOImpl :  getExpNumOne() 호출");
+		return sqlSession.selectOne(NAMESPACE + "getExpNumOne", exp_name);
+	}
+	
+	//결제 처리
+	public int paymentInsert(OrderVO vo) throws Exception{
+		logger.debug(" DAOImpl :  paymentInsert() 호출");
+		return sqlSession.insert(NAMESPACE + "insertOrderBoard", vo);
 	}
 
 }// DAOImpl

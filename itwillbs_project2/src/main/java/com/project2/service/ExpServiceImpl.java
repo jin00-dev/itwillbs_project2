@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project2.domain.ExpVO;
+import com.project2.domain.OrderVO;
 import com.project2.domain.ReportVO;
 import com.project2.domain.RevVO;
 import com.project2.domain.UserVO;
@@ -48,6 +49,16 @@ public class ExpServiceImpl {
 		return dao.insertReview(vo);
 	}
 
+	// 리뷰 작성
+	public int updateReview(RevVO vo) throws Exception {
+		return dao.updateReview(vo);
+	}
+
+	// 리뷰 삭제
+	public int deleteReview(RevVO vo) throws Exception {
+		return dao.deleteReview(vo);
+	}
+
 	// 리뷰 작성자 번호 가저오기
 	public int getRevUserNum(int rev_num) throws Exception {
 		return dao.getRevUserNum(rev_num);
@@ -61,6 +72,16 @@ public class ExpServiceImpl {
 	// 유저 한명 정보
 	public UserVO getUserOne(int user_num) throws Exception {
 		return dao.getUserOne(user_num);
+	}
+
+	// 체험 번호 하나
+	public int getExpNumOne(String exp_name) throws Exception {
+		return dao.getExpNumOne(exp_name);
+	}
+
+	// 결제 처리
+	public int paymentInsert(OrderVO vo) throws Exception {
+		return dao.paymentInsert(vo);
 	}
 
 }///////
