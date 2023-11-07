@@ -25,8 +25,8 @@
 			<ul class="navbar-nav me-2 mb-2 mb-lg-0">
 				<c:choose>
 					<c:when test="${empty user_id }">
-						<li class="nav-item"><a class="nav-link" href="#!">회원가입</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">로그인</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/join">회원가입</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/login">로그인</a></li>
 					</c:when>
 					<c:when test="${user_type eq 0 }">
 						<li class="nav-item"><a class="nav-link" >${user_id }님 환영합니다</a></li>

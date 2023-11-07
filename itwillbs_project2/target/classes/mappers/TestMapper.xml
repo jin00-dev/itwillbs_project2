@@ -8,6 +8,35 @@
 	<select id="getTime" resultType="String">
 		select now()
 	</select>
+<insert id="insertUser">
+   	   insert into t bl_member(user_id,user_pw,user_name) 
+   	   values(#{user_id},#{user_pw},#{user_name})   
+   </insert>
+   
+   <select id="loginUser" resultType="com.project2.domain.UserVO">
+   	  select * from tbl_member 
+   	  where user_id=#{user_id} and user_pw=#{user_pw}
+   </select>
+   
+   <select id="getUser" resultType="UserVO">
+   	  select * from tbl_member 
+   	  where user_id=#{user_id}   
+   </select>
+   
+   <update id="updateUser">
+      update tbl_member set user_name=#{user_name},updatedate=now() 
+	  where user_id=#{user_id} and user_pw=#{user_pw}	   
+   </update>
+   
+   <delete id="deleteUser">
+      delete from tbl_member 
+      where user_id=#{user_id} and userpw=#{user_pw}   
+   </delete>  
+   
+   <select id="getUserList" resultType="UserVO">
+     select * from tbl_member 
+     where user_id != 'admin'   
+   </select>
 
 	
 	

@@ -1,0 +1,38 @@
+package com.project2.service;
+
+import java.util.List;
+
+import com.project2.domain.UserVO;
+
+public interface UserService {
+
+   
+   // 실제로 구현해야 하는 기능 정의
+      // 회원가입 동작 실행
+      public void userJoin(UserVO vo);
+      
+      // 로그인 체크 동작
+      public UserVO userLogin(UserVO vo);
+      
+   // 회원정보 조회 동작
+  	public UserVO userInfo(String id);
+  	
+	// 회원정보 수정 동작
+	public void userUpdate(UserVO updateVO);
+	
+	// 회원정보 삭제 동작
+    public int userDelete(UserVO deleteVO);
+    
+    // 회원정보 목록조회 동작
+    public List<UserVO> userList();
+    
+    
+    //회원등급변경
+   public UserVO getUserById(String user_id);
+    public void updateUserGrade(UserVO userVO);
+    
+    
+    // 아이디찾기
+
+  
+}
