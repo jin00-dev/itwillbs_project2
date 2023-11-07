@@ -475,59 +475,59 @@ function cancelPay() {
 	
 	//결제 ------------------------------------------------------------------------
 	
-	var IMP = window.IMP; 
-	IMP.init('imp14397622');
+// 	var IMP = window.IMP; 
+// 	IMP.init('imp14397622');
 	
-	var today = new Date();   
-    var hours = today.getHours(); 
-    var minutes = today.getMinutes();  
-    var seconds = today.getSeconds();  
-    var milliseconds = today.getMilliseconds();
-    var makeMerchantUid = hours +  minutes + seconds + milliseconds;
+// 	var today = new Date();   
+//     var hours = today.getHours(); 
+//     var minutes = today.getMinutes();  
+//     var seconds = today.getSeconds();  
+//     var milliseconds = today.getMilliseconds();
+//     var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 	
-	function requestPay() {
-		if($('#selectedDateResult').val() === "null"){
-			alert('날짜를 선택해 주세요');
-		}else if(${userVO.user_id == null}){
-			alert('로그인을 해주세요');
-		}else{
-	        IMP.request_pay({
-	            pg : 'html5_inicis',
-	            pay_method : 'card',
-	            merchant_uid: "IMP"+makeMerchantUid, 
-	            name : '${expVO.exp_name}',
-	            custom_data : $('#selectedDateResult').val(),
-	            amount : $('#totalPriceValue').val(),
-// 	            amount : 100,
-				code : "${param.exp_num}",
-				unitPrice : ${expVO.exp_price} ,
-				quantity : $('totalQuantityValue').val(),
-	            buyer_email : '${userVO.user_id}',
-	            buyer_name : '${userVO.user_name}',
-	            buyer_tel : '${userVO.user_phone}'
-	            //buyer_addr : '서울특별시 강남구 삼성동',
-	            //buyer_postcode : '123-456'
-	        }, function (rsp) { // callback
-	            if (rsp.success) {
-	                console.log(rsp);
-	                $.ajax({
-	                    type: 'POST',
-	                    url: '/exp/payment',
-	                    data: rsp,
-	                    success: function (response) {
-	                        console.log(response);
-	                    },
-	                    error: function (error) {
-	                        console.error(error);
-	                    }
-	                });
-	            } else {
-	                console.log(rsp);
-	                alert(rsp.error_msg);
-	            }
-	        });
-		}
-    }
+// 	function requestPay() {
+// 		if($('#selectedDateResult').val() === "null"){
+// 			alert('날짜를 선택해 주세요');
+// 		}else if(${userVO.user_id == null}){
+// 			alert('로그인을 해주세요');
+// 		}else{
+// 	        IMP.request_pay({
+// 	            pg : 'html5_inicis',
+// 	            pay_method : 'card',
+// 	            merchant_uid: "IMP"+makeMerchantUid, 
+// 	            name : '${expVO.exp_name}',
+// 	            custom_data : $('#selectedDateResult').val(),
+// 	            amount : $('#totalPriceValue').val(),
+// // 	            amount : 100,
+// 				code : "${param.exp_num}",
+// 				unitPrice : ${expVO.exp_price} ,
+// 				quantity : $('totalQuantityValue').val(),
+// 	            buyer_email : '${userVO.user_id}',
+// 	            buyer_name : '${userVO.user_name}',
+// 	            buyer_tel : '${userVO.user_phone}'
+// 	            //buyer_addr : '서울특별시 강남구 삼성동',
+// 	            //buyer_postcode : '123-456'
+// 	        }, function (rsp) { // callback
+// 	            if (rsp.success) {
+// 	                console.log(rsp);
+// 	                $.ajax({
+// 	                    type: 'POST',
+// 	                    url: '/exp/payment',
+// 	                    data: rsp,
+// 	                    success: function (response) {
+// 	                        console.log(response);
+// 	                    },
+// 	                    error: function (error) {
+// 	                        console.error(error);
+// 	                    }
+// 	                });
+// 	            } else {
+// 	                console.log(rsp);
+// 	                alert(rsp.error_msg);
+// 	            }
+// 	        });
+// 		}
+//     }
 
 	//달력 -------------------------------------------------------------------
 	document.addEventListener("DOMContentLoaded", function() {
