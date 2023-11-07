@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.project2.domain.PaymentVO;
 import com.project2.domain.TestVO;
 import com.project2.persistence.PaymentDAO;
 
@@ -37,6 +38,12 @@ public class paymentServiceImpl implements paymentService {
 	@Override
 	public List<TestVO> hostList(TestVO vo) throws Exception {
 		return pdao.hostList(vo);
+	}
+
+
+	@Override
+	public int payment(PaymentVO vo) throws Exception {
+		return pdao.payment(vo);
 	}
 
 	

@@ -32,7 +32,7 @@
 		left join order_board o 
 		on u.user_num = o.user_num 
 		left join experience e 
-		on o.exp_num = e.exp_num 
+		on o.exp_name = e.exp_name 
 		where user_id=#{user_id}
 	</select>
 	
@@ -44,7 +44,7 @@
 		left join order_board o 
 		on u.user_num = o.user_num 
 		left join experience e 
-		on o.exp_num = e.exp_num 
+		on o.exp_name = e.exp_name 
 		where u.user_num=#{user_num} and o.order_num=#{order_num}
 	</select>
 	
@@ -53,11 +53,20 @@
 		select e.exp_name, e.exp_num, u.user_name, u.user_num, u.user_phone, o.order_cnt, o.payment_price, o.order_num, o.order_date, o.payment_state
 		from order_board o 
 		left join experience e 
-		on o.exp_num = e.exp_num 
+		on o.exp_name = e.exp_name 
 		left join userTable u 
 		on o.user_num = u.user_num 
 		where e.exp_num in(select exp_num from experience where user_num = #{user_num});
 	</select>
+	
+	
+	<!-- 결제 -->
+	<insert id="getPayment">
+		insert into payment 
+		values(#{order_num},#{merchant_uid},#{buyer_email},#{buyer_name},#{buyer_tel},
+		#{name},#{custom_data},#{imp_uid},#{paid_amount},#{status},default,#{pg_provider},
+		#{pay_method},#{card_name})
+	</insert>
 
 
 

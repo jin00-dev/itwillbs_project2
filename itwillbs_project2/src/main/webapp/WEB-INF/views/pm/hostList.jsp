@@ -1,18 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" pageEncoding="UTF-8"%>
+<%@ include file="../include/header.jsp" %>
+
 	<h2> 사업자 페이지 <br><br> 
 		예약 관리 목록 </h2>
 
-	<table>
-		<tr>
+	<table class="table">
+		<tr class="table-warning">
 			<td>예약 클래스 이름 : </td>
 			<td>예약날짜 : </td>
 			<td>예매자 이름 : </td>
@@ -35,5 +29,4 @@
 	</table>
 
 
-</body>
-</html>
+<%@ include file="../include/footer.jsp" %>

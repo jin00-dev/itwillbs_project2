@@ -1,5 +1,8 @@
 package com.project2.controller;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
@@ -10,7 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project2.domain.PaymentVO;
 import com.project2.domain.TestVO;
 import com.project2.service.paymentService;
 
@@ -68,11 +73,35 @@ public class PaymentController {
 		return "/pm/hostList";
 	}
 	
-	// 결제하기 버튼 링크로 가기
 	@RequestMapping(value = "/payment")
 	public String paymentGET() {
-		logger.debug("actionPayment() 메서드 호출");
 		return "/pm/actionPayment";
+	}
+	
+	// 결제하기 버튼 링크로 가기
+	@ResponseBody
+	@RequestMapping(value = "/payment", method = RequestMethod.POST)
+	public boolean paymentPOST(PaymentVO vo) {
+		logger.debug("actionPayment() 메서드 호출");
+		
+        int result;
+
+        if(vo.isSuccess() == true) {
+
+            try {
+
+                result = pService.payment(vo);
+
+                if(result == 1)
+                    return true;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return false;
+		
 	}
 	
 	

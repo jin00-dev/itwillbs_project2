@@ -2,6 +2,7 @@ package com.project2.service;
 
 import java.util.List;
 
+import com.project2.domain.PaymentVO;
 import com.project2.domain.TestVO;
 
 public interface paymentService {
@@ -11,5 +12,7 @@ public interface paymentService {
 	public List<TestVO> paymentList(TestVO vo) throws Exception;
 	
 	public List<TestVO> hostList(TestVO vo) throws Exception;
+	
+	public int payment(PaymentVO vo) throws Exception;
 
 }

@@ -1,15 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" pageEncoding="UTF-8"%>
+<%@ include file="../include/header.jsp" %>
 
 	<form action="" method="get">
-		체험번호: ${testVO.exp_num }<br>
+<%-- 		체험번호: ${testVO.exp_num }<br> --%>
 		체험이름 : ${testVO.exp_name }<br>
 		예매 상태 : ${testVO.payment_state }<br>
 		장소 : ${testVO.exp_name }<br>
@@ -24,6 +18,4 @@
 	
 	
 	
-
-</body>
-</html>
+<%@ include file="../include/footer.jsp" %>

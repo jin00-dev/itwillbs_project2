@@ -2,6 +2,7 @@ package com.project2.persistence;
 
 import java.util.List;
 
+import com.project2.domain.PaymentVO;
 import com.project2.domain.TestVO;
 
 public interface PaymentDAO {
@@ -11,6 +12,8 @@ public interface PaymentDAO {
 	List<TestVO> paymentList(TestVO vo) throws Exception;
 	
 	List<TestVO> hostList(TestVO vo) throws Exception;
+	
+	int payment(PaymentVO vo) throws Exception;
 	
 
 	}

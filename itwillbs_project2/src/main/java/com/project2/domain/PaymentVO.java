@@ -7,12 +7,21 @@ import lombok.Data;
 @Data
 public class PaymentVO {
 	
-	private int payment_num;
 	private int order_num;
-	private int patment_state;
-	private Timestamp payment_date;
-	private String payment_pg;
-	private String payment_method;
-	
+	private String merchant_uid;
+	private String buyer_email;
+	private String buyer_name;
+	private String buyer_tel;
+	private String name;
+    private String custom_data;
+    private String imp_uid;
+    private int paid_amount;
+    private String status;
+    private Timestamp payment_date;
+    private String pg_provider;
+    private String pay_method;
+    private String card_name;
+    
+    private boolean success;
 
 }

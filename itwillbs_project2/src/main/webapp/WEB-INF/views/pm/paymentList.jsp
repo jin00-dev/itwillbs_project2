@@ -1,13 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false" pageEncoding="UTF-8"%>
+<%@ include file="../include/header.jsp" %>
 
 	
 	<h2> 한 회원이 주문한 모든 클래스 내용 리스트 </h2>
@@ -34,5 +27,4 @@
 	</table>
 	
 
-</body>
-</html>
+<%@ include file="../include/footer.jsp" %>
