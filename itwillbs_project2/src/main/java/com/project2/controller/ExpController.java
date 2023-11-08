@@ -35,18 +35,17 @@ public class ExpController {
 	@Autowired
 	private ExpServiceImpl service;
 
-	//클래스 상세페이지
+	// 클래스 상세페이지
 	@GetMapping("/exp/info")
 	public String infoGET(ExpVO vo, Model model, HttpSession session) {
-		
-		if(vo.getExp_num() == 0) {
+
+		if (vo.getExp_num() == 0) {
 			return "redirect:/";
 		}
-		
-		
+
 		try {
-			if(session.getAttribute("user_num") !=null) {
-				UserVO uVo =service.getUserOne(Integer.parseInt( (String) session.getAttribute("user_num") ));
+			if (session.getAttribute("user_num") != null) {
+				UserVO uVo = service.getUserOne(Integer.parseInt((String) session.getAttribute("user_num")));
 				model.addAttribute(uVo);
 			}
 			ExpVO expOne = service.getExpOne(vo.getExp_num());
@@ -78,7 +77,7 @@ public class ExpController {
 					break;
 				}
 			}
-			
+
 			model.addAttribute(expOne);
 			model.addAttribute("rList", rList);
 			model.addAttribute("ratings", ratings);
@@ -91,162 +90,138 @@ public class ExpController {
 
 		return "/exp/info";
 	}
-	
-	//리뷰 작성
+
+	// 리뷰 작성
 	@PostMapping("/reviewInsert")
-	public String insertRevGET(RevVO vo, HttpSession session,Model model, RedirectAttributes re) {
+	public String insertRevGET(RevVO vo, HttpSession session, Model model, RedirectAttributes re) {
 		logger.debug("리뷰작성 실행");
-		
-		if(session.getAttribute("user_id") == null){
+
+		if (session.getAttribute("user_id") == null) {
 			re.addFlashAttribute("isRogin", false);
-			return "redirect:/exp/info?exp_num="+vo.getExp_num();
+			return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 		}
-		
-		vo.setUser_num(Integer.parseInt( (String) session.getAttribute("user_num") ));
-		
+
+		vo.setUser_num(Integer.parseInt((String) session.getAttribute("user_num")));
+
 		try {
 			int result = service.insertReview(vo);
-			
-			if(result ==1 ) {
+
+			if (result == 1) {
 				re.addFlashAttribute("isWork", true);
-				return "redirect:/exp/info?exp_num="+vo.getExp_num();
+				return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		re.addFlashAttribute("isWork", false);
-		return "redirect:/exp/info?exp_num="+vo.getExp_num();
+		return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 	}
-	
-	//리뷰 수정
+
+	// 리뷰 수정
 	@PostMapping("/revUpdate")
 	public String reviewUpdate(RevVO vo, HttpSession session, RedirectAttributes re) {
-		
-		if(session.getAttribute("user_id") == null){
+
+		if (session.getAttribute("user_id") == null) {
 			re.addFlashAttribute("isRogin", false);
-			return "redirect:/exp/info?exp_num="+vo.getExp_num();
+			return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 		}
-		
-		vo.setUser_num(Integer.parseInt( (String) session.getAttribute("user_num") ));
-		
+
+		vo.setUser_num(Integer.parseInt((String) session.getAttribute("user_num")));
+
 		try {
 			int result = service.updateReview(vo);
-			
-			if(result == 1) {
-				return "redirect:/exp/info?exp_num="+vo.getExp_num();
+
+			if (result == 1) {
+				return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return "redirect:/exp/info?exp_num="+vo.getExp_num();
+
+		return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 	}
-	
-	//리뷰 신고 작성
+
+	// 리뷰 신고 작성
 	@PostMapping("/revReport")
 	public String insertReport(ReportVO vo, HttpSession session, RedirectAttributes re) {
-		
-		if(session.getAttribute("user_id") == null){
+
+		if (session.getAttribute("user_id") == null) {
 			re.addFlashAttribute("isRogin", false);
-			return "redirect:/exp/info?exp_num="+vo.getExp_num();
+			return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 		}
-		
-		//신고자
-		vo.setReport_user_num(Integer.parseInt( (String) session.getAttribute("user_num") ));
-		
+
+		// 신고자
+		vo.setReport_user_num(Integer.parseInt((String) session.getAttribute("user_num")));
+
 		try {
-			//신고 당하는 사람
+			// 신고 당하는 사람
 			vo.setUser_num(service.getRevUserNum(vo.getRev_num()));
-			
-			//신고 게시판 작성
+
+			// 신고 게시판 작성
 			int result = service.insertReport(vo);
-			
-			if(result ==1 ) {
+
+			if (result == 1) {
 				re.addFlashAttribute("isWork", true);
-				return "redirect:/exp/info?exp_num="+vo.getExp_num();
+				return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		re.addFlashAttribute("isWork", false);
-		return "redirect:/exp/info?exp_num="+vo.getExp_num();
+		return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 	}
-	
-	//리뷰 삭제
+
+	// 리뷰 삭제
 	@GetMapping("/revDel")
 	public String deleteReview(RevVO vo, HttpSession session, RedirectAttributes re) {
-		if(session.getAttribute("user_id") == null){
+		if (session.getAttribute("user_id") == null) {
 			re.addFlashAttribute("isRogin", false);
-			return "redirect:/exp/info?exp_num="+vo.getExp_num();
+			return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 		}
-		
-		vo.setUser_num(Integer.parseInt( (String) session.getAttribute("user_num") ));
-		
+
+		vo.setUser_num(Integer.parseInt((String) session.getAttribute("user_num")));
+
 		try {
 			int result = service.deleteReview(vo);
-			
-			if(result ==1 ) {
+
+			if (result == 1) {
 				re.addFlashAttribute("isWork", true);
-				return "redirect:/exp/info?exp_num="+vo.getExp_num();
+				return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		re.addFlashAttribute("isWork", false);
-		return "redirect:/exp/info?exp_num="+vo.getExp_num();
+		return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 	}
-	
-	//결제 처리
+
+	// 결제 처리
 	@PostMapping("/payment")
 	@ResponseBody
 	public boolean payment(PaymentVO vo, HttpSession session) {
-		OrderVO ovo =null;
 		int result;
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		
-		if(vo.isSuccess() == true) {
-			ovo = new OrderVO();
-			
-			try {
-				//체험번호
-				ovo.setExp_num(service.getExpNumOne(vo.getName()));
-				//회원번호
-				ovo.setUser_num(Integer.parseInt( (String) session.getAttribute("user_num") ));
-				//날짜 포멧 변경
-				java.util.Date date = dateFormat.parse(vo.getCustom_data());
-				Timestamp timestamp = new Timestamp(date.getTime());
-				ovo.setOrder_date(timestamp);
-				
-				ovo.setPayment_id(vo.getImp_uid());
-				ovo.setOrder_id(vo.getMerchant_uid());
-				ovo.setPayment_pg(vo.getPg_provider());
-				ovo.setPayment_method(vo.getPay_method());
-				ovo.setPayment_price(vo.getPaid_amount());
-				ovo.setPayment_state(1);
-				
-				result = service.paymentInsert(ovo);
-				
-				if(result == 1)
-					return true;
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+
+		try {
+			result = service.paymentInsert(vo);
+
+			if (result == 1)
+				return true;
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
+
 		return false;
 	}
-	
-	//test
-	@PostMapping("/cancel")
-	@ResponseBody
-	public CancelPay cancelPay(CancelPay vo) {
-		logger.debug("merchant_uid : "+ vo);
-		return vo;
-	}
-	
-	
-	
+
+//	//test
+//	@PostMapping("/cancel")
+//	@ResponseBody
+//	public CancelPay cancelPay(CancelPay vo) {
+//		logger.debug("merchant_uid : "+ vo);
+//		return vo;
+//	}
 
 }// controller

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.project2.domain.ExpVO;
 import com.project2.domain.OrderVO;
+import com.project2.domain.PaymentVO;
 import com.project2.domain.ReportVO;
 import com.project2.domain.RevVO;
 import com.project2.domain.UserVO;
@@ -80,7 +81,7 @@ public class ExpServiceImpl {
 	}
 
 	// 결제 처리
-	public int paymentInsert(OrderVO vo) throws Exception {
+	public int paymentInsert(PaymentVO vo) throws Exception {
 		return dao.paymentInsert(vo);
 	}
 

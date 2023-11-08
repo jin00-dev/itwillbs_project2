@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project2.domain.ExpVO;
 import com.project2.domain.OrderVO;
+import com.project2.domain.PaymentVO;
 import com.project2.domain.ReportVO;
 import com.project2.domain.RevVO;
 import com.project2.domain.UserVO;
@@ -102,7 +103,7 @@ public class ExpDAOImpl {
 	}
 	
 	//결제 처리
-	public int paymentInsert(OrderVO vo) throws Exception{
+	public int paymentInsert(PaymentVO vo) throws Exception{
 		logger.debug(" DAOImpl :  paymentInsert() 호출");
 		return sqlSession.insert(NAMESPACE + "insertOrderBoard", vo);
 	}
