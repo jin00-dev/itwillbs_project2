@@ -34,6 +34,19 @@ public class UserDAOImpl implements UserDAO{
 			//sqlSession.insert(SQL구문,SQL전달할 정보);
 			sqlSession.insert(NAMESPACE + ".insertUser", vo);
 		}
+		// 아이디 중복체크
+		@Override
+		public int idCheck(String user_id) {
+			
+			return sqlSession.selectOne(NAMESPACE+".idCheck", user_id);
+		}
+
+		//핸드폰 중복체크
+		@Override
+		public int phoneCheck(String user_phone) {
+			
+			return sqlSession.selectOne(NAMESPACE+".phoneCheck", user_phone);
+		}
 
 		@Override
 		public UserVO loginUser(UserVO loginVO) {
@@ -83,6 +96,5 @@ public class UserDAOImpl implements UserDAO{
 		}
 
 	
-		
 		
 }

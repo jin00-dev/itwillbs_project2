@@ -1,27 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@include file="../include/header.jsp"%>
 	<h1>Login.jsp</h1>
 	
 	<h2> 로그인 페이지 </h2>
 	
-	<fieldset>
+	<div class="container">
 		<form action="" method="post">
-			아이디 : <input type="text" name="user_id"><br>
-			비밀번호 : <input type="password" name="user_pw"><br>
-			<input type="submit" value="로그인">
+		<!-- <form action="login" method="post"> -->
+		<div class="form-group">
+		<label for="id">아이디</label>
+		<input type="text" name="user_id" id="user_id" class="form-control">
+		</div>
+		<div class="form-group">
+		<label for="id">비밀번호</label>
+		<input type="password" name="user_pw" id="user_pw" class="form-control" >
+		</div>
+		
+			
+			<button class="btn btn-default">로그인</button>
 			<input type="button" value="회원가입"
 					onclick=" location.href='/user/join';">
-			
-		</form>
-	
-	
-	</fieldset>
-</body>
-</html>
+			<button type="button">아이디찾기</button>
+			<button type="button">비밀번호찾기</button>
+			</form>
+		
+	</div>
+<%@include file="../include/footer.jsp"%>

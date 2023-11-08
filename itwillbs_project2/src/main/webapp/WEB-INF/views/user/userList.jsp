@@ -1,13 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@include file="../include/header.jsp"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>userList.jsp</h1>
+
+<h1>userList.jsp</h1>
 		
 		<%-- ${userList } --%>
 		
@@ -30,6 +26,3 @@
 		</table>
 		
 		<a href="/user/userMain">메인페이지로...</a>
-		
-</body>
-</html>

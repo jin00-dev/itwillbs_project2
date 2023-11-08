@@ -8,7 +8,14 @@ public interface UserDAO {
 
 	// 회원가입기능 
 		public void insertUser(UserVO vo);
-	
+		
+	// 아이디 중복체크
+		public int idCheck(String user_id);
+		
+	// 휴대폰 중복체크
+		public int phoneCheck(String user_phone);
+		
+		
 	// 로그인 기능 - 객체 사용
 		public UserVO loginUser(UserVO loginVO);
 	

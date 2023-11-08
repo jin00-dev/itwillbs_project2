@@ -5,48 +5,54 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project2.domain.UserVO;
 import com.project2.service.UserService;
 
+import lombok.extern.log4j.Log4j;
+
 @Controller
 @RequestMapping(value="/user/*")
 public class UserController {
-
-
 
 private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 @Inject
 private UserService uService;
 
-	//http://localhost:8088/join
+	//http://localhost:8088/user/join
 	//회원가입 페이지 이동
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public String joinGET() throws Exception{
 		
-		logger.info("회원가입 페이지 진입");
+		logger.debug("회원가입 페이지 진입");
 		return "/user/join";
 	}	
-	
+	 
+	// 회원가입 프로세스
 	@RequestMapping(value = "/join",method = RequestMethod.POST)
 	public String joinPOST(/* @ModelAttribute */ UserVO vo) throws Exception{
 		
 		// 전달정보 저장(회원가입 정보)
 		logger.debug("vo "+vo);
 				
+		String hashPw = BCrypt.hashpw(vo.getUser_pw(), BCrypt.gensalt());
+		vo.setUser_pw(hashPw);
 		
-		uService.userJoin(vo);
+		uService.insertUser(vo);
 		logger.debug(" 회원가입 완료! ");
 		
 		// 로그인 페이지로 이동(redirect)		
 		return "redirect:/user/login";
+		//return "redirect:../";
 	}
 	
 //	http://localhost:8088/member/login
@@ -108,6 +114,7 @@ private UserService uService;
 			
 			// 로그아웃 처리 => 세션 정보 초기화
 			session.invalidate();
+			// session.removeAttribute("login");
 			// 메인페이지로 이동(패턴2-주소바뀜)
 			
 			return "redirect:/user/userMain";
@@ -215,6 +222,30 @@ private UserService uService;
 			
 			return "/user/userList";
 		}
+		
+		// 아이디 중복 체크
+		@RequestMapping(value="/idCheck",method=RequestMethod.POST)
+		@ResponseBody
+		public int idCheck(String id, Model model) throws Exception{
+			
+			// 서비스 -> DB에 저장된 회원정보	
+			//UserVO resultVO = uService.userInfo(id);
+			
+			
+			return uService.idCheck(id);
+		}
+		
+		// 휴대폰 중복 체크
+		@RequestMapping(value="/phoneCheck",method=RequestMethod.POST)
+		@ResponseBody
+		public int phoneCheck(String phone,Model model)throws Exception{
+			
+			return uService.phoneCheck(phone);
+			
+			
+		}
+			
+		
 		
 		
 	

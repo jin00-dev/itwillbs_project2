@@ -9,20 +9,22 @@
   
   <insert id="insertUser">
   	insert into c6d2305t2_2.userTable
-  	(
-  	user_id,
-  	user_pw,
-  	user_name,
-  	user_phone
-  	) 
-  	values
-  	(
-  	#{user_id},
-  	#{user_pw},
-  	#{user_name},
-  	#{user_phone}
-  	)
+  	(user_id,user_pw,user_name,user_phone) 
+  	values(#{user_id},#{user_pw},#{user_name},#{user_phone})
   </insert>
+  
+  <!-- 아이디 중복체크 -->
+  <select id = "idCheck" resultType="int">
+  	select count(*) from c6d2305t2_2.userTable
+  	where user_id = #{user_id}
+  </select>
+  
+  
+  <!-- 휴대폰 중복체크 -->
+  <select id = "phoneCheck" resultType="int">
+  	select count(*) from c6d2305t2_2.userTable             
+  	where user_phone = #{user_phone}
+  </select>
   
   <select id="loginUser" resultType="com.project2.domain.UserVO">
   	select * from c6d2305t2_2.userTable

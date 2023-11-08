@@ -9,7 +9,14 @@ public interface UserService {
 	
 	// 실제로 구현해야 하는 기능 정의
 		// 회원가입 동작 실행
-		public void userJoin(UserVO vo);
+		public void insertUser(UserVO vo);
+		
+		// 아이디 중복체크
+		public int idCheck(String id);
+		
+		 //휴대폰번호 중복체크
+		public int phoneCheck(String phone);
+		
 		
 		// 로그인 체크 동작
 		public UserVO userLogin(UserVO vo);
