@@ -3,15 +3,14 @@ package com.project2.service;
 import java.util.List;
 
 import com.project2.domain.PaymentVO;
-import com.project2.domain.TestVO;
 
 public interface paymentService {
 	
-	public TestVO boardPaymentList(TestVO vo) throws Exception;
+	public PaymentVO boardPaymentList(PaymentVO vo) throws Exception;
 	
-	public List<TestVO> paymentList(TestVO vo) throws Exception;
+	public List<PaymentVO> paymentList(PaymentVO vo) throws Exception;
 	
-	public List<TestVO> hostList(TestVO vo) throws Exception;
+	public List<PaymentVO> hostList(PaymentVO vo) throws Exception;
 	
 	public int payment(PaymentVO vo) throws Exception;
 

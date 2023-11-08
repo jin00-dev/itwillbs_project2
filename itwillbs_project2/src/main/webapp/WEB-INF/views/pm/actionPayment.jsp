@@ -31,7 +31,11 @@
             pay_method : 'card',
             merchant_uid: "IMP"+makeMerchantUid, 
             name : 'test1',
-           amount : 100
+           amount : 100,
+           buyer_email : "ddd@fff.vom",
+           custom_data : "2023-11-10",
+           buyer_name : "ddd",
+           buyer_tel : "000-111-111"
         }, function (rsp) { // callback
             if (rsp.success) {
                 console.log(rsp);

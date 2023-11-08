@@ -3,15 +3,14 @@ package com.project2.persistence;
 import java.util.List;
 
 import com.project2.domain.PaymentVO;
-import com.project2.domain.TestVO;
 
 public interface PaymentDAO {
 	
-	TestVO boardPaymentList(TestVO vo) throws Exception;
+	PaymentVO boardPaymentList(PaymentVO vo) throws Exception;
 	
-	List<TestVO> paymentList(TestVO vo) throws Exception;
+	List<PaymentVO> paymentList(PaymentVO vo) throws Exception;
 	
-	List<TestVO> hostList(TestVO vo) throws Exception;
+	List<PaymentVO> hostList(PaymentVO vo) throws Exception;
 	
 	int payment(PaymentVO vo) throws Exception;
 	

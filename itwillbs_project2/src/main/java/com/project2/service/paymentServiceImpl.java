@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.project2.domain.PaymentVO;
-import com.project2.domain.TestVO;
 import com.project2.persistence.PaymentDAO;
 
 @Service
@@ -24,19 +23,19 @@ public class paymentServiceImpl implements paymentService {
 	
 	// 결제한 회원의 상세 리스트 출력
 	@Override
-	public TestVO boardPaymentList(TestVO vo) throws Exception {
+	public PaymentVO boardPaymentList(PaymentVO vo) throws Exception {
 		return pdao.boardPaymentList(vo);
 	}
 
 
 	@Override
-	public List<TestVO> paymentList(TestVO vo) throws Exception {
+	public List<PaymentVO> paymentList(PaymentVO vo) throws Exception {
 		return pdao.paymentList(vo);
 	}
 
 
 	@Override
-	public List<TestVO> hostList(TestVO vo) throws Exception {
+	public List<PaymentVO> hostList(PaymentVO vo) throws Exception {
 		return pdao.hostList(vo);
 	}
 
