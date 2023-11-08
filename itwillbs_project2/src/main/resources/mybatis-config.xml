@@ -9,6 +9,8 @@
 	<typeAliases>
 		<package name="com.project2.domain"/>
 	</typeAliases>
+	
+
 
 </configuration>
 

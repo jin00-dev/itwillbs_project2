@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
 
 import com.project2.domain.UserVO;
 import com.project2.service.UserService;
@@ -245,8 +247,24 @@ private UserService userService;
 	
 	  
 	//  http://localhost:8088/user/login
-	  
+	  //이메일
 	 
-	
-	
+	  //아이디찾기
+	  @RequestMapping(value = "/findId")
+	    public String showFindIdPage() {
+	        return "/user/findId"; // 아이디 찾기 폼 뷰 페이지로 이동
+	    }
+
+	    @RequestMapping(value = "/findId", method = RequestMethod.POST)
+	    public String findUserId(@RequestParam("user_name") String user_name, @RequestParam("user_phone") String user_phone, Model model, HttpSession session) {
+	    	UserVO user = userService.findUserByNameAndPhone(user_name, user_phone);
+
+	        if (user != null) {
+	            model.addAttribute("userId", user.getUser_id());
+	        } else {
+	            model.addAttribute("message", "일치하는 아이디를 찾을 수 없습니다.");
+	        }
+
+	        return "/user/findIdResult"; // 아이디 찾기 결과 뷰 페이지로 이동
+	    }
 	}

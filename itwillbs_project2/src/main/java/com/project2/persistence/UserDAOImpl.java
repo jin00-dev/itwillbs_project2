@@ -8,6 +8,9 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
+
 import org.springframework.stereotype.Repository;
 
 import com.project2.domain.UserVO;
@@ -97,9 +100,16 @@ public class UserDAOImpl implements UserDAO{
     public void updateUserGrade(UserVO userVO) {
         sqlSession.update(NAMESPACE + ".updateUserGrade", userVO);
     }
-    
-    //이메일
-    
-
-
+    //아이디찾기
+    @Override
+    public UserVO findUserByNameAndPhone(String user_name, String user_phone) {
+        Map<String, String> params = new HashMap<>();
+        params.put("user_name", user_name);
+        params.put("user_phone", user_phone);
+        return sqlSession.selectOne(NAMESPACE+".findUserByNameAndPhone", params);
     }
+
+  //이메일
+
+
+}

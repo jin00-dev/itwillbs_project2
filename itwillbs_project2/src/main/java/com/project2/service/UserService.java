@@ -2,6 +2,7 @@ package com.project2.service;
 
 import java.util.List;
 
+
 import com.project2.domain.UserVO;
 
 public interface UserService {
@@ -30,9 +31,13 @@ public interface UserService {
     //회원등급변경
    public UserVO getUserById(String user_id);
     public void updateUserGrade(UserVO userVO);
-    
-    
-    // 아이디찾기
+    //아이디 찾기
+    UserVO findUserByNameAndPhone(String user_name, String user_phone);
+  
 
+    
+    //이메일
+  
+    
   
 }

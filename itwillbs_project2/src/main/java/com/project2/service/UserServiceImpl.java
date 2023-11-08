@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.project2.domain.UserVO;
 import com.project2.persistence.UserDAO;
 
@@ -110,7 +111,19 @@ import com.project2.persistence.UserDAO;
         logger.debug("Service: 회원 등급 변경 메서드 호출");
         userDAO.updateUserGrade(userVO);
     }
+
+    //아이디찾기
+
+    @Override
+    public UserVO findUserByNameAndPhone(String user_name, String user_phone) {
+        // 사용자 이름과 휴대폰 번호를 이용하여 아이디를 찾는 로직을 수행
+        // userDAO의 메서드를 호출하여 데이터베이스에서 조회하도록 구현
+        return userDAO.findUserByNameAndPhone(user_name, user_phone);
+    }
+
+ 
+    //이메일
     
-    // 이메일
+    
 
 }
