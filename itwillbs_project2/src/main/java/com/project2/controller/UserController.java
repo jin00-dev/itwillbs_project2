@@ -8,10 +8,13 @@ import javax.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project2.domain.UserVO;
@@ -29,6 +32,8 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 @Inject
 private UserService uService;
 
+@Autowired
+private UserService userService;
 	//http://localhost:8088/user/join
 	//회원가입 페이지 이동
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
@@ -247,7 +252,34 @@ private UserService uService;
 		}
 			
 		
-		
+		 // 회원 등급 변경POST
+	     
+	     @RequestMapping(value = "/changeGrade", method = RequestMethod.POST) 
+	     public String changeGradePOST(@ModelAttribute UserVO user) {
+	     logger.debug(" changeGradePOST() 호출 "); uService.updateUserGrade(user); 
+	     return
+	     "redirect:/user/list"; }
+	   
+	     
+	  
+	     //아이디찾기
+	     @RequestMapping(value = "/findId")
+	       public String showFindIdPage() {
+	           return "/user/findId"; // 아이디 찾기 폼 뷰 페이지로 이동
+	       }
+
+	       @RequestMapping(value = "/findId", method = RequestMethod.POST)
+	       public String findUserId(@RequestParam("user_name") String user_name, @RequestParam("user_phone") String user_phone, Model model, HttpSession session) {
+	          UserVO user = userService.findUserByNameAndPhone(user_name, user_phone);
+
+	           if (user != null) {
+	               model.addAttribute("userId", user.getUser_id());
+	           } else {
+	               model.addAttribute("message", "일치하는 아이디를 찾을 수 없습니다.");
+	           }
+
+	           return "/user/findIdResult"; // 아이디 찾기 결과 뷰 페이지로 이동
+	       }
 		
 	
 }

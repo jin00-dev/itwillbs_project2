@@ -1,6 +1,8 @@
 package com.project2.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -95,6 +97,24 @@ public class UserDAOImpl implements UserDAO{
 			return sqlSession.selectList(NAMESPACE + ".getUserList");
 		}
 
-	
+		// 등급변경
+		   
+	    @Override
+	    public UserVO getUserByUserId(String user_id) {
+	        return sqlSession.selectOne(NAMESPACE + ".getUserByUserId", user_id);
+	    }
+
+	    @Override
+	    public void updateUserGrade(UserVO userVO) {
+	        sqlSession.update(NAMESPACE + ".updateUserGrade", userVO);
+	    }
+	    //아이디찾기
+	    @Override
+	    public UserVO findUserByNameAndPhone(String user_name, String user_phone) {
+	        Map<String, String> params = new HashMap<>();
+	        params.put("user_name", user_name);
+	        params.put("user_phone", user_phone);
+	        return sqlSession.selectOne(NAMESPACE+".findUserByNameAndPhone", params);
+	    }
 		
 }

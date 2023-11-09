@@ -54,5 +54,27 @@
      select * from c6d2305t2_2.userTable 
      where user_id != 'admin'   
    </select>
+
+
+	<!-- 회원등급 변경 -->
+	<select id="getUserByUserId" resultType="UserVO">
+		SELECT * FROM userTable WHERE user_id = #{user_id}
+	</select>
+	<update id="updateUserGrade">
+		UPDATE userTable
+		SET user_type = #{user_type}
+		WHERE user_id = #{user_id}
+	</update>
+	<!-- 아이디찾기 -->
+	<select id="findUserByNameAndPhone"
+		resultType="com.project2.domain.UserVO">
+		SELECT user_id
+		FROM userTable
+		WHERE user_name = #{user_name} AND user_phone = #{user_phone}
+	</select>
+    
+  
+  
+  
   
   </mapper>
