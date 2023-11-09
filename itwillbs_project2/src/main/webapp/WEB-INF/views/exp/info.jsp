@@ -342,31 +342,38 @@
 
 
 </section>
-<button onclick="cancelPay()">환불하기</button>
+<button onclick="cancelPay('4')">환불하기</button>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script>
 
-function cancelPay() {
-    jQuery.ajax({
-      // 예: http://www.myservice.com/payments/cancel
-      "url": "/exp/cancel", 
-      "type": "POST",
-      "contentType": "application/json",
-      "data": JSON.stringify({
-        "merchant_uid": "IMP470", // 예: ORD20180131-0000011
-        "cancel_request_amount": 100, // 환불금액
-        "reason": "테스트 결제 환불", // 환불사유
-        // [가상계좌 환불시 필수입력] 환불 수령계좌 예금주
-        "refund_holder": "홍길동", 
-        // [가상계좌 환불시 필수입력] 환불 수령계좌 은행코드(예: KG이니시스의 경우 신한은행은 88번)
-        "refund_bank": "88", 
-        // [가상계좌 환불시 필수입력] 환불 수령계좌 번호
-        "refund_account": "56211105948400" 
-      }),
-      "dataType": "json"
-    });
-  }
+function cancelPay(order_num) {
+ 	  jQuery.ajax({
+       url: "/payrest/cancelPay", 
+       type: "POST",
+       contentType: "application/json",
+       data: order_num,
+       success: function(refundResponse) {
+         // refund ajax 실행 후 작업 수행
+         
+       	  if(refundResponse === "ok"){	
+                 alert('환불 요청이 완료되었습니다.');
+                 location.reload();
+              // 예약취소 버튼 수정하기
+             }else if(refundResponse === "already refund"){ 
+          	  alert('이미 환불 처리된 주문 건입니다.');
+            	  
+	      }else{
+                 alert('실패: 관리자에게 문의해주세요');
+             }	
+         
+       },
+       error: function(error) {
+         // refund ajax 실행 중 에러 발생 시 처리
+       }
+     }); // refund ajax
+}
+  
 // function cancelPay() {
 // 	  jQuery.ajax({
 // 	    url: "/exp/cancel", // 환불정보를 수신할 가맹점 서비스 URL
@@ -487,7 +494,7 @@ function cancelPay() {
 	//결제 ------------------------------------------------------------------------
 	
 	var IMP = window.IMP; 
-	IMP.init('imp14397622');
+	IMP.init('imp66880805');
 	
 	var today = new Date();   
     var hours = today.getHours(); 

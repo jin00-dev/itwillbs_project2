@@ -80,12 +80,28 @@
 	<insert id="insertOrderBoard">
 		insert into payment values 
 		(default,#{merchant_uid},#{buyer_email},#{buyer_name},#{buyer_tel},
-		#{name},#{custom_data},#{imp_uid},#{paid_amount},#{status},default,#{pg_provider}
+		#{name},#{custom_data},#{imp_uid},#{paid_amount},#{status},null,default,#{pg_provider}
 		,#{pay_method},#{card_name})
 	</insert>
 	
 	<select id="getExpNumOne" resultType="int">
 		select exp_num from experience where exp_name = #{exp_name} 
 	</select>
+	
+	<!-- 결제 테이블 select TH -->
+	<select id="selectPay" resultType="PaymentVO">
+		select * from payment where order_num=#{order_num} 
+	</select>
+	
+	<!-- 결제 테이블 결제 상태 update TH -->
+	<update id="updatePay" parameterType="map">
+	update payment set status=#{status} ,
+ 	cancel_date =
+      <choose>
+        <when test="status == 'cancelled'">now()</when>
+        <otherwise>null</otherwise>
+      </choose>
+	where order_num=#{order_num}
+	</update>
 	
 </mapper>
