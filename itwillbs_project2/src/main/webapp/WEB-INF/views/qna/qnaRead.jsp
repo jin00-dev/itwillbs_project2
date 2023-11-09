@@ -3,85 +3,97 @@
 <%@ page isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
 
-<!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 
-<h3>1:1 문의사항 상세 정보</h3>
+<div class="container mt-5">
+	<div class="card">
+		<h3 class="card-header">1:1 문의사항 상세 정보</h3>
+		<div class="card-body">
+			<div class="row mb-3 pb-2 border-bottom">
+				<div class="col-8">
+					<h5 class="card-title">제목: ${resultVO.qna_title}</h5>
+				</div>
+				<div class="col-4 text-right">
+					<h6 class="card-subtitle mb-2 text-muted">
+						작성일:
+						<fmt:formatDate value="${resultVO.qna_regdate}"
+							pattern="yyyy-MM-dd HH:mm:ss" />
+					</h6>
+				</div>
+			</div>
 
-<div>
-	<!-- 문의 제목 -->
-	<div>
-		<span>제목: ${resultVO.qna_title}</span>
-	</div>
-	<!-- 문의 작성일 -->
-	<div>
-		<span>작성일: <fmt:formatDate value="${resultVO.qna_regdate}"
-				pattern="yyyy-MM-dd HH:mm:ss" /></span>
-	</div>
-
-	<!-- 문의 상태 -->
-	<div>
-		<span>상태: <c:out
-				value="${resultVO.qna_state == 0 ? '답변 대기' : '답변 완료'}" /></span>
-	</div>
-
-	<!-- 문의 내용 -->
-	<div>
-		<p>
-			<c:out value="${resultVO.qna_content}" />
-		</p>
-	</div>
-
-	<form id="actionForm" method="POST">
-		<input type="hidden" name="qna_num" value="${resultVO.qna_num}">
-	</form>
-
-	
-	<c:choose>
-		<c:when test="${resultVO.qna_state == 1}">
-			<!-- 이미 답변이 있는 경우 -->
-			<div>
-				<h6>답변 내용</h6>
-				<p>
-					<c:out value="${resultVO.qna_answer}" />
+			<div class="mb-3 pb-2 border-bottom">
+				<p class="card-text">
+					<strong>현재 상태:</strong>
+					<c:choose>
+						<c:when test="${resultVO.qna_state == 0}">
+							<span class="badge badge-warning">답변 대기</span>
+						</c:when>
+						<c:otherwise>
+							<span class="badge badge-success">답변 완료</span>
+						</c:otherwise>
+					</c:choose>
 				</p>
 			</div>
-		</c:when>
-		<c:otherwise>
-			<!-- 관리자가 아니며 답변이 없는 경우 -->
-			<div>
-				<h5>답변 대기 중</h5>
+
+			<div class="mb-3 pb-2">
+				<p class="card-text">${resultVO.qna_content}</p>
 			</div>
-		</c:otherwise>
-	</c:choose>
-		<%-- <c:when test="${sessionScope.user_id == 'admin'}"> --%>
-			<!-- 관리자일 경우 답변 입력 폼을 보여줌 -->
+
+
+			<c:choose>
+				<c:when test="${resultVO.qna_state == 1}">
+					<!-- 답변 내용 -->
+					<div class="border-top pt-3">
+						<h6 class="font-weight-bold">답변 내용:</h6>
+						<p>${resultVO.qna_answer}</p>
+					</div>
+				</c:when>
+				<c:otherwise>
+					<!-- 답변 대기 메시지 -->
+					<div class="border-top pt-3">
+						<h5 class="text-muted">답변 대기 중...</h5>
+					</div>
+				</c:otherwise>
+			</c:choose>
+
+			<%-- 관리자 답변 입력 폼, 실제 조건에 맞게 주석을 해제하여 사용하세요 --%>
+			<%-- <c:when test="${sessionScope.user_id == 'admin'}"> --%>
 			<div>
-				<h5>답변 작성</h5>  
+				<h5>답변 작성</h5>
 				<form action="/qna/qnaAnswer" method="post">
-					<textarea name="qna_answer" rows="4" cols="50"></textarea>
+					<div class="form-group">
+						<textarea class="form-control" name="qna_answer" rows="4"></textarea>
+					</div>
 					<input type="hidden" name="qna_num" value="${resultVO.qna_num}">
-					<input type="submit" value="답변 등록">
+					<button type="submit" class="btn btn-primary">답변 등록</button>
 				</form>
 			</div>
-		<%-- </c:when> --%>
+			<%-- </c:when> --%>
 
+			<form id="actionForm" method="POST">
+				<input type="hidden" name="qna_num" value="${resultVO.qna_num}">
+			</form>
 
-	<!-- 목록/수정/삭제 버튼 -->
-	<div>
-		<button id="btnList">목록</button>
-
+			<!-- 목록/수정/삭제 버튼 -->
+			<div class="mt-3">
+				<button id="btnList" class="btn btn-secondary">목록</button>
+				<button id="btnUpdate" class="btn btn-secondary">수정</button>
+				<button id="btnDelete" class="btn btn-secondary">삭제</button>
+				<button id="bbtnDelete" class="btn btn-secondary">답변 삭제</button>
+			</div>
+		</div>
 		<%-- <c:if
 			test="${sessionScope.user_num == resultVO.user_num && resultVO.qna_state == 0}"> --%>
 		<!-- 로그인한 사용자가 작성자이며 답변이 없을 경우에만 수정 및 삭제 버튼을 보여줍니다. -->
-		<button id="btnUpdate">수정</button>
-		<button id="btnDelete">삭제</button>
-		<button id="bbtnDelete">답변 삭제</button>		
 		<%-- </c:if> --%>
-
 	</div>
 </div>
+
 
 <!-- footer -->
 <%@include file="/WEB-INF/views/include/footer.jsp"%>
@@ -107,7 +119,7 @@
 				$('#actionForm').attr('action', '/qna/removeQna').submit();
 			}
 		});
-		
+
 		// 답변 삭제 버튼 클릭 이벤트
 		$('#bbtnDelete').click(function() {
 			if (confirm('답변을 정말 삭제하시겠습니까?')) {
@@ -117,3 +129,8 @@
 		});
 	});
 </script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.9.3/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

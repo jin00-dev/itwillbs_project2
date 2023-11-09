@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.project2.domain.Criteria;
+import com.project2.domain.PageVO;
 import com.project2.domain.QnaVO;
 import com.project2.service.QnaService;
 
@@ -178,8 +180,8 @@ public class qnaController {
 
 	}
 
-	// http://localhost:8088/qna/adminQnaListAll
-	// 1대1 리스트 조회GET
+	
+	// 관리자 1대1 모든 리스트 조회GET
 	@RequestMapping(value = "/adminQnaListAll", method = RequestMethod.GET)
 	public void adminQnaListAllGet(Model model, HttpSession session) throws Exception {
 		logger.debug(" boardlistAllGet() 호출! ");
@@ -188,11 +190,45 @@ public class qnaController {
 		List<QnaVO> qnaListAll = qService.adminListAll();
 
 		logger.debug("결과 리스트 크기 : " + qnaListAll.size());
- 
+
 		model.addAttribute("qnaListAll", qnaListAll);
- 
+
 		// View 이동 후 출력
 
+	}
+
+	// http://localhost:8088/qna/adminQnaListPage
+	// 게시판 목록조회(페이징처리)
+	@RequestMapping(value = "/adminQnaListPage", method = RequestMethod.GET)
+	public void adminQnaListPageGET(Criteria cri, Model model, HttpSession session) throws Exception {
+		logger.debug(" adminQnaListPageGET() 호출 ");
+
+		// 페이징처리( 페이지 블럭 처리 객체 )
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		// pageVO.setTotalCount(1664);
+		pageVO.setTotalCount(qService.getQnaCount());
+
+		logger.debug("" + pageVO);
+		// 페이징처리 정보도 뷰페이지로 전달
+		model.addAttribute("pageVO", pageVO);
+		// cri.setPage(2);
+		// 페이지 이동시 받아온 페이지 번호
+		if (cri.getPage() > pageVO.getEndPage()) {
+			// 잘못된 페이지 정보 입력
+			cri.setPage(pageVO.getEndPage());
+		}
+
+		// 서비스 -> DAO -> 페이징처리한 리스트 가져오기
+		List<QnaVO> QnaList = qService.getQnaPage(cri); 
+
+		// 리스트 사이즈 확인
+		logger.debug(" 글 개수 : " + QnaList.size());
+
+		// Model 객체에 리스트 정보를 저장
+		model.addAttribute("QnaList", QnaList);
+
+		// 페이지 이동(/board/listPage.jsp)
 	}
 
 }

@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.project2.domain.BoardVO;
+import com.project2.domain.Criteria;
 import com.project2.domain.QnaVO;
 import com.project2.persistence.QnaDAO;
 
@@ -66,7 +68,17 @@ public class QnaServiceImpl implements QnaService {
 		return qdao.getAdminListAll();
 	}
 	
+	@Override
+	public List<QnaVO> getQnaPage(Criteria cri) throws Exception {
+		
+		return qdao.getQnaPage(cri); 
+	}	
 	
+	@Override
+	public int getQnaCount() throws Exception {
+		
+		return qdao.getQnaCount();
+	}
 	
 	
 	
