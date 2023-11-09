@@ -82,25 +82,25 @@ public class PaymentController {
 	@RequestMapping(value = "/payment", method = RequestMethod.POST)
 	public boolean paymentPOST(PaymentVO vo) {
 		logger.debug("actionPayment() 메서드 호출");
-		
         int result;
-
         if(vo.isSuccess() == true) {
-
             try {
-
                 result = pService.payment(vo);
-
                 if(result == 1)
                     return true;
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
         return false;
+	}
+	
+	// 결제 취소
+	@RequestMapping(value = "/paymentList", method = RequestMethod.POST)
+	public @ResponseBody String cancelPayment() {
+		logger.debug("ddd@@@@@@");
 		
+		return "reee";
 	}
 	
 	
