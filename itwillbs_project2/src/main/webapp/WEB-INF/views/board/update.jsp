@@ -7,43 +7,54 @@
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%> 
 
-<form method="post">
-	<div>
-		<h3>공지사항 수정</h3>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">공지사항 수정</h5>
 
-		<!-- 공지사항 제목 -->
-		<div>
-			<label>제목:</label> <input type="text" name="enf_title"
-				value="${resultVO.enf_title}">
-		</div>
+                    <!-- 공지사항 수정 Form -->
+                    <form method="post" role="form">
+                        <div class="row mb-3">
+                            <label for="inputTitle" class="col-sm-2 col-form-label">제목</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="enf_title" id="inputTitle" value="${resultVO.enf_title}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputDate" class="col-sm-2 col-form-label">작성일</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="inputDate" value="<fmt:formatDate value="${resultVO.enf_regdate}" pattern="yyyy-MM-dd"/>" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="inputContent" class="col-sm-2 col-form-label">내용</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" name="enf_content" id="inputContent" rows="3">
+                                    <c:out value="${resultVO.enf_content}" />
+                                </textarea>
+                            </div>
+                        </div>
+                      
+                        <input type="hidden" name="enf_notice_num" value="${resultVO.enf_notice_num}">
+                        <div class="row mb-3">
+                            <div class="col-sm-10 offset-sm-2">
+                                <button type="submit" class="btn btn-primary btn-update">수정하기</button>
+                                <button type="button" class="btn btn-secondary btn-cancel">수정취소</button>
+                            </div>
+                        </div>
+                    </form><!-- End 공지사항 수정 Form -->
 
-		<!-- 작성일 -->
-		<div>
-			<span>작성일: <fmt:formatDate value="${resultVO.enf_regdate}"
-					pattern="yyyy-MM-dd" /></span>
-		</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-		<!-- 공지사항 내용 -->
-		<div>
-			<label for="enf_content">내용:</label>
-			<textarea id="enf_content" name="enf_content" rows="10" cols="30">
-                <c:out value="${resultVO.enf_content}" />
-            </textarea>
-		</div>
-
-		<!-- hidden field for enf_notice_num -->
-		<input type="hidden" name="enf_notice_num"
-			value="${resultVO.enf_notice_num}">
-</form>
-<!-- 버튼 -->
-<div>
-	<button type="submit" class="btn-update">수정하기</button>
-	<button type="submit" class="btn-cancel">수정취소</button>
-</div> 
-
-<!-- <script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function() {
-        var updateForm = $('#updateForm');
+        var updateForm = $('form'); 
 
         // 수정하기 버튼 클릭
         $('.btn-update').click(function() {
@@ -52,13 +63,10 @@
 
         // 취소하기 버튼 클릭
         $('.btn-cancel').click(function() {
-            location.href = '/board/read';
+        	window.history.back(); 
         }); 
     });
-</script> -->
-
-
-
+</script>
 
 <!-- footer -->
 <%@include file="/WEB-INF/views/include/footer.jsp"%>

@@ -82,20 +82,59 @@
 	</delete>
 	<!-- 특정 글 삭제 -->
 
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+	<select id="boardPage" resultType="BoardVO">
+		select * from
+		event_notice_faq_board
+		order by enf_notice_num desc, enf_regdate desc
+		limit #{page}, 10
+	</select>
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+	<select id="boardCri" resultType="BoardVO">
+		select * from
+		event_notice_faq_board
+		order by enf_notice_num desc, enf_regdate desc
+		limit #{pageStart}, #{pageSize}
+	</select>
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+
+	<!-- 게시판에 저장된 총 글의 개수 조회 -->
+	<select id="boardCount" resultType="int">
+ 		<![CDATA[
+ 		select count(*) from event_notice_faq_board
+ 		where enf_notice_num > 0
+ 		]]>
+	</select>
+	<!-- 게시판에 저장된 총 글의 개수 조회 -->
+
+	<select id="searchByTitle" resultType="BoardVO">
+		SELECT * FROM event_notice_faq_board
+		WHERE (enf_title LIKE CONCAT('%', #{searchTerm}, '%')
+		OR enf_content LIKE CONCAT('%', #{searchTerm}, '%'))
+		AND enf_category = 1
+	</select>
+
+
+
 	<!-- 이벤트 -->
 
 	<select id="getMaxEnfEventNum" resultType="java.lang.Integer">
-		SELECT MAX(enf_event_num) FROM event_notice_faq_board;
+		SELECT
+		MAX(enf_event_num) FROM event_notice_faq_board;
 	</select>
 
 	<!-- 이벤트 글쓰기 -->
 	<insert id="createEvent"
 		parameterType="com.project2.domain.BoardVO">
 		INSERT INTO event_notice_faq_board
-		(enf_category, enf_event_num, enf_title, enf_content, enf_viewcnt, enf_updatedate,
+		(enf_category,
+		enf_event_num, enf_title, enf_content, enf_viewcnt, enf_updatedate,
 		enf_event_type, enf_img)
 		VALUES
-		(0, #{enf_event_num}, #{enf_title}, #{enf_content}, 0, null,
+		(0, #{enf_event_num}, #{enf_title},
+		#{enf_content}, 0, null,
 		#{enf_event_type}, #{enf_img});
 	</insert>
 
@@ -103,7 +142,7 @@
 	<select id="getEvListAll" resultType="BoardVO"
 		resultMap="boardMap">
 		select * from event_notice_faq_board
-		order by enf_regdate
+		order by enf_event_type
 		desc
 	</select>
 	<!-- 글 목록 조회 -->
@@ -121,7 +160,8 @@
 		parameterType="com.project2.domain.BoardVO">
 		UPDATE event_notice_faq_board
 		SET enf_title = #{enf_title},
-		enf_content = #{enf_content},
+		enf_content
+		= #{enf_content},
 		<if test="enf_img != null">
 			enf_img = #{enf_img},
 		</if>
@@ -134,9 +174,37 @@
 	<delete id="eventRemoveBoard">
 		delete from event_notice_faq_board
 		where
-		enf_event_num = #{enf_event_num}
+		enf_event_num
+		= #{enf_event_num}
 	</delete>
 	<!-- 특정 글 삭제 -->
 
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+	<select id="eventPage" resultType="BoardVO">
+		select * from
+		event_notice_faq_board
+		order by enf_event_num desc, enf_regdate desc
+		limit #{page}, 10
+	</select>
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+	<select id="eventCri" resultType="BoardVO">
+		select * from
+		event_notice_faq_board
+		order by enf_event_num desc, enf_regdate desc
+		limit #{pageStart}, #{pageSize}
+	</select>
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+
+
+	<!-- 게시판에 저장된 총 글의 개수 조회 -->
+	<select id="eventCount" resultType="int">
+ 		<![CDATA[
+ 		select count(*) from tbl_boaevent_notice_faq_boardrd
+ 		where enf_event_num > 0
+ 		]]>
+	</select>
+	<!-- 게시판에 저장된 총 글의 개수 조회 -->
 
 </mapper>

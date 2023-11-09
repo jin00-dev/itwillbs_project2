@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.project2.domain.BoardVO;
+import com.project2.domain.Criteria;
 import com.project2.persistence.BoardDAO;
 
 @Service
@@ -60,8 +61,29 @@ public class BoardServiceImpl implements BoardService {
 		return bdao.removeBoard(enf_notice_num);
 	} 
 	
+	@Override
+	public List<BoardVO> getBoardPage(Criteria cri) throws Exception {
+		
+		return bdao.getBoardPage(cri);
+	}	
+	
+	@Override
+	public int getBoardCount() throws Exception {
+		
+		return bdao.getBoardCount();
+	}
+	
+	@Override
+	public List<BoardVO> searchByTitle(String title) {
+		
+		 return bdao.searchByTitle(title);
+	}
+	
+	
 ///////////////////////////////////이벤트/////////////////////////////////////////////
 	
+
+
 	@Override
 	public Integer getMaxEnfEventNum() throws Exception {
 	    return bdao.getMaxEnfEventNum();
@@ -97,6 +119,17 @@ public class BoardServiceImpl implements BoardService {
 	public int eventRemoveBoard(Integer enf_event_num) throws Exception {
 		
 		return bdao.eventRemoveBoard(enf_event_num);
+	}
+
+	@Override
+	public List<BoardVO> getEventPage(Criteria cri) throws Exception {
+		
+		return bdao.getEventPage(cri);
+	}
+
+	@Override
+	public int getEventCount() throws Exception {
+		return bdao.getEventCount();
 	}
 	
 	

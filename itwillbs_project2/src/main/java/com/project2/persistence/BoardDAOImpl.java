@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.project2.domain.BoardVO;
+import com.project2.domain.Criteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -80,25 +81,63 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public int removeBoard(Integer enf_notice_num) throws Exception {
 		logger.debug(" deleteBoard(Integer enf_notice_num) ");
- 
+
 		return sqlSession.delete(NAMESPACE + ".removeBoard", enf_notice_num);
 	}
+
+	@Override
+	public List<BoardVO> getBoardPage(Integer page) throws Exception {
+		if (page <= 0) {
+			page = 1;
+		}
+		// 1 -> 1페이지 / 2 -> 2페이지
+		// page가 1이라면 if문 안 들어가고 밑에 코드는 값이 0임.
+		page = (page - 1) * 10;
+
+		return sqlSession.selectList(NAMESPACE + ".boardPage", page);
+	}
+
+	@Override
+	public List<BoardVO> getBoardPage(Criteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".boardCri", cri);
+	}
 	
-///////////////////////////////////이벤트///////////////////////////////////////////// 
 	
 	@Override
-	public void evinsert(BoardVO vo) throws Exception {
-	    logger.debug(" event insert -> DAO 호출 ");
-	    
-	    Integer maxEnfEventNum = sqlSession.selectOne(NAMESPACE + ".getMaxEnfEventNum");
-	    if (maxEnfEventNum == null) {
-	        maxEnfEventNum = 0;
-	    }
-	    vo.setEnf_event_num(maxEnfEventNum + 1);
-	    
-	    sqlSession.insert(NAMESPACE + ".createEvent", vo);
-	}  
+	public int getBoardCount() throws Exception {
+		
+		return sqlSession.selectOne(NAMESPACE + ".boardCount");
+	}
 	
+	@Override
+	public int getEventCount() throws Exception {
+		
+		return sqlSession.selectOne(NAMESPACE + ".eventCount");
+	}
+	
+	@Override
+	public List<BoardVO> searchByTitle(String title) {
+	
+		return sqlSession.selectList(NAMESPACE + ".searchByTitle", title);
+	}
+
+///////////////////////////////////이벤트///////////////////////////////////////////// 
+
+
+
+	@Override
+	public void evinsert(BoardVO vo) throws Exception {
+		logger.debug(" event insert -> DAO 호출 ");
+
+		Integer maxEnfEventNum = sqlSession.selectOne(NAMESPACE + ".getMaxEnfEventNum");
+		if (maxEnfEventNum == null) {
+			maxEnfEventNum = 0;
+		}
+		vo.setEnf_event_num(maxEnfEventNum + 1);
+
+		sqlSession.insert(NAMESPACE + ".createEvent", vo);
+	}
+
 	@Override
 	public List<BoardVO> getEvListAll() throws Exception {
 		logger.debug(" getEvListAll() 호출 - 연결된 매퍼 호출 ");
@@ -109,10 +148,10 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public Integer getMaxEnfEventNum() throws Exception {
-		 
+
 		return sqlSession.selectOne(NAMESPACE + ".getMaxEnfEventNum");
 	}
-	
+
 	@Override
 	public BoardVO evGetBoard(Integer enf_event_num) throws Exception {
 		logger.debug(" evGetBoard() 호출 - 연결된 매퍼 호출 ");
@@ -123,18 +162,32 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public void eventUpdateBoard(BoardVO vo) throws Exception {
-		
+
 		sqlSession.update(NAMESPACE + ".eventUpdateBoard", vo);
 	}
 
 	@Override
 	public int eventRemoveBoard(Integer enf_event_num) throws Exception {
-		
-		
+
 		return sqlSession.delete(NAMESPACE + ".eventRemoveBoard", enf_event_num);
 	}
 
-	
-	
-	
+	@Override
+	public List<BoardVO> getEventPage(Integer page) throws Exception {
+
+		if (page <= 0) {
+			page = 1;
+		}
+		// 1 -> 1페이지 / 2 -> 2페이지
+		// page가 1이라면 if문 안 들어가고 밑에 코드는 값이 0임.
+		page = (page - 1) * 10;
+
+		return sqlSession.selectList(NAMESPACE + ".eventPage", page);
+	}
+ 
+	@Override
+	public List<BoardVO> getEventPage(Criteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".eventCri", cri);
+	}
+
 }
