@@ -22,6 +22,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @RequestMapping(value="/user/*")
 public class UserController {
+	
 
 private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -241,7 +242,7 @@ private UserService uService;
 		public int phoneCheck(String phone,Model model)throws Exception{
 			
 			return uService.phoneCheck(phone);
-			
+			 
 			
 		}
 			

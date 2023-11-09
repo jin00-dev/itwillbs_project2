@@ -14,6 +14,7 @@
 		var idJ = /^[a-z0-9][a-z0-9_\-]{4,19}$/;
 		// 비밀번호 정규식
 		var pwRegex =  /^.*(?=^.{8,20}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+// 		var pwRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
 		// 이름 정규식
 		var nameJ = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
 		// 이메일 검사 정규식
@@ -44,6 +45,7 @@
 				$("#idCheckDiv").removeClass("alert-success");
 				$("#idCheckDiv").addClass("alert-danger");
 				$("#idCheckDiv").text("아이디는 4자 이상 영숫자여야 합니다.");
+				idCheck = false;
 				return;
 			}
 
@@ -52,6 +54,7 @@
 				$("#idCheckDiv").removeClass("alert-success");
 				$("#idCheckDiv").addClass("alert-danger");
 				$("#idCheckDiv").text("아이디는 30자 이내 영숫자여야 합니다.");
+				idCheck = false;
 				return;
 			}
 			// user/idCheck
@@ -61,7 +64,8 @@
 		        //alert("이메일형식에 맞게 입력해주세요")
 		        $("#idCheckDiv").val("");
 		        $("#idCheckDiv").text("아이디를 이메일형식에 맞게 입력해주세요");
-		        $("#idCheckDiv").focus();
+		        idCheck=false;
+		        //$("#idCheckDiv").focus();
 		        return ;
 		      }else{
 // 				$("#idCheckDiv").load("/user/idCheck?id=" + id, function(result) {
@@ -108,58 +112,71 @@
 		// 비밀번호  처리 이벤트
 		$("#pw").keyup(function() {
 			pwCheck = false;
-			var pw = $(this).val();
+			var pw = $("#pw").val();
+			var pw2 = $("#pw2").val();
 			
-			if (!pwRegex.test(pw.value)) { // 비밀번호 유효성 검사
-				$("#pwCheckDiv").text("비밀번호는 영문자+숫자+특수문자 조합으로 8~20자리 사용해야합니다.");
-// 				pw.focus();
-				return ;
+			if (pwRegex.test(pw)) {
+				pwCheck = true;
+				$("#pwCheckDiv").removeClass("alert-danger");
+				$("#pwCheckDiv").addClass("alert-success");
+				$("#pwCheckDiv").text("적당한 비밀번호입니다.");
+				return;
 			}
-
-			if (pw.length < 8) {
+			else if (pw.length < 8) {
 				$("#pwCheckDiv").removeClass("alert-success");
 				$("#pwCheckDiv").addClass("alert-danger");
 				$("#pwCheckDiv").text("비밀번호는 8자 이상이어야 합니다.");
 				return;
 			}
-
 			// 20자 초과 처리
-			if (pw.length > 20) {
+			else if (pw.length > 20) {
 				$("#pwCheckDiv").removeClass("alert-success");
 				$("#pwCheckDiv").addClass("alert-danger");
 				$("#pwCheckDiv").text("비밀번호는 20자 이내여야 합니다.");
 				return;
 			}
+			else if (!pwRegex.test(pw)) { // 비밀번호 유효성 검사
+				$("#pwCheckDiv").removeClass("alert-success");
+				$("#pwCheckDiv").addClass("alert-danger");
+				$("#pwCheckDiv").text("비밀번호는 영문자+숫자+특수문자 조합으로 8~20자리 사용해야합니다.");
+// 				pw.focus();
+				return ;
+			}
+			 
 			
+			
+			
+// 			else if (pw == pw2) {// 4~20 사이 pw2와 같은지 체크
+			 
+			
+// 				$("#pwCheckDiv, #pw2CheckDiv").removeClass("alert-danger");
+// 				$("#pwCheckDiv, #pw2CheckDiv").addClass("alert-success");
+// 				$("#pwCheckDiv, #pw2CheckDiv").text("적당한 비밀번호입니다.");
+// 				pwCheck = true;
+// 			} else {
+// 				$("#pwCheckDiv, #pw2CheckDiv").removeClass("alert-danger");
+// 				$("#pwCheckDiv, #pw2CheckDiv").addClass("alert-success");
+// 				$("#pwCheckDiv").text("비밀번호와 비밀번호 확인은 같아야 합니다.");
+// 				if (pw2.length < 8)
+// 					$("#pw2CheckDiv").text("비밀번호확인은 8자 이상이여야합니다.");
+// 				else if (pw2.length > 20)
+// 					$("#pw2CheckDiv").text("비밀번호 확인은 20자 이내여야합니다.");
+// 				else
+// 					$("#pw2CheckDiv").text("비밀번호와 비밀번호 확인은 같아야 합니다.");
+// 			}
 			
 			
 			
 
-			// 4~20 사이 pw2와 같은지 체크
-			var pw2 = $("#pw2").val();
-			if (pw == pw2) {
-				$("#pwCheckDiv, #pw2CheckDiv").removeClass("alert-danger");
-				$("#pwCheckDiv, #pw2CheckDiv").addClass("alert-success");
-				$("#pwCheckDiv, #pw2CheckDiv").text("적당한 비밀번호입니다.");
-				pwCheck = true;
-			} else {
-				$("#pwCheckDiv, #pw2CheckDiv").removeClass("alert-danger");
-				$("#pwCheckDiv, #pw2CheckDiv").addClass("alert-success");
-				$("#pwCheckDiv").text("비밀번호와 비밀번호 확인은 같아야 합니다.");
-				if (pw2.length < 8)
-					$("#pw2CheckDiv").text("비밀번호확인은 8자 이상이여야합니다.");
-				else if (pw2.length > 20)
-					$("#pw2CheckDiv").text("비밀번호 확인은 20자 이내여야합니다.");
-				else
-					$("#pw2CheckDiv").text("비밀번호와 비밀번호 확인은 같아야 합니다.");
-			}
+			
 
 		});
 
-		// 비밀번호 확인 처리 이벤트
+		//비밀번호 확인 처리 이벤트
 		$("#pw2").keyup(function() {
 			pwCheck = false;
 			var pw2 = $(this).val();
+			var pw = $("#pw").val();
 
 			if (pw2.length < 8) {
 				$("#pw2CheckDiv").removeClass("alert-success");
@@ -169,16 +186,16 @@
 			}
 
 			// 20자 초과 처리
-			if (pw2.length > 20) {
+			else if(pw2.length > 20) {
 				$("#pw2CheckDiv").removeClass("alert-success");
 				$("#pw2CheckDiv").addClass("alert-danger");
 				$("#pw2CheckDiv").text("비밀번호는 20자 이내여야 합니다.");
 				return;
-			}
-
-			// 4~20 사이 pw2와 같은지 체크
-			var pw = $("#pw").val();
-			if (pw == pw2) {
+			} 
+			 // 4~20 사이 pw2와 같은지 체크
+			
+			else if(pw == pw2) {
+				
 				$("#pw2CheckDiv, #pwCheckDiv").removeClass("alert-danger");
 				$("#pw2CheckDiv, #pwCheckDiv").addClass("alert-success");
 				$("#pw2CheckDiv, #pwCheckDiv").text("적당한 비밀번호입니다.");
@@ -187,13 +204,9 @@
 				$("#pwCheckDiv, #pw2CheckDiv").removeClass("alert-danger");
 				$("#pwCheckDiv, #pw2CheckDiv").addClass("alert-success");
 				$("#pw2CheckDiv").text("비밀번호와 비밀번호 확인은 같아야 합니다.");
-				if (pw.length < 8)
-					$("#pwCheckDiv").text("비밀번호확인은 8자 이상이여야합니다.");
-				else if (pw.length > 20)
-					$("#pwCheckDiv").text("비밀번호 확인은 20자 이내여야합니다.");
-				else
-					$("#pwCheckDiv").text("비밀번호와 비밀번호 확인은 같아야 합니다.");
 			}
+
+			
 
 		});
 
@@ -230,7 +243,7 @@
 		        
 		        $("#phoneCheckDiv").val("");
 		        $("#phoneCheckDiv").text("핸드폰 번호 양식에 맞게 적어주세요");
-		        $("#phoneCheckDiv").focus();
+		        //$("#phoneCheckDiv").focus();
 		        
 		        return ;
 		      }else{
@@ -266,7 +279,7 @@
 			
 		// 회원가입
 		$("#writeForm").submit(function() {
-
+			var name = $('#name').val();
 			
 			// 핸드폰 중복체크 -
 			if(!phoneCheck){
@@ -279,6 +292,7 @@
 			// 아이디 중복체크 - 사용 가능한 아이디 인지 확인
 			if (!idCheck) {
 				alert("중복이 되지 않는 적당한 형식의 아이디를 사용하셔야만 합니다.");
+				console.log(idCheck+"@@@@@@@@@");
 				$("#id").focus();
 				//form 전송을 무시시킴
 				return ;
@@ -292,8 +306,8 @@
 				return ;
 			}
 			
-				alert("아이디 체크 : " + idCheck + "\n비밀번호 체크 : " + pwCheck);
-				alert(id+"회원님 가입을 환영합니다.");
+				
+				alert(name+"회원님 가입을 환영합니다.");
 			
 
 			
@@ -310,7 +324,7 @@
 	<form action="" id="writeForm" method="post">
 		<div class="form-group">
 			<label for="id">아이디 </label> 
-			<input id="id" name="user_id" pattern=""
+			<input id="id" name="user_id" 
 				required="required" class="form-control" type="email">
 			<div class="alert alert-danger" id="idCheckDiv">아이디는 4자 이상 입력하셔야합니다.</div>
 		</div>
@@ -333,7 +347,7 @@
 			</div>
 			<div class="form-group">
 				<label for="pw">비밀번호</label> 
-				<input id="pw" name="user_pw" required="required" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$"  placeholder="비밀번호 입력"
+				<input id="pw" name="user_pw" required="required"  placeholder="비밀번호 입력"
 					class="form-control" type="password">
 				<div id="pwCheckDiv" class="alert alert-danger">비밀번호는 8자 이상이어야합니다.</div>
 			</div>
@@ -351,7 +365,7 @@
 			</div>
 			<div class="form-group">
 				<label for="tel">연락처</label> <input id="phone" name="user_phone" placeholder="000-0000-0000" 
-				pattern="" class="form-control"  required="required">
+				 class="form-control"  required="required">
 				<div class="alert alert-danger" id="phoneCheckDiv">휴대폰 번호를 양식에 맞게 적어주세요.</div>
 			</div>
 		</div>
@@ -363,7 +377,7 @@
 				<a type="button" class="btn btn-default pull-left"
 					href="../user/userMain">취소</a>
 				<button type="submit" class="btn btn-primary infoModBtn pull-right"
-					id="joinButton">가입하기</button>
+					id="joinButton">회원가입</button>
 			</div>
 		</div>
 
