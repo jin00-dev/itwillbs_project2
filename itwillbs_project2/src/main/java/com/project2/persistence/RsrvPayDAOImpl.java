@@ -21,7 +21,7 @@ public class RsrvPayDAOImpl {
 	
 	String NAMESPACE = "com.project2.mapper.ExpMapper";
 
-	public String makeP_no() throws Exception {
+/*	public String makeP_no() throws Exception {
 		logger.info("dao - makiP_no 호출 ");
 	    String orderNo = null;
 	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -38,7 +38,7 @@ public class RsrvPayDAOImpl {
 	    
 	    logger.info("주문번호 "+orderNo);
 	    return orderNo;		
-	}
+	}*/
 
 //	public void insertPaymentInfo(PayDTO pdto) throws Exception {
 //		logger.info("dao.insertPay() 실행");
@@ -51,11 +51,11 @@ public class RsrvPayDAOImpl {
 		return sqlSession.update(NAMESPACE+".updatePay",rvo);
 	}
 
-	public Integer selectPrice(String p_no) throws Exception {
-		Integer price = sqlSession.selectOne(NAMESPACE+".selectPrice",p_no);
-		logger.info("daoPrice"+price);
-		return price;
-	}
+//	public Integer selectPrice(String p_no) throws Exception {
+//		Integer price = sqlSession.selectOne(NAMESPACE+".selectPrice",p_no);
+//		logger.info("daoPrice"+price);
+//		return price;
+//	}
 	
 	public PaymentVO selectPayInfo(int order_num) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+".selectPay",order_num);

@@ -1,7 +1,5 @@
 package com.project2.controller;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,9 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.project2.domain.CancelPay;
+import com.google.gson.Gson;
 import com.project2.domain.ExpVO;
-import com.project2.domain.OrderVO;
 import com.project2.domain.PaymentVO;
 import com.project2.domain.ReportVO;
 import com.project2.domain.RevVO;
@@ -216,12 +213,24 @@ public class ExpController {
 		return false;
 	}
 
-//	//test
-//	@PostMapping("/cancel")
-//	@ResponseBody
-//	public CancelPay cancelPay(CancelPay vo) {
-//		logger.debug("merchant_uid : "+ vo);
-//		return vo;
-//	}
+	//내 주변 체험
+	@GetMapping("/myLocation")
+	public String myLocationGET(Model model) {
+		try {
+			List<ExpVO> list = service.getExpList();
+			
+			// Gson 객체 생성
+			Gson gson = new Gson();
+
+			// List<ExpVO>를 JSON 문자열로 변환
+			String json = gson.toJson(list);
+			
+			model.addAttribute("list",json);
+			model.addAttribute("region","");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/exp/myLocation";
+	}
 
 }// controller

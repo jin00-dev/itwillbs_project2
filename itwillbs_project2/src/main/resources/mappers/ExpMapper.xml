@@ -5,6 +5,9 @@
   
 <mapper namespace="com.project2.mapper.ExpMapper">
 
+	<select id="expListAll" resultType="ExpVO">
+		select * from experience
+	</select>
 
 	<select id="expList" resultType="ExpVO">
 		select e.exp_num, e.user_num,e.exp_name,e.exp_start_date,exp_end_date,

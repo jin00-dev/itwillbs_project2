@@ -31,15 +31,23 @@ public class ExpDAOImpl {
 	// memberMapper의 namespace정보 저장
 	private static final String NAMESPACE = "com.project2.mapper.ExpMapper.";
 
-	// 게시물리스트
-	public List<ExpVO> getExpList(ExpVO vo) throws Exception {
+	// 게시물리스트 전부 가저오기
+	public List<ExpVO> getExpList() throws Exception {
 		logger.debug(" DAOImpl : getExpList() 호출");
 
+		return sqlSession.selectList(NAMESPACE + "expListAll");
+
+	}
+	
+	// 게시물리스트
+	public List<ExpVO> getExpList(ExpVO vo) throws Exception {
+		logger.debug(" DAOImpl : getExpList(조건) 호출");
+		
 		if(vo.getExp_region().equals("전체")) {
 			return sqlSession.selectList(NAMESPACE + "expListAllRegion", vo);
 		}
 		return sqlSession.selectList(NAMESPACE + "expList", vo);
-
+		
 	}
 
 	//1개 개시물 리뷰목록 가저오기
