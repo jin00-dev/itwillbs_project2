@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project2.mapper.PaymentMapper">
+
+
+	<!-- 클래스를 주문한 사람 상세 내역 -->
+
+	<!-- 회원의 모든 결제 예매 리스트 -->
+	<select id="paymentList" resultType="com.project2.domain.PaymentVO">
+		select u.user_id, u.user_num, e.exp_name, e.exp_summary_img, e.exp_num, e.exp_capacity, e.exp_price, p.order_num
+		from userTable u 
+		left join experience e 
+		on u.user_num = e.user_num 
+		left join payment p 
+		on p.name = e.exp_name 
+		where user_id=#{user_id}
+	</select>
+	
+	
+	<!-- 한 회원의 결제 상세내역 -->
+	<select id="paymentInfo" resultType="com.project2.domain.PaymentVO">
+		select u.user_num, p.status, e.exp_name, e.exp_place, e.exp_region, e.exp_phone, e.exp_num, p.paid_amount, p.pay_method, p.custom_data , p.order_num, p.custom_data, p.buyer_tel, p.payment_date   
+		from userTable u 
+		left join experience e 
+		on u.user_num = e.user_num 
+		left join payment p 
+		on p.name = e.exp_name 
+		where u.user_num=#{user_num} and p.order_num=#{order_num}
+	</select>
+	
+	<!-- 사업자가 신청한 클래스의 모든 예약자 리스트로 조회 -->
+	<select id="hostList" resultType="com.project2.domain.PaymentVO">
+		select e.exp_name, e.exp_num, u.user_name, u.user_num, u.user_phone, e.exp_price, p.order_num, p.custom_data, p.status
+		from payment p 
+		left join experience e 
+		on p.name = e.exp_name 
+		left join userTable u 
+		on p.buyer_email = u.user_id 
+		where e.exp_num in(select exp_num from experience where u.user_num = #{user_num})
+	</select>
+	
+	
+	<!-- 결제 -->
+	<insert id="getPayment">
+		insert into payment 
+		values(#{order_num},#{merchant_uid},#{buyer_email},#{buyer_name},#{buyer_tel},
+		#{name},#{custom_data},#{imp_uid},#{paid_amount},#{status},default,#{pg_provider},
+		#{pay_method},#{card_name})
+	</insert>
+
+
+
+
+</mapper>
