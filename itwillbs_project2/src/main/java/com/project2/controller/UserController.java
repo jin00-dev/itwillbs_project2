@@ -61,7 +61,7 @@ private UserService userService;
 		//return "redirect:../";
 	}
 	
-//	http://localhost:8088/member/login
+//	http://localhost:8088/user/login
 	
 	// 로그인 동작 메서드 생성 - 입력받는거 / 받은 거 처리
 	
@@ -70,8 +70,6 @@ private UserService userService;
 	public String loginGET() {
 		logger.debug(" loginGET() 호출 ");
 		logger.debug(" 연결된 뷰페이지로 이동 ");
-		
-		
 		
 		return "/user/login";
 	}
@@ -96,21 +94,56 @@ private UserService userService;
 		
 		// 로그인 성공
 		// 세션에 로그인 아이디를 저장
-		session.setAttribute("id", resultVO.getUser_id());
+		// 세션에 유저 번호, 권한, 이름 저장
+		session.setAttribute("user_id", resultVO.getUser_id());
+		session.setAttribute("user_num", resultVO.getUser_num());
+		session.setAttribute("user_type", resultVO.getUser_type());
+		session.setAttribute("user_name", resultVO.getUser_name());
 		
-		return "redirect:/user/userMain";
+//		return "redirect:/user/userMain";
+		// 로그인 후 메인페이지 이동 - Y
+		return "redirect:/";
 	}
 	
-	// 정보조회, 정보입력받는 페이지의 대부분의 방식은 GET
+		// 정보조회, 정보입력받는 페이지의 대부분의 방식은 GET
 		// 메인페이지 호출 - 내가 전달할 세션아이디를 출력
+		// 회원 마이페이지 - Y
 		@RequestMapping(value="/userMain", method=RequestMethod.GET)
-		public String mainGET() {
+		public String mainGET(HttpSession session,Model model) {
 			logger.debug(" mainGET() 호출 ");
 			
+			//사용자의 아이디정보 => 세션영역에 있는 정보 가져오기	
+			String id = (String) session.getAttribute("user_id");
 			
-			// 메인 페이지를 보여주기만 (패턴3-주소안바뀜)
+			// 서비스 -> DB에 저장된 회원정보	
+			UserVO resultVO = uService.userInfo(id);
+			
+			// 연결된 뷰페이지에 출력=> 컨트롤러의 정보를 view페이지로 전달
+			// Model객체를 사용
+			model.addAttribute("vo", resultVO);
+			
+			
+			// UserMain -> 마이페이지 (userInfo)로 변경
 			return "/user/userMain";
 		}
+		
+		// 회원정보 조회 => userMain페이지에서 회원 정보 조회 
+//				@RequestMapping(value = "/info",method = RequestMethod.GET)
+//				public String infoGET(HttpSession session,Model model) {
+//					logger.debug(" infoGET() 호출 ");
+//					
+//					//사용자의 아이디정보 => 세션영역에 있는 정보 가져오기	
+//					String id = (String) session.getAttribute("user_id");
+//					
+//					// 서비스 -> DB에 저장된 회원정보	
+//					UserVO resultVO = uService.userInfo(id);
+//					
+//					// 연결된 뷰페이지에 출력=> 컨트롤러의 정보를 view페이지로 전달
+//					// Model객체를 사용
+//					model.addAttribute("vo", resultVO);
+//					
+//					return "/user/userInfo";
+//				}		
 		
 		// 로그아웃 처리
 		@RequestMapping(value = "/logout",method = { RequestMethod.GET, RequestMethod.POST })
@@ -126,31 +159,13 @@ private UserService userService;
 			return "redirect:/user/userMain";
 		}
 	
-		// 회원정보 조회
-		@RequestMapping(value = "/info",method = RequestMethod.GET)
-		public String infoGET(HttpSession session,Model model) {
-			
-			logger.debug(" infoGET() 호출 ");
-			//사용자의 아이디정보 => 세션영역에 있는 정보 가져오기	
-			String id = (String) session.getAttribute("id");
-			
-			// 서비스 -> DB에 저장된 회원정보	
-			UserVO resultVO = uService.userInfo(id);
-			
-			// 연결된 뷰페이지에 출력=> 컨트롤러의 정보를 view페이지로 전달
-			// Model객체를 사용
-			model.addAttribute("vo", resultVO);
-			
-			return "/user/userInfo";
-		}
-		
 		// 회원정보 수정GET
 		@RequestMapping(value = "/update",method = RequestMethod.GET)
 		public String updateGET(HttpSession session,Model model) {
 			logger.debug(" updateGET() 호출 ");
 			
 			// 로그인한 회원 아이디조회
-			String id = (String)session.getAttribute("id");
+			String id = (String)session.getAttribute("user_id");
 			
 			// 서비스 -> DAO : 회원정보 조회 호출
 			UserVO resultVO =uService.userInfo(id);

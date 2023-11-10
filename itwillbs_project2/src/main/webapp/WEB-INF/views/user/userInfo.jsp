@@ -8,9 +8,7 @@
    
    ${vo }<hr>
    
-   아이디 : ${vo.user_id } <hr>
-   이름 : ${vo.user_name }<hr>
-   폰번호 : ${vo.user_phone }<hr>
+   
  
    
    <a href="/user/userMain">메인페이지로....</a>
