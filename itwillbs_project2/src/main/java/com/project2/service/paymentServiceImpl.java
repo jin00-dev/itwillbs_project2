@@ -55,7 +55,8 @@ public class paymentServiceImpl implements paymentService {
 
 
 	@Override
-	public PaymentVO selectPayInfo(int order_num) throws Exception {
+	public PaymentVO selectPayInfo(Integer order_num) throws Exception {
+		logger.debug("dddddddddddddddddddddddddddddddddddddddddd");
 		return pdao.selectPayInfo(order_num);
 	}
 

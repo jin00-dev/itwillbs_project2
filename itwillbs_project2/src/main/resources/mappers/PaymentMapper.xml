@@ -58,7 +58,8 @@
 	
 	<update id="updateCancelPay">
 		update payment set 
-		cancel_date=<choose><when test="status=='cancelled">now()</when>
+		cancel_date=<choose>
+		<when test="status=='cancelled'">now()</when>
 		<otherwise>null</otherwise>
 		</choose>, 
 		status=#{status} where order_num=#{order_num}

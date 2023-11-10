@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -93,13 +94,15 @@ public class PaymentController {
 	
 	// 결제 취소
 	@RequestMapping(value = "/cancelPay", method = RequestMethod.POST)
-	public @ResponseBody String cancelPayment(int order_num, PaymentVO vo) {
-		
+	@ResponseBody
+	public String cancelPayment(@RequestBody int order_num) {
+		logger.debug("결제취소 실행 ");
+		logger.debug("order_num : "+order_num);
 		try {
 			//  결제정보 가져오기
 			PaymentVO re = pService.selectPayInfo(order_num);
 			String token = pService.getToken();
-			if(vo.getStatus().equals("cancelled")) {
+			if(re.getStatus().equals("cancelled")) {
 				return "already refund";
 			}
 			PaymentVO result = pService.cancelPayAction(token, re);

@@ -14,7 +14,7 @@ public interface paymentService {
 	
 	public int payment(PaymentVO vo) throws Exception;
 	
-	public PaymentVO selectPayInfo(int order_num) throws Exception;
+	public PaymentVO selectPayInfo(Integer order_num) throws Exception;
 	
 	public String getToken() throws Exception;
 	

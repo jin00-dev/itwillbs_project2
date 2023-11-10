@@ -48,7 +48,7 @@ public class PaymentDAOImpl implements PaymentDAO {
 	}
 
 	@Override
-	public PaymentVO selectPayInfo(int order_num) throws Exception {
+	public PaymentVO selectPayInfo(Integer order_num) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+".selectPayinfo", order_num);
 	}
 

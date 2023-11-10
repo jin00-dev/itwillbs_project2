@@ -22,12 +22,14 @@
 					<td>${i.exp_name }</td>
 					<td>${i.exp_capacity } * ${i.exp_price }</td>
 					<td><button class="btn1" onclick="location.href='/class/paymentInfo?user_num=${param.user_num}&order_num=${i.order_num }'">상세내역</button></td>
-					<td><button class="btn2" onclick="cancelPay('6')">환불</button><br></td>
+					<td><button class="btn2" onclick="cancelPay('10')">환불</button><br></td>
 					
 				</tr>
 			</c:forEach>	
 			
-		<script>
+	</table>
+	
+	<script>
 		function cancelPay(order_num) {
 		      jQuery.ajax({
 		       url: "/class/cancelPay", 
@@ -54,12 +56,8 @@
 		       }
 		     }); // refund ajax
 		}
-		</script>
-			
-			
-	</table>
+	</script>
 	
-	<
 	
 	
 	
