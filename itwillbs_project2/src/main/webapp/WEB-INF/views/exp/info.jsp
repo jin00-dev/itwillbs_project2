@@ -18,10 +18,10 @@
 
 <!-- 로그인 테스트 -->
 <%
-	session.setAttribute("user_num", "1");
-	session.setAttribute("user_id", "test1");
-	session.setAttribute("user_name", "김소예");
-	session.setAttribute("user_type", "1");
+// 	session.setAttribute("user_num", "1");
+// 	session.setAttribute("user_id", "test1");
+// 	session.setAttribute("user_name", "김소예");
+// 	session.setAttribute("user_type", "1");
 	// 		session.invalidate();
 %>
 <!-- Section-->
