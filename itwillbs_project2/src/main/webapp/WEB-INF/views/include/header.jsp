@@ -24,23 +24,27 @@
 		<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
 			<ul class="navbar-nav me-2 mb-2 mb-lg-0">
 				<c:choose>
-					<c:when test="${empty user_id }">
+					<c:when test="${empty user_num }">
 						<li class="nav-item"><a class="nav-link" href="#!">회원가입</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">로그인</a></li>
+						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
 					</c:when>
 					<c:when test="${user_type eq 0 }">
-						<li class="nav-item"><a class="nav-link" >${user_id }님 환영합니다</a></li>
+						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
+						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">로그아웃</a></li>
 					</c:when>
 					<c:when test="${user_type eq 1 }">
-						<li class="nav-item"><a class="nav-link" >${user_id }님 환영합니다</a></li>
+						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
+						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">로그아웃</a></li>
 					</c:when>
 					<c:when test="${user_type eq 2 }">
-						<li class="nav-item"><a class="nav-link" >${user_id }님 환영합니다</a></li>
+						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">관리자페이지</a></li>
+						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">로그아웃</a></li>
 					</c:when>
 				</c:choose>
@@ -48,7 +52,7 @@
 		</div>
 	</nav>
 	<div class="navbar navbar-light bg-light">
-		<a class="navbar-brand" href="#"> <img src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top"> 
+		<a class="navbar-brand" href="/"> <img src="" alt="" width="30" height="24" class="d-inline-block align-text-top"> 
 		세모클래스
 		</a>
 		<form class="d-flex justify-content-center">
@@ -58,11 +62,13 @@
 		<div style="width: 9%">
 		</div>
 	</div>
+	<c:set var="path" value="${requestScope['javax.servlet.forward.servlet_path']}"/>
 	<div>
-		<ul class="nav nav nav-tabs justify-content-center">
-			<li class="nav-item"><a class="nav-link" href="#">체험</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">내주변 체험</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">이벤트</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">고객지원</a></li>
+		<ul class="nav nav nav-pills justify-content-center">
+			<li class="nav-item"><a class="nav-link ${path == '/' ? 'active' : ''}" href="/?category=공예">체험</a></li>
+			<li class="nav-item"><a class="nav-link ${path == '' ? 'active' : ''}" href="/">내주변 체험</a></li>
+			<li class="nav-item"><a class="nav-link ${path == '' ? 'active' : ''}" href="#">이벤트</a></li>
+			<li class="nav-item"><a class="nav-link ${path == '' ? 'active' : ''}" href="#">고객지원</a></li>
 		</ul>
 	</div>
+	
