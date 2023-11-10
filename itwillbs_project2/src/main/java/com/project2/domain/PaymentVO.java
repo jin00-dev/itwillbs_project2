@@ -48,6 +48,7 @@ public class PaymentVO {
     private int paid_amount;
     private String status;
     private Timestamp payment_date;
+    private Timestamp cancel_date;
     private String pg_provider;
     private String pay_method;
     private String card_name;

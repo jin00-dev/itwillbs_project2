@@ -47,6 +47,16 @@ public class PaymentDAOImpl implements PaymentDAO {
 		return sqlSession.insert(NAMESPACE+".getPayment", vo);
 	}
 
+	@Override
+	public PaymentVO selectPayInfo(int order_num) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+".selectPayinfo", order_num);
+	}
+
+	@Override
+	public int updatePayCancel(PaymentVO vo) throws Exception {
+		return sqlSession.update(NAMESPACE+".updateCancelPay", vo);
+	}
+
 	
 	
 	

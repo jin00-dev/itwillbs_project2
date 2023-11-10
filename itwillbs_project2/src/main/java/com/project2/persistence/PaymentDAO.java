@@ -14,7 +14,8 @@ public interface PaymentDAO {
 	
 	int payment(PaymentVO vo) throws Exception;
 	
+	PaymentVO selectPayInfo(int order_num) throws Exception;
+	
+	int updatePayCancel(PaymentVO vo) throws Exception;
 
-	}
-
-
+}

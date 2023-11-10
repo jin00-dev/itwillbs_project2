@@ -1,15 +1,11 @@
 package com.project2.controller;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -96,11 +92,24 @@ public class PaymentController {
 	}
 	
 	// 결제 취소
-	@RequestMapping(value = "/paymentList", method = RequestMethod.POST)
-	public @ResponseBody String cancelPayment() {
-		logger.debug("ddd@@@@@@");
+	@RequestMapping(value = "/cancelPay", method = RequestMethod.POST)
+	public @ResponseBody String cancelPayment(int order_num, PaymentVO vo) {
 		
-		return "reee";
+		try {
+			//  결제정보 가져오기
+			PaymentVO re = pService.selectPayInfo(order_num);
+			String token = pService.getToken();
+			if(vo.getStatus().equals("cancelled")) {
+				return "already refund";
+			}
+			PaymentVO result = pService.cancelPayAction(token, re);
+			pService.updatePayCancel(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return "ok";
 	}
 	
 	
