@@ -5,6 +5,28 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
+	 <!-- Mail -->
+	 	<bean id="mailSender"
+	 				class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	 				<property name="host" value="smtp.gmail.com" />
+	 				<property name="port" value="587"/>
+	 				<property name="username" value="kimseo131612@gmail.com"/>
+	 				<property name="password" value="emeu3099!@G" />
+	 				<property name="defaultEncoding" value="utf-8" />
+	 				 <!-- 보안연결 TLS과 관련된 설정 -->
+		     <property name="javaMailProperties">
+			    <props>
+			       <prop key="mail.smtp.starttls.enable">true</prop>
+			       <prop key="mail.smtp.auth">true</prop>
+			       <prop key="mail.transport.protocol">smtp</prop>
+			       <prop key="mail.debug">true</prop>
+			       <prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+				   <prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+			    </props>
+		     </property>
+	     </bean>
+		
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	<!-- hikariCP 설정 정보(DB연결정보) -->
