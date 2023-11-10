@@ -14,9 +14,9 @@ import com.project2.domain.ExpVO;
 import com.project2.service.ExpServiceImpl;
 
 @Controller
-public class mainController {
+public class MainController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(mainController.class);
+	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	@Autowired
 	private ExpServiceImpl service;
