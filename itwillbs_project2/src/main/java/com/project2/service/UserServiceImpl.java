@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService{
 	private UserDAO udao; 
 	
 	@Autowired
-	   private UserDAO userDAO;
+	private UserDAO userDAO;
 	
 	@Override
 	public void insertUser(UserVO vo) {
