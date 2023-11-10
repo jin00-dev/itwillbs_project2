@@ -1,7 +1,23 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Do+Hyeon&display=swap');
+  .navbar-brand{
+  	font-family : 'Bagel Fat One', swap;
+  }
+  .nav-item{
+	font-family : 'Do Hyeon', swap; 
+  }
+  #searchbar{
+  width : 130%;
+  margin : sauto;
+  margin-top : 5%;
+  }
+  
+</style>
+
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -18,15 +34,22 @@
 <body>
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+	
+		<a class="navbar-brand" href="/">세모클래스</a>
+		
+		<div>
+		<form class="d-flex" id="searchbar">
+			<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+			<button class="btn btn-outline-success" type="submit">Search</button>
+		</form>
+		</div>
+		
 		<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
 			<ul class="navbar-nav me-2 mb-2 mb-lg-0">
 				<c:choose>
 					<c:when test="${empty user_num }">
-						<li class="nav-item"><a class="nav-link" href="#!">회원가입</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">로그인</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/join">회원가입</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/login">로그인</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
 					</c:when>
 					<c:when test="${empty user_id }">
@@ -35,37 +58,27 @@
 					</c:when>
 					<c:when test="${user_type eq 0 }">
 						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/userMain">마이페이지</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">로그아웃</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 					</c:when>
 					<c:when test="${user_type eq 1 }">
 						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/userMain">마이페이지</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">로그아웃</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 					</c:when>
 					<c:when test="${user_type eq 2 }">
 						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">관리자페이지</a></li>
 						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">로그아웃</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 					</c:when>
 				</c:choose>
 			</ul>
 		</div>
 	</nav>
-	<div class="navbar navbar-light bg-light">
-		<a class="navbar-brand" href="/"> <img src="" alt="" width="30" height="24" class="d-inline-block align-text-top"> 
-		세모클래스
-		</a>
-		<form class="d-flex justify-content-center">
-			<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-			<button class="btn btn-outline-success" type="submit">Search</button>
-		</form>
-		<div style="width: 9%">
-		</div>
-	</div>
+	
 	<c:set var="path" value="${requestScope['javax.servlet.forward.servlet_path']}"/>
 	<div>
 		<ul class="nav nav nav-pills justify-content-center">
