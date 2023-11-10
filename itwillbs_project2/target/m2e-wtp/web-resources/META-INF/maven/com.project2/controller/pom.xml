@@ -193,7 +193,6 @@
 
 		<!-- Mail 관련 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
-
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
@@ -224,60 +223,74 @@
 		
 		<!-- ja : Validation -->
 		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
-	<dependency>
-  		  <groupId>javax.validation</groupId>
-   		 <artifactId>validation-api</artifactId>
-   		 <version>1.1.0.Final</version>
-	</dependency>
-		
+		<dependency>
+	  		  <groupId>javax.validation</groupId>
+	   		 <artifactId>validation-api</artifactId>
+	   		 <version>1.1.0.Final</version>
+		</dependency>
+			
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
-	<dependency>
-   		 <groupId>org.hibernate</groupId>
-   		 <artifactId>hibernate-validator</artifactId>
-   		 <version>5.4.2.Final</version>
-	</dependency>
+		<dependency>
+	   		 <groupId>org.hibernate</groupId>
+	   		 <artifactId>hibernate-validator</artifactId>
+	   		 <version>5.4.2.Final</version>
+		</dependency>
 		<!-- ja : Validation -->
+		
+		<!-- 파일 업로드를 위한 commons-fileupload 라이브러리 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.5</version> 
+		</dependency>
+
+		<!-- 파일 처리를 위한 commons-io 라이브러리 -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.15.0</version> 
+		</dependency>
+		
 		
 		<!-- @@@@@@@@@@@@ 외부 라이브러리 추가@@@@@@@@@@@@ -->   
 		
 	</dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <version>2.9</version>
-                <configuration>
-                    <additionalProjectnatures>
-                        <projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
-                    </additionalProjectnatures>
-                    <additionalBuildcommands>
-                        <buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
-                    </additionalBuildcommands>
-                    <downloadSources>true</downloadSources>
-                    <downloadJavadocs>true</downloadJavadocs>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <source>1.11</source>
-                    <target>1.11</target>
-                    <compilerArgument>-Xlint:all</compilerArgument>
-                    <showWarnings>true</showWarnings>
-                    <showDeprecation>true</showDeprecation>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
-                <configuration>
-                    <mainClass>org.test.int1.Main</mainClass>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<additionalProjectnatures>
+						<projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
+					</additionalProjectnatures>
+					<additionalBuildcommands>
+						<buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
+					</additionalBuildcommands>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.11</source>
+					<target>1.11</target>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>org.test.int1.Main</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
