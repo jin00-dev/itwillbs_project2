@@ -1,59 +1,86 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- /mappers/memberMapper.xml -->
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.project2.mapper.UserMapper">
-    <insert id="insertUser">
-        insert into c6d2305t2_2.userTable
-        (user_id, user_pw, user_name, user_phone)
-        values (#{user_id}, #{user_pw}, #{user_name}, #{user_phone})
-    </insert>
-
-    <select id="loginUser" resultType="com.project2.domain.UserVO">
-        select * from c6d2305t2_2.userTable
-        where user_id = #{user_id} and user_pw = #{user_pw}
-    </select>
-
+<!--    namespace정보는 외부에서 해당 mapper(xml)를 찾을 수 있는 이름 -->
+  <mapper namespace="com.project2.mapper.UserMapper">
+  
+  <insert id="insertUser">
+  	insert into c6d2305t2_2.userTable
+  	(user_id,user_pw,user_name,user_phone) 
+  	values(#{user_id},#{user_pw},#{user_name},#{user_phone})
+  </insert>
+  
+  <!-- 아이디 중복체크 -->
+  <select id = "idCheck" resultType="int">
+  	select count(*) from c6d2305t2_2.userTable
+  	where user_id = #{user_id}
+  </select>
+  
+  
+  <!-- 휴대폰 중복체크 -->
+  <select id = "phoneCheck" resultType="int">
+  	select count(*) from c6d2305t2_2.userTable             
+  	where user_phone = #{user_phone}
+  </select>
+  
+  <select id="loginUser" resultType="com.project2.domain.UserVO">
+  	select * from c6d2305t2_2.userTable
+  	where user_id=#{user_id} and user_pw=#{user_pw}
+  </select>
+  
+  
+ 
+ 
     <select id="getUser" resultType="UserVO">
-        select * from c6d2305t2_2.userTable
-        where user_id = #{user_id}
-    </select>
+        select * from c6d2305t2_2.userTable 
+        where user_id=#{user_id}   
+   </select>
+   
+   <update id="updateUser">
+      update c6d2305t2_2.userTable set user_pw=#{user_pw}, 
+      user_name=#{user_name}, user_phone=#{user_phone}<!-- ,updatedate=now() --> 
+     where user_id=#{user_id}      
+   </update>
+   
+   <delete id="deleteUser">
+      delete from c6d2305t2_2.userTable 
+      where user_id=#{user_id} and user_pw=#{user_pw}   
+   </delete>  
+   
+   <select id="getUserList" resultType="UserVO">
+     select * from c6d2305t2_2.userTable 
+     where user_id != 'admin'   
+   </select>
 
-    <update id="updateUser">
-        update c6d2305t2_2.userTable
-        set user_pw = #{user_pw}, user_name = #{user_name}, user_phone = #{user_phone}
-        where user_id = #{user_id}
-    </update>
 
-    <delete id="deleteUser">
-        delete from c6d2305t2_2.userTable
-        where user_id = #{user_id} and user_pw = #{user_pw}
-    </delete>
-
-    <select id="getUserList" resultType="UserVO">
-        select * from c6d2305t2_2.userTable
-        where user_id != 'admin'
-    </select>
-
-    <!-- 회원등급 변경 -->
-    <select id="getUserByUserId" resultType="UserVO">
-        SELECT * FROM userTable WHERE user_id = #{user_id}
-    </select>
-    <update id="updateUserGrade">
-        UPDATE userTable
-        SET user_type = #{user_type}
-        WHERE user_id = #{user_id}
-    </update>
-    <!-- 아이디찾기 -->
- <select id="findUserByNameAndPhone" resultType="com.project2.domain.UserVO">
-        SELECT user_id
-        FROM userTable
-        WHERE user_name = #{user_name} AND user_phone = #{user_phone}
-    </select>
+	<!-- 회원등급 변경 -->
+	<select id="getUserByUserId" resultType="UserVO">
+		SELECT * FROM userTable WHERE user_id = #{user_id}
+	</select>
+	<update id="updateUserGrade">
+		UPDATE userTable
+		SET user_type = #{user_type}
+		WHERE user_id = #{user_id}
+	</update>
+	<!-- 아이디찾기 -->
+	<select id="findUserByNameAndPhone"
+		resultType="com.project2.domain.UserVO">
+		SELECT user_id
+		FROM userTable
+		WHERE user_name = #{user_name} AND user_phone = #{user_phone}
+	</select>
+    <!-- 회원정보수정(관리자) -->
+    <update id="updateList">
+		update c6d2305t2_2.userTable set user_pw=#{user_pw}, 
+		user_name=#{user_name}, user_phone=#{user_phone}, user_type=#{user_type} <!-- ,updatedate=now() -->
+		where user_id=#{user_id}
+	</update>
     
-    <!-- 이메일 -->
- 
- 
-    
-</mapper>
+  
+  
+  
+  
+  </mapper>

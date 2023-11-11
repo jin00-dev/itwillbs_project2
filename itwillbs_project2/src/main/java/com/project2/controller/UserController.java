@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -66,7 +67,7 @@ private UserService userService;
       logger.debug("vo "+vo);
             
       
-      uService.userJoin(vo);
+  //  uService.userJoin(vo);
       logger.debug(" 회원가입 완료! ");
       
       // 로그인 페이지로 이동(redirect)      
@@ -267,4 +268,33 @@ private UserService userService;
 
 	        return "/user/findIdResult"; // 아이디 찾기 결과 뷰 페이지로 이동
 	    }
+	    
+	   // 회원 상세 페이지로 이동
+	   
+	    @RequestMapping(value= "/userDetail", method = RequestMethod.GET)
+	    public String userDetail(String user_id, Model model) {
+	    	logger.debug("@@@@@@@@@@@@@회원상세페이지이동");
+	        // userId를 사용하여 해당 유저의 정보를 가져옴
+	        UserVO user = userService.getUserById(user_id);
+
+	        // 가져온 정보를 모델에 추가하여 View로 전달
+	        model.addAttribute("user", user);
+
+	        // userDetail.jsp로 이동
+	        return "/user/userDetail";
+	    }
+	    
+	    //수정후 페이지
+
+	    @RequestMapping(value= "/userDetail", method = RequestMethod.POST)
+	    public String userDetaill(UserVO vo, Model model) {
+	    	logger.debug("@@@@@@@@@@@@@회원정보수정");
+	    	userService.updateUser(vo);
+
+	        // userDetail.jsp로 이동
+	        return "redirect:/user/userDetail?user_id="+vo.getUser_id();
+	    }
+	    
+	    
+	    
 	}

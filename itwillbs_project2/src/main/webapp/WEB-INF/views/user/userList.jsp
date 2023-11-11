@@ -1,32 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@include file="../include/header.jsp"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../include/header.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>User List</title>
-</head>
-<body>
-    <h1>User List</h1>
-      
-    <table border="1">
-        <tr>
-            <td>아이디</td>
-            <td>이름</td>
-            <td>핸드폰</td>
-            <td>회원가입일</td>
-            <td>회원등급</td> 
+
+<%-- ${userList } --%>
+		
+		<table border="1">
+		  <tr>
+		  	<td>아이디</td>
+		  	<td>이름</td>
+		  	<td>핸드폰</td>
+		  	<td>회원가입일</td>
+		  	<td>회원등급</td> 
             <td>등급변경</td> <!-- 사용자 등급 변경 옵션을 추가 -->
-        </tr>
-        
-        <c:forEach var="vo" items="${userList}">
-            <tr>
-                <td>${vo.user_id}</td>
-                <td>${vo.user_name}</td>
-                <td>${vo.user_phone}</td>
-                <td>${vo.user_regdate}</td>
-                <td>
+		  </tr>
+		  
+		 <c:forEach var="vo" items="${userList }"> 
+		     <tr>
+			  	<td>${vo.user_id }</td>
+			  	 <!-- 수정: 이름을 클릭하면 해당 회원의 상세 페이지로 이동 -->
+    <td><a href="/user/userDetail?user_id=${vo.user_id}">${vo.user_name}</a></td>
+			  	<td>${vo.user_name }</td>
+			  	<td>${vo.user_phone }</td>
+			  	<td>${vo.user_regdate }</td>
+			  	    <td>
                     <c:choose>
                         <c:when test="${vo.user_type == 1}">
                             사업자
@@ -49,11 +45,11 @@
                         <input type="submit" value="변경" />
                     </form>
                 </td>
-            </tr>
-        </c:forEach>
-    </table>
-    
-    <a href="/user/userMain">메인페이지로...</a>
-</body>
-</html>
-<%@include file="../include/footer.jsp"%>
+			  </tr>
+		 </c:forEach>
+		</table>
+		
+		<a href="/user/userMain">메인페이지로...</a>
+		
+	
+		

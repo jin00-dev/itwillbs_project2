@@ -14,7 +14,7 @@ public class mainController {
 	private static final Logger logger = LoggerFactory.getLogger(mainController.class);
 	
 	
-	//http://localhost:8088/main
+	//http://localhost:8088/home
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String mainGET() {
 
