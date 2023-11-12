@@ -3160,7 +3160,7 @@ textarea.form-control-lg {
   }
 }
 .fade:not(.show) {
-  opacity: 0;
+/*   opacity: 0; */
 }
 
 .collapse:not(.show) {
