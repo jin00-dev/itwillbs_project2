@@ -11,17 +11,17 @@
 		  	<td>핸드폰</td>
 		  	<td>회원가입일</td>
 		  	<td>회원등급</td> 
-            <td>등급변경</td> <!-- 사용자 등급 변경 옵션을 추가 -->
+		  	<td>상세보기</td> 
+           
 		  </tr>
 		  
 		 <c:forEach var="vo" items="${userList }"> 
 		     <tr>
 			  	<td>${vo.user_id }</td>
-			  	 <!-- 수정: 이름을 클릭하면 해당 회원의 상세 페이지로 이동 -->
-    <td><a href="/user/userDetail?user_id=${vo.user_id}">${vo.user_name}</a></td>
 			  	<td>${vo.user_name }</td>
 			  	<td>${vo.user_phone }</td>
 			  	<td>${vo.user_regdate }</td>
+			  	
 			  	    <td>
                     <c:choose>
                         <c:when test="${vo.user_type == 1}">
@@ -35,14 +35,11 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
+                <td><a href="/user/userDetail?user_id=${vo.user_id}">상세보기</a></td>
                 <td>
                     <form method="post" action="/user/changeGrade"> 
                         <input type="hidden" name="user_id" value="${vo.user_id}" /> 
-                        <select name="user_type">
-                            <option value="0" <c:if test="${vo.user_type == 0}">selected</c:if>>일반회원</option>
-                            <option value="1" <c:if test="${vo.user_type == 1}">selected</c:if>>사업자</option>
-                        </select>
-                        <input type="submit" value="변경" />
+                       
                     </form>
                 </td>
 			  </tr>

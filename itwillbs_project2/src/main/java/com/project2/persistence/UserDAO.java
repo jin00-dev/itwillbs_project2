@@ -41,6 +41,11 @@ public interface UserDAO {
 		    
 		  //회원정보수정(관리자)
 		    public void updateUserAdmin(UserVO vo);
+		    
+		    //회원삭제
+		   // void UserDelete(UserVO deleteVO);
+		    int userDeleteById(String user_id);
+		    
 }
 
 

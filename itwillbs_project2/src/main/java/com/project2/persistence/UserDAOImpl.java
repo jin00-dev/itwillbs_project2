@@ -79,7 +79,7 @@ public class UserDAOImpl implements UserDAO{
 			
 			
 		}
-
+//회원탈퇴
 		@Override
 		public int deleteUser(UserVO delVO) {
 			System.out.println(" DAOImpl : 삭제 시작 ");
@@ -122,4 +122,15 @@ public class UserDAOImpl implements UserDAO{
 	    	sqlSession.update(NAMESPACE + ".updateList", vo);
 	    	
 	    }
+	    //회원삭제
+	 /*   @Override
+	    public void UserDelete(UserVO deleteVO) {
+	    	sqlSession.delete(NAMESPACE + ".deleteUser", deleteVO);
+	    	
+	    }*/
+	    @Override
+	    public int userDeleteById(String user_id) {
+	        return sqlSession.delete(NAMESPACE + ".userDeleteById", user_id);
+	    }
+	    
 }

@@ -134,9 +134,19 @@ public class UserServiceImpl implements UserService{
 	   @Override
 	public void updateUser(UserVO vo) {
 		   userDAO.updateUserAdmin(vo);
-		   
-		   
-		
 		
 	}
+	   
+	   //회원삭제
+	//   @Override
+	//public void deleteUser(UserVO deleteVO) {
+	
+		
+//	}
+	   @Override
+	   public int userDeleteById(String user_id) {
+		   logger.debug("userDeleteById() 호출");
+	       return userDAO.userDeleteById(user_id);
+	   }
+	   
 }

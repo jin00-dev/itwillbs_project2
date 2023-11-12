@@ -42,4 +42,8 @@ public interface UserService {
 
 	//회원수정
 	public void updateUser(UserVO vo);
+	
+	// 회원정보 삭제 동작
+	//	public void deleteUser(UserVO deleteVO);
+	int userDeleteById(String user_id);
 }

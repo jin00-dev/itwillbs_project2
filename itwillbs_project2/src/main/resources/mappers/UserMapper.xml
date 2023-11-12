@@ -72,14 +72,21 @@
 		FROM userTable
 		WHERE user_name = #{user_name} AND user_phone = #{user_phone}
 	</select>
+	
     <!-- 회원정보수정(관리자) -->
     <update id="updateList">
 		update c6d2305t2_2.userTable set user_pw=#{user_pw}, 
 		user_name=#{user_name}, user_phone=#{user_phone}, user_type=#{user_type} <!-- ,updatedate=now() -->
 		where user_id=#{user_id}
 	</update>
-    
-  
+    <!-- 회원삭제 
+  <delete id="deleteUser">
+    DELETE FROM userTable
+    WHERE user_id = #{user_id}
+</delete>-->
+<delete id="userDeleteById">
+    delete from userTable where user_id=#{user_id}
+</delete>
   
   
   
