@@ -4,8 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!-- 부트스트랩 CSS 추가 -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
@@ -15,19 +14,25 @@
 	<div class="row">
 		<div class="col-md-3">
 			<div class="list-group mb-4 h-100">
-				<h5 class="list-group-item list-group-item-action active"
-					aria-current="true">고객지원</h5>
-				<a href="/board/boardListAll"
-					class="list-group-item list-group-item-action">공지사항</a> <a
-					href="/board/" class="list-group-item list-group-item-action">챗봇
-					상담</a> <a href="/board/" class="list-group-item list-group-item-action">1:1
-					문의</a>
+				<h5 class="list-group-item list-group-item-action active" aria-current="true">고객지원</h5>
+				<a href="/board/boardListAll" class="list-group-item list-group-item-action">공지사항</a> 
+<!-- 				<a href="/board/" class="list-group-item list-group-item-action">챗봇상담</a>  삭제 -->
+				<a href="/qna/qnaCreate" class="list-group-item list-group-item-action">1:1 문의</a>
+				<a href="#" class="list-group-item list-group-item-action">자주 묻는 질문</a>
 			</div>
 		</div>
 
 		<div class="col-md-9">
 			<h2 class="mb-4">공지사항</h2>
 			<a href="/board/insert" class="btn btn-primary mb-3">글쓰기</a>
+			
+			<!-- 검색 바 -->
+			<form class="form-inline my-2 my-lg-0" action="/board/boardSearch"
+				method="get">
+				<input class="form-control mr-sm-2" type="search" placeholder="검색"
+					aria-label="Search" name="searchTerm">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+			</form>
 
 			<!-- <c:if
 				test="${sessionScope.user_id != null && sessionScope.user_id.equals('admin')}">
@@ -98,13 +103,7 @@
 				</c:if>
 			</nav>
 
-			<!-- 검색 바 -->
-			<form class="form-inline my-2 my-lg-0" action="/board/boardSearch"
-				method="get">
-				<input class="form-control mr-sm-2" type="search" placeholder="검색"
-					aria-label="Search" name="searchTerm">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-			</form>
+			
 
 
 
