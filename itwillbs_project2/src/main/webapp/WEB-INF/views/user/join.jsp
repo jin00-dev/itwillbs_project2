@@ -2,8 +2,6 @@
 <%@include file="../include/header.jsp"%>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-
-<h1>join.jsp</h1>
 <script type="text/javascript">
 
 	$(document).ready(function() {
@@ -308,11 +306,44 @@
 			
 				
 				alert(name+"회원님 가입을 환영합니다.");
-			
-
-			
-			
 		});
+			
+			//인증코드 발송 버튼 클릭
+			$("#checkEmailButton").click(function(){
+				const email = $("#id").val(); // 회원가입시 입력한 이메일 주소값 가져오기 
+				console.log("회원 이메일 확인 : " + email);// console에서 확인 
+				const checkInput = $("#checkEmail"); // 인증번호 입력하는 곳 
+				
+				$.ajax({
+					type : "get",
+					url : "/user/mailCheck?email="+email,
+					success : function(data){
+						console.log("data : " + data);
+						checkInput.attr("disabled",false);
+						code = data; 
+						alert("인증번호가 전송되었습니다");
+					},
+					error : function(){
+						alert("인증번호 전송에 실패했습니다.");
+					}
+				});// mail ajax
+			});// checkEmailButton. click 
+			
+			$("#checkEmail").blur(function(){
+				var inputCode = $(this).val();
+				var resultMsg = $("#mail_check_msg");
+				
+				if(inputCode == code){
+					resultMsg.html("인증번호가 일치합니다.");
+					resultMsg.css("color","green");
+					$("#checkEmailButton").attr("disabled",true);
+					$("#email").attr("readonly",true);
+				}else{
+					resultMsg.html("인증번호가 일치하지 않습니다. 다시 입력해 주세요.");
+					resultMag.css("color","red");
+				}
+				
+			});//checkEmail.blur
 		
 	}); // $(function(){})의 끝
 	
@@ -324,26 +355,28 @@
 	<form action="" id="writeForm" method="post">
 		<div class="form-group">
 			<label for="id">아이디 </label> 
-			<input id="id" name="user_id" 
-				required="required" class="form-control" type="email">
+			<input id="id" name="user_id" required="required" class="form-control" type="text">
 			<div class="alert alert-danger" id="idCheckDiv">아이디는 4자 이상 입력하셔야합니다.</div>
 		</div>
+		
 		<span class="id_input_box_warn"></span>
 		<div class="form-group">
-			<button type="button" id="checkEmailButton" class="btn btn-primary"
-				onclick="sendEmail()" disabled='disabled'>인증코드 발송</button>
+			<button type="button" id="checkEmailButton" class="btn btn-primary">인증코드 발송</button>
 		</div>
 
 		<div class="row mt-1">
 			<div class="col bi bi-exclamation-square-fill deepblue">인증번호
-				발송은 서버 상황에 따라 5초~10초정도 걸릴 수 있어요</div>
+				발송은 서버 상황에 따라 1분정도 걸릴 수 있어요</div>
 		</div>
 
 		<div class="row mt-1">
 			<div class="col-lg-5">
 				<input class="form-control" id="checkEmail" type="text"
-					placeholder="인증번호를 입력해주세요." aria-label="default input example"
+					placeholder="인증번호 6자리를 입력해주세요." aria-label="default input example"
 					disabled="disabled">
+				<div>
+					<span id="mail_check_msg"></span>
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="pw">비밀번호</label> 
@@ -374,7 +407,7 @@
 
 		<div class="row mt-1">
 			<div class="col-lg-5">
-				<a type="button" class="btn btn-default pull-left"
+				<a type="button" class="btn btn-primary infoModBtn pull-right"
 					href="../user/userMain">취소</a>
 				<button type="submit" class="btn btn-primary infoModBtn pull-right"
 					id="joinButton">회원가입</button>
