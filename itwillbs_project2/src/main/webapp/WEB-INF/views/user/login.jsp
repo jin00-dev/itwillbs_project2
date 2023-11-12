@@ -15,10 +15,10 @@
 		<input type="password" name="user_pw" id="user_pw" class="form-control" >
 		</div>
 			
-			<button class="btn btn-default">로그인</button>
-			<button class="btn btn-default" onclick=" location.href='/user/join';">회원가입</button>
-			<button type="btn btn-default">아이디찾기</button>
-			<button type="btn btn-default">비밀번호찾기</button>
+			<button class="btn btn-primary infoModBtn pull-right">로그인</button>
+			<button class="btn btn-primary infoModBtn pull-right" onclick=" location.href='/user/join';">회원가입</button>
+			<button type="button" class="btn btn-primary infoModBtn pull-right" onclick=" location.href='/user/findId';">아이디찾기</button>
+			<button type="button" class="btn btn-primary infoModBtn pull-right" onclick=" location.href='#';">비밀번호찾기</button>
 			
 		</form>
 	</div>
