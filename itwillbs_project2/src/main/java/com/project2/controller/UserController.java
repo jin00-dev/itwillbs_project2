@@ -237,14 +237,14 @@ public class UserController {
 	}
 
 	// 회원목록 조회GET
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/adminMain", method = RequestMethod.GET)
 	public String listGET(HttpSession session, Model model) {
 		logger.debug(" listGET() ");
 		// 관리자가 아닌경우 로그인페이지로 이동
-		String id = (String) session.getAttribute("id");
+		String id = (String) session.getAttribute("user_id");
 
-		if (id == null || !id.equals("admin")) {
-			return "redirect:/user/userMain";
+		if (id == null || !id.equals("admin1")) {
+			return "redirect:/";
 		}
 		// 서비스 -> DAO 회원목록 조회
 		List<UserVO> userList = uService.userList();
@@ -254,8 +254,8 @@ public class UserController {
 		model.addAttribute("userList", userList);
 		// model.addAllAttributes(attributeValues)
 		// model.addAttribute("memberList", mService.memberList());
-
-		return "/user/userList";
+		
+		return "/user/adminMain";
 	}
 
 	// 아이디 중복 체크
