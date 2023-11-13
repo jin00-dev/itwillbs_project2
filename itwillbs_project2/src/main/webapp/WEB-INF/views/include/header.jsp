@@ -83,15 +83,9 @@
 	<div>
 		<ul class="nav nav nav-pills justify-content-center">
 			<li class="nav-item"><a class="nav-link ${path == '/' ? 'active' : ''}" href="/?category=공예">체험</a></li>
-<<<<<<< HEAD
-			<li class="nav-item"><a class="nav-link ${path == '' ? 'active' : ''}" href="/">내주변 체험</a></li>
+			<li class="nav-item"><a class="nav-link ${path == '' ? 'active' : ''}" href="/exp/myLocation">내주변 체험</a></li>
 			<li class="nav-item"><a class="nav-link ${path == '' ? 'active' : ''}" href="/board/eventListAll">이벤트</a></li>
 			<li class="nav-item"><a class="nav-link ${path == '' ? 'active' : ''}" href="/board/boardListAll">고객지원</a></li>
-=======
-			<li class="nav-item"><a class="nav-link ${path == '/exp/myLocation' ? 'active' : ''}" href="/exp/myLocation">내주변 체험</a></li>
-			<li class="nav-item"><a class="nav-link ${path == '' ? 'active' : ''}" href="#">이벤트</a></li>
-			<li class="nav-item"><a class="nav-link ${path == '' ? 'active' : ''}" href="#">고객지원</a></li>
->>>>>>> 9fd203c6c7b2f2be53b3c9ddd8733a61f8c72f76
 		</ul>
 	</div>
 	
