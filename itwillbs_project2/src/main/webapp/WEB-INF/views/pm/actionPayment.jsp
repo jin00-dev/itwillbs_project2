@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,9 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </head>
 <body>
+
+	<c:set var="user_id" value="test1"/>
+
 
 	<button onclick="requestPay()">결제하기</button>
 
@@ -46,6 +50,7 @@
                     success: function (response) {
                         console.log(response);
                         alert('결제가 완료되었습니다');
+                        location.href = '/class/paymentList?user_id=${user_id}';
                     },
                     error: function (error) {
                         console.error(error);

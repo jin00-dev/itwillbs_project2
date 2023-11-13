@@ -38,7 +38,7 @@ public class PaymentController {
 		return "/pm/paymentList";
 	}
 	
-	// 주문한 내역 하나를 눌렀을때 상세 리스트 출력
+	// 주문한 내역 하나를 눌렀을때 상세 내역 출력
 	@RequestMapping(value = "/paymentInfo")
 	public String paymentInfo(Model model, PaymentVO vo, HttpSession session) {
 		PaymentVO result;

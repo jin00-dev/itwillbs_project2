@@ -22,8 +22,13 @@
 			<td>${i.custom_data }</td>
 			<td>${i.user_name }</td>
 			<td>${i.user_phone }</td>
-			<td>${i.exp_price }</td>
-			<td>${i.status }</td>
+			<td>${i.exp_price }원</td>
+			<td>
+				<c:choose>
+					<c:when test="${i.status eq 'paid' }">결제완료</c:when>
+					<c:when test="${i.status eq 'cancelled' }">취소완료</c:when>
+				</c:choose>
+			</td>
 		</tr>
 		</c:forEach>
 	</table>

@@ -3,9 +3,13 @@
 <%@ include file="../include/header.jsp" %>
 
 	<form action="" method="get">
-<%-- 		체험번호: ${testVO.exp_num }<br> --%>
+		체험번호: ${testVO.exp_num }<br>
 		체험이름 : ${testVO.exp_name }<br>
-		예매 상태 : ${testVO.status }<br>
+		예매 상태 : 
+				<c:choose>
+					<c:when test="${testVO.status eq 'paid' }">결제완료</c:when>
+					<c:when test="${testVO.status eq 'cancelled' }">취소완료</c:when>
+				</c:choose><br>
 		장소 : ${testVO.exp_name }<br>
 		주소 : ${testVO.exp_region }<br>
 		사업자연락처 : ${testVO.exp_phone }<br>
