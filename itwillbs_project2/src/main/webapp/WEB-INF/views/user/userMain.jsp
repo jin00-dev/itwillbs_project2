@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../include/header.jsp"%>
 
-    <h2>${user_id }님의 마이페이지 입니다. </h2>
+    <h2>${vo.user_name }님의 마이페이지 입니다. </h2>
     
     <!-- 로그인 정보가 없으면 로그인 페이지로 이동 -->
     <c:if test="${empty user_id}">
@@ -104,10 +104,10 @@
    
 <!--     <hr><hr> -->
     
-    <h3><a href="/user/update">회원정보 수정</a></h3>
-    <hr><hr>
+<!--     <h3><a href="/user/update">회원정보 수정</a></h3> -->
+<!--     <hr><hr> -->
     
-    <h3><a href="/user/delete">회원정보 삭제</a></h3>
+<!--     <h3><a href="/user/delete">회원정보 삭제</a></h3> -->
                                   
     <%-- <c:if test="${!empty id && id eq 'admin'}"> --%>
     <c:if test="${!empty id && id.equals('admin')}">
