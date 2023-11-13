@@ -28,7 +28,7 @@
 				</thead>
 				<tbody id="mapList">
 					<tr>
-						<td>입력된 값이 없어요</td>
+						<td>입력된 주소가 없어요</td>
 					</tr>
 				</tbody>
 			</table>
@@ -112,27 +112,50 @@
 		$('#mapList').append(mapList);
 		
 		$('#expList').empty();
-		insertList(address.substring(0, 2));
 		
 		var map = new naver.maps.Map('map', {
 			center : new naver.maps.LatLng(longitude, latitude),
-			zoom : 14
+			zoom : 12
 		});
+		
+		insertList(address,map);
+		
 		var marker = new naver.maps.Marker({
 			map : map,
 			position : new naver.maps.LatLng(longitude, latitude),
 		});
-	}
+		
+		// 정보 창 만들기
+		var contentString = [
+		        '<div class="iw_inner">',
+		        '   <h3>내 주소</h3>',
+		        '</div>'
+		    ].join('');
+		 
+		var infowindow = new naver.maps.InfoWindow({
+		    content: contentString
+		});
+		
+		// 마커 클릭 이벤트
+		naver.maps.Event.addListener(marker, "click", function(e) {
+		    if (infowindow.getMap()) {
+		        infowindow.close();
+		    } else {
+		        infowindow.open(map, marker);
+		    }
+		});
+	}///
 
-	//체험 리스트
-	function insertList(addr) {
+	//체험 리스트와 마커
+	function insertList(addr,map) {
 		list = ${list};
 		
-		for (var i of list) {
+		for (let i of list) {
 			var expList = "";
-			if(i.exp_region.substr(0,2) == addr){
-				expList += '<div class="container-fluid border" style="min-width: 300px">';
-				expList += '    <div class="row justify-content-center">';
+			if(i.exp_region.substr(0,2) == addr.substring(0, 2)){
+				var href= "onclick=location.href='/exp/info?exp_num="+i.exp_num+"';";
+				expList += '<div class="container-fluid border" style="min-width: 300px"'+href+' >';
+				expList += '    <div class="row justify-content-center" style="cursor:pointer;" >';
 				expList += '        <div class="col-6 m-3">';
 				expList += '            <img class="img-fluid" src="https://dummyimage.com/150x150/dee2e6/6c757d.jpg" class="card-img-left" alt="...">';
 				expList += '        </div>';
@@ -151,9 +174,69 @@
 				expList += '</div>';
 				
 				$('#expList').append(expList);
-			}
-		}
-	}
+
+				naver.maps.Service
+				.geocode(
+						{
+							query : i.exp_region
+						},
+						function(status, response) {
+							console.log(response);
+							if (status === naver.maps.Service.Status.ERROR) {
+								return alert('Something Wrong!');
+							}
+							if (response.v2.meta.totalCount === 0) {
+								return alert('올바른 주소를 입력해주세요.');
+							}
+							var htmlAddresses = [], item = response.v2.addresses[0], point = new naver.maps.Point(
+									item.x, item.y);
+							if (item.roadAddress) {
+								htmlAddresses.push('[도로명 주소] '
+										+ item.roadAddress);
+							}
+							if (item.jibunAddress) {
+								htmlAddresses.push('[지번 주소] '
+										+ item.jibunAddress);
+							}
+							if (item.englishAddress) {
+								htmlAddresses.push('[영문명 주소] '
+										+ item.englishAddress);
+							}
+							
+							//마커 만들기
+							var marker = new naver.maps.Marker({
+								map : map,
+								position : new naver.maps.LatLng(item.y, item.x),
+							});
+							
+							// 정보 창 만들기
+							var href= "onclick=location.href='/exp/info?exp_num="+i.exp_num+"';";
+							var contentString = '<div class="card" '+href+' style="cursor:pointer;">' +
+			                    '   <h3>' + i.exp_name + '</h3>' +
+			                    '   <p>' + i.exp_region + '<br />' +
+			                    '   </p>' +
+			                    '</div>';
+							 
+							var infowindow = new naver.maps.InfoWindow({
+							    content: contentString
+							});
+							
+							// 마커 클릭 이벤트
+							naver.maps.Event.addListener(marker, "click", function(e) {
+							    if (infowindow.getMap()) {
+							        infowindow.close();
+							    } else {
+							        infowindow.open(map, marker);
+							    }
+							});
+							
+						});
+				
+				
+				
+			}//if
+		}//for
+	}////
 
 	//지도를 그려주는 함수
 	function selectMapList() {

@@ -18,11 +18,11 @@
 
 <!-- 로그인 테스트 -->
 <%
-	session.setAttribute("user_num", "1");
-	session.setAttribute("user_id", "test1");
-	session.setAttribute("user_name", "김소예");
+	session.setAttribute("user_num", "6");
+	session.setAttribute("user_id", "totoro");
+	session.setAttribute("user_name", "몽실이누나서영");
 	session.setAttribute("user_type", "1");
-	// 		session.invalidate();
+	 	//	session.invalidate();
 %>
 <!-- Section-->
 <section class="py-5">
