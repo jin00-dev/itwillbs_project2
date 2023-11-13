@@ -47,9 +47,23 @@
 	<insert id="getPayment">
 		insert into payment 
 		values(#{order_num},#{merchant_uid},#{buyer_email},#{buyer_name},#{buyer_tel},
-		#{name},#{custom_data},#{imp_uid},#{paid_amount},#{status},default,#{pg_provider},
+		#{name},#{custom_data},#{imp_uid},#{paid_amount},#{status},null,default,#{pg_provider},
 		#{pay_method},#{card_name})
 	</insert>
+	
+	<!-- 결제 취소 -->
+	<select id="selectPayinfo" resultType="com.project2.domain.PaymentVO">
+		select * from payment where order_num=#{order_num}
+	</select>
+	
+	<update id="updateCancelPay">
+		update payment set 
+		cancel_date=<choose>
+		<when test="status=='cancelled'">now()</when>
+		<otherwise>null</otherwise>
+		</choose>, 
+		status=#{status} where order_num=#{order_num}
+	</update>
 
 
 

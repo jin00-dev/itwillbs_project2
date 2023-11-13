@@ -16,7 +16,7 @@
 
 
     var IMP = window.IMP; 
-    IMP.init('imp14397622');
+    IMP.init('imp66880805');
 
     var today = new Date();
     var hours = today.getHours(); 
@@ -45,9 +45,11 @@
                     data: rsp,
                     success: function (response) {
                         console.log(response);
+                        alert('결제가 완료되었습니다');
                     },
                     error: function (error) {
                         console.error(error);
+                        alert('결제를 다시 시도해주세요');
                     }
                 });
             } else {

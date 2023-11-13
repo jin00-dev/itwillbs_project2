@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 Manifest-Version: 1.0
 Built-By: ITWILL
 Build-Jdk: 11.0.19
 Created-By: Maven Integration for Eclipse
 
+=======
+Manifest-Version: 1.0
+Built-By: qeadz
+Build-Jdk: 11.0.20
+Created-By: Maven Integration for Eclipse
+
+>>>>>>> d9a396499f09cdba2c6a98ac24639b92f322b77b
