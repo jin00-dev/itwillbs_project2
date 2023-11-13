@@ -15,6 +15,7 @@
 
 <section class="py-5">
 	<div class="col-md-8 mx-auto p-5 border">
+	<h2>내 주변 클래스</h2>
 		<!-- 검색 -->
 		<div class="d-flex justify-content-center m-3">
 			<input class="form-control me-2" id="address" type="text" placeholder="검색할 주소"> <input class="btn btn-outline-success" id="submit" type="button" value="주소검색">
