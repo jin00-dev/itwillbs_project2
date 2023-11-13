@@ -26,3 +26,4 @@
 		</table>
 		
 		<a href="/user/userMain">메인페이지로...</a>
+<%@include file="../include/footer.jsp"%>    
