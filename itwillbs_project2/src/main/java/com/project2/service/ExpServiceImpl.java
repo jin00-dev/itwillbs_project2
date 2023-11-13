@@ -23,10 +23,17 @@ public class ExpServiceImpl {
 	@Autowired
 	private ExpDAOImpl dao;
 
-	//
-	public List<ExpVO> getExpList(ExpVO vo) throws Exception {
+	//게시물 리스트 가저오기
+	public List<ExpVO> getExpList() throws Exception {
 		logger.debug("getMemberList() 호출");
 
+		return dao.getExpList();
+	}
+
+	//게시물 리스트 가저오기(조건)
+	public List<ExpVO> getExpList(ExpVO vo) throws Exception {
+		logger.debug("getMemberList(조건) 호출");
+		
 		return dao.getExpList(vo);
 	}
 

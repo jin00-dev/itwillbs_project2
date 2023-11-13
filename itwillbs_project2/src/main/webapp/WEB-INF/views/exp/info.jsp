@@ -228,11 +228,24 @@
 					</div>
 				</c:forEach>
 			</div>
-			<div class="tab-pane text-center" id="bnm3">
-			<!-- 장소 -->
-				<div id="map" style="width:100%;height:400px;"></div>
+			<div class="tab-pane text-center p-3" id="bnm3">
+				<div class="search">
+					<input id="address" type="hidden" value="${expVO.exp_region }"> 
+				</div>
+				<!-- 장소-------------------------------------------- -->
+				<div id="map" style="width: 100%; height: 400px;"></div>
+				<div>
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>주소</th>
+							</tr>
+						</thead>
+						<tbody id="mapList"></tbody>
+					</table>
+				</div>
 			</div>
-			<!-- 환불 방법 -->
+			<!-- 환불 방법 -------------------------------------------------->
 			<div class="tab-pane" id="bnm4">
 				<div class="container">
 					<br>
@@ -342,7 +355,7 @@
 
 
 </section>
-<button onclick="cancelPay('4')">환불하기</button>
+<button onclick="cancelPay('7')">환불하기</button>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script>
@@ -373,29 +386,6 @@ function cancelPay(order_num) {
        }
      }); // refund ajax
 }
-  
-// function cancelPay() {
-// 	  jQuery.ajax({
-// 	    url: "/exp/cancel", // 환불정보를 수신할 가맹점 서비스 URL
-// 	    type: "POST",
-// 	    contentType: "application/json",
-// 	    data: JSON.stringify({
-// 	      merchant_uid: "IMP470", // 결제건의 주문번호
-// 	      cancel_request_amount: 2000, // 환불금액
-// 	      reason: "테스트 결제 환불", // 환불사유
-// 	      refund_holder: "홍길동", // 가상계좌 환불 시 필수입력: 환불 수령계좌 예금주
-// 	      refund_bank: "88", // 가상계좌 환불 시 필수입력: 환불 수령계좌 은행코드
-// 	      refund_account: "56211105948400" // 가상계좌 환불 시 필수입력: 환불 수령계좌 번호
-// 	    }),
-// 	    dataType: "json"
-// 	  }).done(function(result) { // 환불 성공시 로직 
-// 	    console.log("환불 성공", result);
-// 	    // 환불에 성공한 경우에 실행할 추가 로직
-// 	  }).fail(function(error) { // 환불 실패시 로직
-// 	    console.error("환불 실패", error);
-// 	    console.log("에러 응답 메시지:", error);
-// 	  });
-// 	}
 
 </script>
 
@@ -460,36 +450,131 @@ function cancelPay(order_num) {
 -->
 </style>
 <!-- script  -->
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=efx8eq0ugv"></script>
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=efx8eq0ugv&submodules=geocoder"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script type="text/javascript">
 	//네이버 지도 api ---------------------------------------------------------
-	var mapOptions = {
-    center: new naver.maps.LatLng(37.3595704, 127.105399),
-    zoom: 10
-	};
+// 	var mapOptions = {
+//     center: new naver.maps.LatLng(37.3595704, 127.105399),
+//     zoom: 13,
+//     zoomControl: true
+// 	};
+	
+// 	var map = new naver.maps.Map('map', mapOptions);
 
-	var map = new naver.maps.Map('map', mapOptions);
+	searchAddressToCoordinate($('#address').val());
 	
 	
-	//리뷰쓰기 수정 신고 성공 실패 알림 ------------------------------------------------
-	$(document).ready(function() {
-	    if (${not empty isRogin}) {
-	        var isRogin = "${isRogin}"; // 문자열에서 불리언으로 변환
-	        if (isRogin === "false") {
-	            alert('로그인 해주세요');
+	//검색한 주소의 정보를 insertAddress 함수로 넘겨준다.
+	function searchAddressToCoordinate(address) {
+	    naver.maps.Service.geocode({
+	        query: address
+	    }, function(status, response) {
+	        if (status === naver.maps.Service.Status.ERROR) {
+	            return alert('Something Wrong!');
 	        }
-	    }
-	
-	    if (${not empty isWork}) {
-	        var isWork = "${isWork}"; // 문자열에서 불리언으로 변환
-	        if (isWork === "false") {
-	            alert('작업쓰기 실패');
-	        } else if (isWork === "true") {
-	            alert('작업 성공');
+	        if (response.v2.meta.totalCount === 0) {
+	            return alert('올바른 주소를 입력해주세요.');
 	        }
-	    }
-	});
+	        var htmlAddresses = [],
+	            item = response.v2.addresses[0],
+	            point = new naver.maps.Point(item.x, item.y);
+	        if (item.roadAddress) {
+	            htmlAddresses.push('[도로명 주소] ' + item.roadAddress);
+	        }
+	        if (item.jibunAddress) {
+	            htmlAddresses.push('[지번 주소] ' + item.jibunAddress);
+	        }
+	        if (item.englishAddress) {
+	            htmlAddresses.push('[영문명 주소] ' + item.englishAddress);
+	        }
+
+	        insertAddress(item.roadAddress, item.x, item.y);
+	        
+	    });
+	}
+	
+	//검색정보를 테이블로 작성해주고, 지도에 마커를 찍어준다.
+	function insertAddress(address, latitude, longitude) {
+		var mapList = "";
+		mapList += "<tr>"
+		mapList += "	<td>" + address + "</td>"
+		mapList += "</tr>"
+
+		$('#mapList').append(mapList);	
+
+		var map = new naver.maps.Map('map', {
+		    center: new naver.maps.LatLng(longitude, latitude),
+		    zoom: 14
+		});
+	    var marker = new naver.maps.Marker({
+	        map: map,
+	        position: new naver.maps.LatLng(longitude, latitude),
+	    });
+	}
+
+	// 지도를 이동하게 해주는 함수
+	function moveMap(len, lat) {
+		var mapOptions = {
+			    center: new naver.maps.LatLng(len, lat),
+			    zoom: 15,
+			    mapTypeControl: true
+			};
+	    var map = new naver.maps.Map('map', mapOptions);
+	    var marker = new naver.maps.Marker({
+	        position: new naver.maps.LatLng(len, lat),
+	        map: map
+	    });
+	}
+	
+	naver.maps.Event.once(map, 'init_stylemap');
+// 	naver.maps.Event.addListener(map, 'click', function (e) {
+// 	  console.log(e.coord); // 클릭한 지점 좌표
+// 	  console.log('-----------클릭지점 좌표를 주소로---------------------');
+// 	  naver.maps.Service.reverseGeocode(
+// 			    {
+// 			      coords: e.coord,
+// 			      orders: [naver.maps.Service.OrderType.ADDR, 
+// 			   	  naver.maps.Service.OrderType.ROAD_ADDR].join(','),
+// 			    },
+// 			    function (status, response) {
+// 			      console.log(status);
+// 			      console.log(response);
+// 			    }
+// 			)
+// 	});
+	
+// 	var address = "부산서구구덕로120";
+// 	console.log('address : '+address);
+// 	naver.maps.Service.geocode(
+// 			  {
+// 			    query: address, // 주소 전달
+// 			  },
+// 			  function (status, response) {
+// 			   // console.log(response); // 응답 객체
+// 			  }
+// 			);
+	
+	
+	
+// 	//리뷰쓰기 수정 신고 성공 실패 알림 ------------------------------------------------
+// 	$(document).ready(function() {
+// 	    if (${not empty isRogin}) {
+// 	        var isRogin = "${isRogin}"; // 문자열에서 불리언으로 변환
+// 	        if (isRogin === "false") {
+// 	            alert('로그인 해주세요');
+// 	        }
+// 	    }
+	
+// 	    if (${not empty isWork}) {
+// 	        var isWork = "${isWork}"; // 문자열에서 불리언으로 변환
+// 	        if (isWork === "false") {
+// 	            alert('작업쓰기 실패');
+// 	        } else if (isWork === "true") {
+// 	            alert('작업 성공');
+// 	        }
+// 	    }
+// 	});
 	
 	//결제 ------------------------------------------------------------------------
 	

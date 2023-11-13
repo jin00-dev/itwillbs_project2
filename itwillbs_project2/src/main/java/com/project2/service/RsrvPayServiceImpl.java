@@ -140,10 +140,10 @@ public class RsrvPayServiceImpl {
 		return dao.updatePaymentInfo(rvo);
 	}
 
-	public Integer selectPrice(String p_no) throws Exception {
-		logger.info("service.selectPrice 호출, p_no : "+p_no);
-		return dao.selectPrice(p_no);
-	}
+//	public Integer selectPrice(String p_no) throws Exception {
+//		logger.info("service.selectPrice 호출, p_no : "+p_no);
+//		return dao.selectPrice(p_no);
+//	}
 
 //	public Integer modifyOrder(int order_num) throws Exception{
 //		logger.info("service.modifyOrde()"+order_num);
