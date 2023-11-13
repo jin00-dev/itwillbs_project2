@@ -355,37 +355,37 @@
 
 
 </section>
-<button onclick="cancelPay('7')">환불하기</button>
+<!-- <button onclick="cancelPay('7')">환불하기</button> -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script>
 
-function cancelPay(order_num) {
- 	  jQuery.ajax({
-       url: "/payrest/cancelPay", 
-       type: "POST",
-       contentType: "application/json",
-       data: order_num,
-       success: function(refundResponse) {
-         // refund ajax 실행 후 작업 수행
+// function cancelPay(order_num) {
+//  	  jQuery.ajax({
+//        url: "/payrest/cancelPay", 
+//        type: "POST",
+//        contentType: "application/json",
+//        data: order_num,
+//        success: function(refundResponse) {
+//          // refund ajax 실행 후 작업 수행
          
-       	  if(refundResponse === "ok"){	
-                 alert('환불 요청이 완료되었습니다.');
-                 location.reload();
-              // 예약취소 버튼 수정하기
-             }else if(refundResponse === "already refund"){ 
-          	  alert('이미 환불 처리된 주문 건입니다.');
+//        	  if(refundResponse === "ok"){	
+//                  alert('환불 요청이 완료되었습니다.');
+//                  location.reload();
+//               // 예약취소 버튼 수정하기
+//              }else if(refundResponse === "already refund"){ 
+//           	  alert('이미 환불 처리된 주문 건입니다.');
             	  
-	      }else{
-                 alert('실패: 관리자에게 문의해주세요');
-             }	
+// 	      }else{
+//                  alert('실패: 관리자에게 문의해주세요');
+//              }	
          
-       },
-       error: function(error) {
-         // refund ajax 실행 중 에러 발생 시 처리
-       }
-     }); // refund ajax
-}
+//        },
+//        error: function(error) {
+//          // refund ajax 실행 중 에러 발생 시 처리
+//        }
+//      }); // refund ajax
+// }
 
 </script>
 
@@ -494,6 +494,7 @@ function cancelPay(order_num) {
 	    });
 	}
 	
+	
 	//검색정보를 테이블로 작성해주고, 지도에 마커를 찍어준다.
 	function insertAddress(address, latitude, longitude) {
 		var mapList = "";
@@ -505,11 +506,12 @@ function cancelPay(order_num) {
 
 		var map = new naver.maps.Map('map', {
 		    center: new naver.maps.LatLng(longitude, latitude),
-		    zoom: 14
+		    zoom: 15
 		});
 	    var marker = new naver.maps.Marker({
 	        map: map,
 	        position: new naver.maps.LatLng(longitude, latitude),
+	        animation: naver.maps.Animation.BOUNCE,
 	    });
 	}
 
@@ -528,54 +530,6 @@ function cancelPay(order_num) {
 	}
 	
 	naver.maps.Event.once(map, 'init_stylemap');
-// 	naver.maps.Event.addListener(map, 'click', function (e) {
-// 	  console.log(e.coord); // 클릭한 지점 좌표
-// 	  console.log('-----------클릭지점 좌표를 주소로---------------------');
-// 	  naver.maps.Service.reverseGeocode(
-// 			    {
-// 			      coords: e.coord,
-// 			      orders: [naver.maps.Service.OrderType.ADDR, 
-// 			   	  naver.maps.Service.OrderType.ROAD_ADDR].join(','),
-// 			    },
-// 			    function (status, response) {
-// 			      console.log(status);
-// 			      console.log(response);
-// 			    }
-// 			)
-// 	});
-	
-// 	var address = "부산서구구덕로120";
-// 	console.log('address : '+address);
-// 	naver.maps.Service.geocode(
-// 			  {
-// 			    query: address, // 주소 전달
-// 			  },
-// 			  function (status, response) {
-// 			   // console.log(response); // 응답 객체
-// 			  }
-// 			);
-	
-	
-	
-// 	//리뷰쓰기 수정 신고 성공 실패 알림 ------------------------------------------------
-// 	$(document).ready(function() {
-// 	    if (${not empty isRogin}) {
-// 	        var isRogin = "${isRogin}"; // 문자열에서 불리언으로 변환
-// 	        if (isRogin === "false") {
-// 	            alert('로그인 해주세요');
-// 	        }
-// 	    }
-	
-// 	    if (${not empty isWork}) {
-// 	        var isWork = "${isWork}"; // 문자열에서 불리언으로 변환
-// 	        if (isWork === "false") {
-// 	            alert('작업쓰기 실패');
-// 	        } else if (isWork === "true") {
-// 	            alert('작업 성공');
-// 	        }
-// 	    }
-// 	});
-	
 	//결제 ------------------------------------------------------------------------
 	
 	var IMP = window.IMP; 

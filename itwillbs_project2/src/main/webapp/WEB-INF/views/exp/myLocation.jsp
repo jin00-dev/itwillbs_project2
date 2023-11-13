@@ -52,8 +52,19 @@
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script type="text/javascript">
 	//네이버 지도 api ---------------------------------------------------------
-	selectMapList();
+	var map = new naver.maps.Map('map', {
+		center : new naver.maps.LatLng(start, end),
+		zoom : 12
+	});
+	console.log(start);
+	console.log(end);
+	//selectMapList();
+	RouteMap(map,start,end);
 	
+	var selectedMarker;
+	
+	//현재 위치 가져오기
+
 	//검색한 주소의 정보를 insertAddress 함수로 넘겨준다.
 	function searchAddressToCoordinate(address) {
 		naver.maps.Service
@@ -113,7 +124,7 @@
 		
 		$('#expList').empty();
 		
-		var map = new naver.maps.Map('map', {
+		map = new naver.maps.Map('map', {
 			center : new naver.maps.LatLng(longitude, latitude),
 			zoom : 12
 		});
@@ -123,6 +134,7 @@
 		var marker = new naver.maps.Marker({
 			map : map,
 			position : new naver.maps.LatLng(longitude, latitude),
+			animation: naver.maps.Animation.DROP,
 		});
 		
 		// 정보 창 만들기
@@ -143,6 +155,14 @@
 		    } else {
 		        infowindow.open(map, marker);
 		    }
+		    
+		 	// 현재 선택된 마커에만 애니메이션 효과 적용
+		    if (selectedMarker) {
+		        selectedMarker.setAnimation(null); // 이전에 선택된 마커의 애니메이션 제거
+		    }
+
+		    selectedMarker = marker;
+		    selectedMarker.setAnimation(naver.maps.Animation.BOUNCE);
 		});
 	}///
 
@@ -207,6 +227,7 @@
 							var marker = new naver.maps.Marker({
 								map : map,
 								position : new naver.maps.LatLng(item.y, item.x),
+								animation: naver.maps.Animation.DROP,
 							});
 							
 							// 정보 창 만들기
@@ -228,6 +249,15 @@
 							    } else {
 							        infowindow.open(map, marker);
 							    }
+
+								// 현재 선택된 마커에만 애니메이션 효과 적용
+							    if (selectedMarker) {
+							        selectedMarker.setAnimation(null); // 이전에 선택된 마커의 애니메이션 제거
+							    }
+
+							    selectedMarker = marker;
+							    selectedMarker.setAnimation(naver.maps.Animation.BOUNCE);
+
 							});
 							
 						});
@@ -237,14 +267,83 @@
 			}//if
 		}//for
 	}////
+	
+	//현재위치
+	 function initMap(lat, lng) {
+            var mapOptions = {
+                center: new naver.maps.LatLng(lat, lng),
+                zoom: 15
+            };
+
+            map = new naver.maps.Map('map', mapOptions);
+
+            var marker = new naver.maps.Marker({
+                position: new naver.maps.LatLng(lat, lng),
+                map: map,
+                animation: naver.maps.Animation.DROP
+            });
+            
+            naver.maps.Event.addListener(marker, 'click', function() {
+           	  marker.setAnimation(naver.maps.Animation.BOUNCE);
+           	});
+
+           	naver.maps.Event.addListener(marker, 'animation_end', function() {
+           	  marker.setAnimation(null);  // 애니메이션 제거
+           	});
+            
+         // 정보 창 만들기
+			var contentString = [
+		        '<div class="iw_inner">',
+		        '   <h2>내 주소</h2>',
+		        '</div>'
+		    ].join('');
+			 
+			var infowindow = new naver.maps.InfoWindow({
+			    content: contentString
+			});
+			
+			// 마커 클릭 이벤트
+			naver.maps.Event.addListener(marker, "click", function(e) {
+			    if (infowindow.getMap()) {
+			        infowindow.close();
+			    } else {
+			        infowindow.open(map, marker);
+			    }
+			    
+			 	// 현재 선택된 마커에만 애니메이션 효과 적용
+			    if (selectedMarker) {
+			        selectedMarker.setAnimation(null); // 이전에 선택된 마커의 애니메이션 제거
+			    }
+
+			    selectedMarker = marker;
+			    selectedMarker.setAnimation(naver.maps.Animation.BOUNCE);
+			});
+        }
+
+        function success(location) {
+            var currentMyLocation = {
+                lat: location.coords.latitude,
+                lng: location.coords.longitude
+            };
+
+            initMap(currentMyLocation.lat, currentMyLocation.lng);
+        }
+
+        function error() {
+        	map = new naver.maps.Map('map', {
+    			center : new naver.maps.LatLng(37.3595704, 127.105399),
+    			zoom : 10
+    		});
+            alert('현재 위치를 가져올 수 없습니다.');
+        }
 
 	//지도를 그려주는 함수
 	function selectMapList() {
-
-		var map = new naver.maps.Map('map', {
-			center : new naver.maps.LatLng(37.3595704, 127.105399),
-			zoom : 10
-		});
+		if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, error);
+        } else {
+            alert('Geolocation이 지원되지 않습니다.');
+        }
 	}
 
 	// 지도를 이동하게 해주는 함수
@@ -254,11 +353,43 @@
 			zoom : 15,
 			mapTypeControl : true
 		};
-		var map = new naver.maps.Map('map', mapOptions);
+		map = new naver.maps.Map('map', mapOptions);
 		var marker = new naver.maps.Marker({
 			position : new naver.maps.LatLng(len, lat),
 			map : map
 		});
+	}
+	
+	//길찾기 -------------------------------------------------------
+	// 출발지와 도착지 좌표를 설정합니다.
+	var start = new naver.maps.LatLng(37.5666103, 126.9783882); // 출발지 좌표
+	var end = new naver.maps.LatLng(37.4979502, 127.0276368); // 도착지 좌표
+	
+	
+	
+	function RouteMap(map, startCoord, endCoord) {
+		var directionsService = new naver.maps.services.Directions();
+	    var directionsRenderer = new naver.maps.DirectionsRenderer({
+	        map: map,
+	        preserveViewport: true,
+	        suppressMarkers: true
+	    });
+
+	    // 길찾기 요청
+	    directionsService.route({
+	        start: startCoord,
+	        end: endCoord,
+	        method: 'DRIVING',  // 자동차 경로 찾기
+	        callback: function(response, status) {
+	            if (status === naver.maps.Service.Status.OK) {
+	                // 길찾기 결과를 지도에 표시
+	                directionsRenderer.setDirections(response);
+	            } else {
+	                // 실패 시 처리
+	                alert('길찾기에 실패했습니다.');
+	            }
+	        }
+	    });
 	}
 	
 	
