@@ -2,8 +2,7 @@
 <%@ page session="false" pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
 
-	<h2> 사업자 페이지 <br><br> 
-		예약 관리 목록 </h2>
+	<h3> 예약 관리 목록 </h3>
 
 	<table class="table">
 		<tr class="table-warning">

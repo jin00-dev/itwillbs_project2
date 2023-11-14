@@ -6,16 +6,18 @@ import com.project2.domain.PaymentVO;
 
 public interface PaymentDAO {
 	
-	PaymentVO boardPaymentList(PaymentVO vo) throws Exception;
+	public PaymentVO boardPaymentList(PaymentVO vo) throws Exception;
 	
-	List<PaymentVO> paymentList(PaymentVO vo) throws Exception;
+	public List<PaymentVO> paymentList(PaymentVO vo) throws Exception;
 	
-	List<PaymentVO> hostList(PaymentVO vo) throws Exception;
+	public List<PaymentVO> hostList(PaymentVO vo) throws Exception;
 	
-	int payment(PaymentVO vo) throws Exception;
+	public int payment(PaymentVO vo) throws Exception;
 	
-	PaymentVO selectPayInfo(Integer order_num) throws Exception;
+	public PaymentVO selectPayInfo(Integer order_num) throws Exception;
 	
-	int updatePayCancel(PaymentVO vo) throws Exception;
+	public int updatePayCancel(PaymentVO vo) throws Exception;
+	
+	public List<PaymentVO> adminOrderBoard(PaymentVO vo) throws Exception;
 
 }

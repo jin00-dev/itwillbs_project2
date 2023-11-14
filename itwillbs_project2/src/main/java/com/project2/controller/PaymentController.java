@@ -69,10 +69,23 @@ public class PaymentController {
 		return "/pm/hostList";
 	}
 	
+	// 관리자 페이지에서 클래스를 결제한 모든 회원의 리스트 출력
+	@RequestMapping(value = "/admnOrderBoard")
+	public String adminPaymentList(PaymentVO vo, Model model) {
+		try {
+			model.addAttribute("list", pService.adminOrderBoard(vo));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/pm/adminList";
+	}
+	
+	
 	@RequestMapping(value = "/payment")
 	public String paymentGET() {
 		return "/pm/actionPayment";
 	}
+	
 	
 	// 결제하기 버튼 링크로 가기
 	@ResponseBody

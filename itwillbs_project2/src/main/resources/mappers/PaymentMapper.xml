@@ -42,6 +42,11 @@
 		where e.exp_num in(select exp_num from experience where u.user_num = #{user_num})
 	</select>
 	
+	<!-- 관리자페이지, 모든 회원의 예매 내역 -->
+	<select id="adminList" resultType="com.project2.domain.PaymentVO">
+		select buyer_email, buyer_name, name, status, payment_date, cancel_date, paid_amount from payment
+	</select>
+	
 	
 	<!-- 결제 -->
 	<insert id="getPayment">
