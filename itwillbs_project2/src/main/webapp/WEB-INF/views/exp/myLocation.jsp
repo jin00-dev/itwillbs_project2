@@ -52,14 +52,14 @@
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script type="text/javascript">
 	//네이버 지도 api ---------------------------------------------------------
-	var map = new naver.maps.Map('map', {
-		center : new naver.maps.LatLng(start, end),
-		zoom : 12
-	});
-	console.log(start);
-	console.log(end);
-	//selectMapList();
-	RouteMap(map,start,end);
+// 	var map = new naver.maps.Map('map', {
+// 		center : new naver.maps.LatLng(start, end),
+// 		zoom : 12
+// 	});
+	selectMapList();
+// 	console.log(start);
+// 	console.log(end);
+// 	RouteMap(map,start,end);
 	
 	var selectedMarker;
 	
@@ -190,6 +190,9 @@
 				expList += '                <span>가격 : ' + i.exp_price + '원</span>';
 				expList += '            </div>';
 				expList += '        </div>';
+				expList += '        <div class="col-6 m-3">';
+				expList += '        	<a class="btn">길찾기</a>';
+				expList += '    	</div>';
 				expList += '    </div>';
 				expList += '</div>';
 				
@@ -325,8 +328,23 @@
                 lat: location.coords.latitude,
                 lng: location.coords.longitude
             };
-
-            initMap(currentMyLocation.lat, currentMyLocation.lng);
+            
+	          //  var cuAddr = getAddressFromCoordinates(currentMyLocation.lat, currentMyLocation.lng)
+			naver.maps.Service.reverseGeocode({
+		        location: new naver.maps.LatLng(currentMyLocation.lat, currentMyLocation.lng),
+		    }, function(status, response) {
+		        if (status !== naver.maps.Service.Status.OK) {
+		            return alert('Something wrong!');
+		        }
+	
+		        var result = response.result, // 검색 결과의 컨테이너
+		        	items = result.items; // 검색 결과의 배열
+		        
+	            $('#mapList').empty();
+	    		$('#mapList').append(items[1].address);
+		    });
+	
+	            initMap(currentMyLocation.lat, currentMyLocation.lng);
         }
 
         function error() {
@@ -362,35 +380,35 @@
 	
 	//길찾기 -------------------------------------------------------
 	// 출발지와 도착지 좌표를 설정합니다.
-	var start = new naver.maps.LatLng(37.5666103, 126.9783882); // 출발지 좌표
-	var end = new naver.maps.LatLng(37.4979502, 127.0276368); // 도착지 좌표
+// 	var start = new naver.maps.LatLng(37.5666103, 126.9783882); // 출발지 좌표
+// 	var end = new naver.maps.LatLng(37.4979502, 127.0276368); // 도착지 좌표
 	
 	
 	
-	function RouteMap(map, startCoord, endCoord) {
-		var directionsService = new naver.maps.services.Directions();
-	    var directionsRenderer = new naver.maps.DirectionsRenderer({
-	        map: map,
-	        preserveViewport: true,
-	        suppressMarkers: true
-	    });
+// 	function RouteMap(map, startCoord, endCoord) {
+// 		var directionsService = new naver.maps.services.Directions();
+// 	    var directionsRenderer = new naver.maps.DirectionsRenderer({
+// 	        map: map,
+// 	        preserveViewport: true,
+// 	        suppressMarkers: true
+// 	    });
 
-	    // 길찾기 요청
-	    directionsService.route({
-	        start: startCoord,
-	        end: endCoord,
-	        method: 'DRIVING',  // 자동차 경로 찾기
-	        callback: function(response, status) {
-	            if (status === naver.maps.Service.Status.OK) {
-	                // 길찾기 결과를 지도에 표시
-	                directionsRenderer.setDirections(response);
-	            } else {
-	                // 실패 시 처리
-	                alert('길찾기에 실패했습니다.');
-	            }
-	        }
-	    });
-	}
+// 	    // 길찾기 요청
+// 	    directionsService.route({
+// 	        start: startCoord,
+// 	        end: endCoord,
+// 	        method: 'DRIVING',  // 자동차 경로 찾기
+// 	        callback: function(response, status) {
+// 	            if (status === naver.maps.Service.Status.OK) {
+// 	                // 길찾기 결과를 지도에 표시
+// 	                directionsRenderer.setDirections(response);
+// 	            } else {
+// 	                // 실패 시 처리
+// 	                alert('길찾기에 실패했습니다.');
+// 	            }
+// 	        }
+// 	    });
+// 	}
 	
 	
 </script>
