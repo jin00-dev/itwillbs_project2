@@ -39,7 +39,7 @@
 	<select id="getListAll" resultType="BoardVO"
 		resultMap="boardMap">
 		select * from event_notice_faq_board
-		order by enf_regdate
+		order by enf_notice_num
 		desc
 	</select>
 	<!-- 글 목록 조회 -->
@@ -110,17 +110,16 @@
 	<!-- 게시판에 저장된 총 글의 개수 조회 -->
 
 	<select id="searchByTitle" resultType="BoardVO">
-		SELECT * FROM event_notice_faq_board
-		WHERE (enf_title LIKE CONCAT('%', #{searchTerm}, '%')
+		SELECT * FROM
+		event_notice_faq_board
+		WHERE (enf_title LIKE CONCAT('%', #{searchTerm},
+		'%')
 		OR enf_content LIKE CONCAT('%', #{searchTerm}, '%'))
-		AND enf_category = 1
+		AND
+		enf_category = 1
 	</select>
 
-
-
-	<!-- 이벤트 -->
-
-	<select id="getMaxEnfEventNum" resultType="java.lang.Integer">
+	<select id="getMaxEnfEventNum" resultType="int">
 		SELECT
 		MAX(enf_event_num) FROM event_notice_faq_board;
 	</select>
@@ -201,10 +200,100 @@
 	<!-- 게시판에 저장된 총 글의 개수 조회 -->
 	<select id="eventCount" resultType="int">
  		<![CDATA[
- 		select count(*) from tbl_boaevent_notice_faq_boardrd
+ 		select count(*) from event_notice_faq_board
  		where enf_event_num > 0
  		]]>
 	</select>
 	<!-- 게시판에 저장된 총 글의 개수 조회 -->
+
+	<!-- 최대 글번호 조회 -->
+	<select id="getMaxEnfFaqNum" resultType="int">
+		SELECT
+		IFNULL(MAX(enf_faq_num), 0) FROM event_notice_faq_board
+	</select>
+	<!-- 최대 글번호 조회 -->
+
+	<!-- FAQ 글쓰기 -->
+	<insert id="createFaq">
+		INSERT INTO event_notice_faq_board
+		(enf_category,
+		enf_faq_num, enf_title,
+		enf_content, enf_event_type, enf_updatedate)
+		VALUES
+		(2,
+		#{enf_faq_num}, #{enf_title}, #{enf_content}, 0, NULL);
+	</insert>
+	<!-- 글쓰기 -->
+
+	<!-- 글 목록 조회 -->
+	<select id="getFaListAll" resultType="BoardVO"
+		resultMap="boardMap">
+		select * from event_notice_faq_board
+		order by enf_faq_num
+		desc
+	</select>
+	<!-- 글 목록 조회 -->
+
+	<!-- 특정 글정보를 조회 -->
+	<select id="getFaqBoard" resultType="BoardVO">
+		select * from
+		event_notice_faq_board
+		where enf_faq_num = #{enf_faq_num}
+	</select>
+	<!-- 특정 글정보를 조회 -->
+
+
+	<!-- faq 업데이트 쿼리 -->
+	<update id="faqUpdateBoard"
+		parameterType="com.project2.domain.BoardVO">
+		UPDATE event_notice_faq_board
+		SET enf_title =
+		#{enf_title},
+		enf_content
+		= #{enf_content},
+		enf_regdate =
+		CURRENT_TIMESTAMP,
+		enf_updatedate = CURRENT_TIMESTAMP
+		WHERE enf_faq_num
+		= #{enf_faq_num}
+	</update>
+
+	<!-- 특정 글 삭제 -->
+	<delete id="faqRemoveBoard">
+		delete from event_notice_faq_board
+		where
+		enf_faq_num
+		=
+		#{enf_faq_num}
+	</delete>
+	<!-- 특정 글 삭제 -->
+
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+	<select id="faqPage" resultType="BoardVO">
+		select * from
+		event_notice_faq_board
+		order by enf_faq_num desc, enf_regdate desc
+		limit #{page}, 10
+	</select>
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+	<select id="faqCri" resultType="BoardVO">
+		select * from
+		event_notice_faq_board
+		order by enf_faq_num desc, enf_regdate desc
+		limit #{pageStart}, #{pageSize}
+	</select>
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+
+	<!-- 게시판에 저장된 총 글의 개수 조회 -->
+	<select id="faqCount" resultType="int">
+ 		<![CDATA[
+ 		select count(*) from event_notice_faq_board
+ 		where enf_faq_num > 0
+ 		]]>
+	</select>
+	<!-- 게시판에 저장된 총 글의 개수 조회 -->
+
 
 </mapper>
