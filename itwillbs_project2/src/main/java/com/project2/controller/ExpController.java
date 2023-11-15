@@ -52,10 +52,6 @@ public class ExpController {
 		}
 
 		try {
-			if (session.getAttribute("user_num") != null) {
-				UserVO uVo = service.getUserOne(Integer.parseInt((String) session.getAttribute("user_num")));
-				model.addAttribute(uVo);
-			}
 			ExpVO expOne = service.getExpOne(vo.getExp_num());
 			List<RevVO> rList = service.getExpRevList(vo.getExp_num());
 			double avgStar = service.getExpRevAvg(vo.getExp_num());
@@ -87,7 +83,6 @@ public class ExpController {
 			}
 
 			model.addAttribute(expOne);
-			// model.addAttribute("filePath",req.getRealPath("\\upload")+ "\\");
 			model.addAttribute("rList", rList);
 			model.addAttribute("ratings", ratings);
 			model.addAttribute("avgStar", avgStar);
@@ -114,7 +109,7 @@ public class ExpController {
 		vo.setUser_num(Integer.parseInt((String) session.getAttribute("user_num")));
 
 		try {
-			String fileName = revFileUpload(file, req);
+			String fileName = service.revFileUpload(file, req);
 			vo.setRev_img(fileName);
 			int result = service.insertReview(vo);
 
@@ -249,95 +244,57 @@ public class ExpController {
 		return "/exp/myLocation";
 	}
 
-	// 리뷰 파일 업로드 처리 메서드
-	private String revFileUpload(MultipartFile ufile, HttpServletRequest req) throws Exception {
-		logger.debug(" revFileUpload() - 파일업로드 처리 시작");
-
-		// form태그-input/file태그의 이름 정보
-		String fileName = ufile.getName();
-		logger.debug(" fileName : " + fileName);
-
-		// 업로드한 파일을 임시 저장
-		MultipartFile mFile = ufile;
-		// 임시저장된 파일의 원본이름을 리스트에 저장
-		String oFileName = mFile.getOriginalFilename();
-		logger.debug(" oFileName : " + oFileName);
-
-		// 업로드 저장경로 생성 /WEB-INF/upload (가상경로)
-		// 임시저장된 파일을 생성하기 위한 준비 (실제파일 생성)
-		// File file = new File("D:\\springupload2\\"+fileName);
-		File file = new File(req.getRealPath("\\upload\\rev") + "\\" + fileName);
-		logger.debug(" realPath : " + req.getRealPath("\\upload\\rev"));
-		if (mFile.getSize() != 0) { // 첨부파일(업로드한 임시파일)이 존재할때 진행
-			if (!file.exists()) { // 해당파일이 존재하는지 체크
-				// 해당경로에 파일이 없을경우,자동으로 폴더 생성후 진행
-				if (file.getParentFile().mkdirs()) {
-					file.createNewFile();
-					file.delete();
-					logger.debug(" 임시파일 생성완료-삭제 (첨부파일 폴더생성)! ");
-				}
-			}
-			// 임시로 생성된(저장된) 파일mFile -> 실제파일로 데이터 전송
-			// mFile.transferTo(new File("D:\\springupload2\\"+oFileName));
-			mFile.transferTo(new File(req.getRealPath("\\upload\\rev") + "\\" + oFileName));
-		}
-		logger.debug(" 파일 업로드 성공! ");
-
-		logger.debug(" revFileUpload() - 파일업로드 처리 끝");
-
-		return oFileName;
-	}
-
 	// 파일(썸네일) 다운로드 처리
-	@RequestMapping(value = "/thumbDownload", method = RequestMethod.GET)
-	public void fileThumbDownloadGET(@RequestParam("fileName") String fileName, @RequestParam("wid") int wid,
-			@RequestParam("hei") int hei, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		@RequestMapping(value = "/thumbDownload", method = RequestMethod.GET)
+		public void fileThumbDownloadGET(@RequestParam("fileName") String fileName, @RequestParam("wid") int wid,
+				@RequestParam("hei") int hei, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		logger.debug(" fileThumbDownloadGET() 호출 ");
+			logger.debug(" fileThumbDownloadGET() 호출 ");
 
-		// 다운로드할 폴더 (= 업로드한 폴더)에 있는 파일정보
-		String downFile = request.getRealPath("\\upload\\rev") + "\\" + fileName;
-		logger.debug(" 다운로드할 파일 : " + downFile);
+			// 다운로드할 폴더 (= 업로드한 폴더)에 있는 파일정보
+			String downFile = request.getRealPath("\\upload\\rev") + "\\" + fileName;
+			logger.debug(" 다운로드할 파일 : " + downFile);
 
-		// 다운로드할 파일을 준비
-		File file = new File(downFile);
+			// 다운로드할 파일을 준비
+			File file = new File(downFile);
 
-		// 업로드했던(다운로드할) 파일의 확장자 확인
-		// "itwill.jpg"
-		int lastIdx = fileName.lastIndexOf(".");
-		// 파일의 확장자를 제외한 이름을 저장
-		String thumbName = fileName.substring(0, lastIdx);
+			// 업로드했던(다운로드할) 파일의 확장자 확인
+			// "itwill.jpg"
+			int lastIdx = fileName.lastIndexOf(".");
+			// 파일의 확장자를 제외한 이름을 저장
+			String thumbName = fileName.substring(0, lastIdx);
 
-		// 파일명이 한글일때 인코딩문제 해결
-		// thumbName = URLEncoder.encode(thumbName,"UTF-8");
-		// 출력객체
-		OutputStream out = response.getOutputStream();
+			// 파일명이 한글일때 인코딩문제 해결
+			// thumbName = URLEncoder.encode(thumbName,"UTF-8");
+			// 출력객체
+			OutputStream out = response.getOutputStream();
 
-		//File thumbNail = new File(request.getRealPath("\\upload\\rev") + "\\thumbnail\\" + thumbName + ".png");
+			// File thumbNail = new File(request.getRealPath("\\upload\\rev") +
+			// "\\thumbnail\\" + thumbName + ".png");
 
-		if (file.exists()) {
-			// 썸네일 폴더 생성
-			// thumbNail.getParentFile().mkdirs();
-			// 썸네일 파일 생성
-			// Thumbnails.of(file).size(50, 50).outputFormat("png").toFile(thumbNail);
-			Thumbnails.of(file).size(wid, hei).outputFormat("png").toOutputStream(out);
+			if (file.exists()) {
+				// 썸네일 폴더 생성
+				// thumbNail.getParentFile().mkdirs();
+				// 썸네일 파일 생성
+				// Thumbnails.of(file).size(50, 50).outputFormat("png").toFile(thumbNail);
+				Thumbnails.of(file).size(wid, hei).outputFormat("png").toOutputStream(out);
+			}
+
+			// 파일 전송(썸네일 이미지 출력)
+
+			// 파일 읽기 객체
+//				FileInputStream fis = new FileInputStream(thumbNail);
+//				
+//				byte[] buffer = new byte[1024*8];
+//				int data = 0;
+//				while( (data = fis.read(buffer)) != -1) { //파일이 끝날때까지 파일읽기
+//					out.write(buffer,0,data);
+//				}
+
+			// 자원해제
+			out.close();
+//				fis.close();
+
 		}
-
-		// 파일 전송(썸네일 이미지 출력)
-
-		// 파일 읽기 객체
-//		FileInputStream fis = new FileInputStream(thumbNail);
-//		
-//		byte[] buffer = new byte[1024*8];
-//		int data = 0;
-//		while( (data = fis.read(buffer)) != -1) { //파일이 끝날때까지 파일읽기
-//			out.write(buffer,0,data);
-//		}
-
-		// 자원해제
-		out.close();
-//		fis.close();
-
-	}
 
 }// controller

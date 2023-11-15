@@ -15,11 +15,6 @@
 
 <!-- Vue.js 스크립트 불러오기 -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
-<%
-	session.setAttribute("user_num", "1");
-	session.setAttribute("user_id", "test1");
-	session.setAttribute("user_type", "1");
-%>
 <!-- Section-->
 <section class="py-5">
 	<!-- 상단 전체 박스 -->
@@ -535,9 +530,12 @@
 	                    data: rsp,
 	                    success: function (response) {
 	                        console.log(response);
+	                        alert('결제가 완료되었습니다');
+	                        location.href = '/class/paymentList?user_id=${user_id}';
 	                    },
 	                    error: function (error) {
 	                        console.error(error);
+	                        alert('결제를 다시 시도해주세요');
 	                    }
 	                });
 	            } else {
