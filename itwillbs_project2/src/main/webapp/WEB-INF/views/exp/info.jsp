@@ -15,15 +15,6 @@
 
 <!-- Vue.js 스크립트 불러오기 -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
-
-<!-- 로그인 테스트 -->
-<%
-	session.setAttribute("user_num", "6");
-	session.setAttribute("user_id", "totoro");
-	session.setAttribute("user_name", "몽실이누나서영");
-	session.setAttribute("user_type", "1");
-	 	//	session.invalidate();
-%>
 <!-- Section-->
 <section class="py-5">
 	<!-- 상단 전체 박스 -->
@@ -355,42 +346,8 @@
 
 
 </section>
-<!-- <button onclick="cancelPay('7')">환불하기</button> -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script>
-
-// function cancelPay(order_num) {
-//  	  jQuery.ajax({
-//        url: "/payrest/cancelPay", 
-//        type: "POST",
-//        contentType: "application/json",
-//        data: order_num,
-//        success: function(refundResponse) {
-//          // refund ajax 실행 후 작업 수행
-         
-//        	  if(refundResponse === "ok"){	
-//                  alert('환불 요청이 완료되었습니다.');
-//                  location.reload();
-//               // 예약취소 버튼 수정하기
-//              }else if(refundResponse === "already refund"){ 
-//           	  alert('이미 환불 처리된 주문 건입니다.');
-            	  
-// 	      }else{
-//                  alert('실패: 관리자에게 문의해주세요');
-//              }	
-         
-//        },
-//        error: function(error) {
-//          // refund ajax 실행 중 에러 발생 시 처리
-//        }
-//      }); // refund ajax
-// }
-
-</script>
-
-
-
 <!-- footer -->
 <%@include file="../include/footer.jsp"%>
 

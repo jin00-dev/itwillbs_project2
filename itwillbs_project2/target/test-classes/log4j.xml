@@ -10,42 +10,14 @@
 		</layout>
 	</appender>
 	
-	<!-- Application Loggers(user) -->
-	<logger name="com.project2.user.controller">
-		<level value="debug" />
-	</logger>
-	<logger name="com.project2.user.persistence">
-		<level value="debug" />
-	</logger>
-	<logger name="com.project2.user.service">
-		<level value="debug" />
-	</logger>
-	
-	<!-- Application Loggers(board) -->
-	<logger name="com.project2.board.controller">
-		<level value="debug" />
-	</logger>
-	<logger name="com.project2.board.persistence">
-		<level value="debug" />
-	</logger>
-	<logger name="com.project2.board.service">
-		<level value="debug" />
-	</logger>
-	
-	<!-- Application Loggers(exp) -->
-	<logger name="com.project2.exp.controller">
-		<level value="debug" />
-	</logger>
-	<logger name="com.project2.exp.persistence">
-		<level value="debug" />
-	</logger>
-	<logger name="com.project2.exp.service">
+	<!-- Application Loggers -->
+	<logger name="com.project2.controller">
 		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
-		<level value="info" />
+		<level value="debug" />
 	</logger>	
 	
 	<logger name="org.springframework.beans">

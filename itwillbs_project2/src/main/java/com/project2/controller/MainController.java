@@ -22,6 +22,8 @@ public class MainController {
 	private ExpServiceImpl service;
 	
 	//메인페이지 -------------------------------------
+	//http://localhost:8088/
+
 	@GetMapping("/")
 	public String mainGET(Model model,
 			String category,String region1,String region2, String sort, Criteria cri) throws Exception{
@@ -74,5 +76,5 @@ public class MainController {
 	
 	
 	
-	
 }//controller
+
