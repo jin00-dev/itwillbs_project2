@@ -1,14 +1,18 @@
 package com.project2.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,14 +23,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.project2.domain.Criteria;
+import com.project2.domain.PageVO;
 import com.project2.domain.UserVO;
-import com.project2.service.MailSendService;
+import com.project2.service.MailSendServiceImpl;
 import com.project2.service.UserService;
 
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping(value = "/user/*")
+@EnableAsync
 public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -36,7 +43,7 @@ public class UserController {
 	
 	// 메일 관련 서비스 주입
 	@Autowired
-	private MailSendService mss; 
+	private MailSendServiceImpl mss; 
 
 	// http://localhost:8088/user/join
 	// 회원가입 페이지 이동
@@ -68,11 +75,18 @@ public class UserController {
 	//이메일 인증
 	@GetMapping("/mailCheck")
 	@ResponseBody
-	public String mailCheck(String email) throws Exception{
+	public void mailCheck(String email) throws Exception{
 		logger.debug("이메일 인증 요청 들어옴 @@@@@");
 		logger.debug("인증 이메일 : " + email );
 		
-		return mss.joinEmail(email); 
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				mss.joinEmail(email); 
+				
+			}
+		}).start();
 	}
 
 //	http://localhost:8088/user/login
@@ -90,7 +104,7 @@ public class UserController {
 
 	// 로그인 POST (받은 거 가져가서 DB에서 확인하는 것)
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginPOST(UserVO vo, HttpSession session) {
+	public String loginPOST(UserVO vo, HttpSession session,HttpServletResponse response) throws IOException {
 		logger.debug(" loginPOST() 호출 ");
 		logger.debug(" 연결된 뷰페이지로 이동 ");
 		// 전달정보 저장
@@ -104,6 +118,12 @@ public class UserController {
 		// 로그인 처리 결과에 따른 페이지 이동
 		if (resultVO == null) {
 			// 로그인 실패 -> 로그인 페이지로 이동
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script> alert('아이디 또는 비밀번호가 틀립니다.');");
+			out.println("history.go(-1); </script>"); 
+			out.close();
 			return "redirect:/user/login";
 		}
 
@@ -238,19 +258,33 @@ public class UserController {
 
 	// 회원목록 조회GET
 	@RequestMapping(value = "/adminMain", method = RequestMethod.GET)
-	public String listGET(HttpSession session, Model model) {
-		logger.debug(" listGET() ");
+	public String listGET(Criteria cri, HttpSession session, Model model) throws Exception {
+		logger.debug(" listGET() 호출 ");
 		// 관리자가 아닌경우 로그인페이지로 이동
 		String id = (String) session.getAttribute("user_id");
 
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(uService.getUserCount());
+		
+		logger.debug(""+pageVO);
+		model.addAttribute("pageVO", pageVO);
+		
+		if(cri.getPage() > pageVO.getEndPage()) {
+			//잘못된 페이지 정보 입력
+			cri.setPage((pageVO.getEndPage()));
+		}
+		
 		if (id == null || !id.equals("admin1")) {
 			return "redirect:/";
 		}
 		// 서비스 -> DAO 회원목록 조회
-		List<UserVO> userList = uService.userList();
+		List<UserVO> userList = uService.userList(cri);
 		// memberList.add(dto); 리턴의 결과를 수정할 수 있다.
 		// List로 전달된 회원정보를 view 페이지로 전달 출력
 		// => Model 객체
+		logger.debug("회원 수 : " + userList.size());
+		
 		model.addAttribute("userList", userList);
 		// model.addAllAttributes(attributeValues)
 		// model.addAttribute("memberList", mService.memberList());

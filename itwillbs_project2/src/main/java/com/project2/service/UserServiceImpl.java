@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project2.domain.Criteria;
 import com.project2.domain.UserVO;
 import com.project2.persistence.UserDAO;
 
@@ -91,15 +92,23 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-
+	//회원목록 + 페이징 처리
 	@Override
-	public List<UserVO> userList() {
+	public List<UserVO> userList(Criteria cri) throws Exception {
 		logger.debug(" userList() 호출 ");
 		
-		List<UserVO> userList = udao.getUserList();
+		List<UserVO> userList = udao.getUserList(cri);
 		
 		return userList;
 	}
+	
+	// 총 회원 수 조회
+	@Override
+	public int getUserCount() throws Exception {
+		logger.debug("getUserCount() 호출");
+		return udao.getUserCount();
+	}
+	
 
 	// 회원등급변경
 	   @Override
@@ -130,4 +139,6 @@ public class UserServiceImpl implements UserService{
 	      logger.debug("Service: 특정 회원 정보 조회 메서드 호출");
 	      return userDAO.getUserByUserId(user_id);
 	   }
+
+	
 }

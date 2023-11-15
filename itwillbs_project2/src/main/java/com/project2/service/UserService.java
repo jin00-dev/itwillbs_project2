@@ -2,6 +2,7 @@ package com.project2.service;
 
 import java.util.List;
 
+import com.project2.domain.Criteria;
 import com.project2.domain.UserVO;
 
 public interface UserService {
@@ -24,7 +25,10 @@ public interface UserService {
 	public int userDelete(UserVO deleteVO);
 
 	// 회원정보 목록조회 동작
-	public List<UserVO> userList();
+	public List<UserVO> userList(Criteria cri) throws Exception;
+	
+	//전체 회원 수 조회 
+	public int getUserCount() throws Exception;
 
 	// 아이디 중복체크
 	public int idCheck(String id);

@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Repository;
 
+import com.project2.domain.Criteria;
 import com.project2.domain.UserVO;
 
 @Repository
@@ -90,12 +91,17 @@ public class UserDAOImpl implements UserDAO{
 		}
 
 		@Override
-		public List<UserVO> getUserList() {
+		public List<UserVO> getUserList(Criteria cri) {
 			System.out.println(" DAOImpl : getUserList() 호출");
-			
-			
-			return sqlSession.selectList(NAMESPACE + ".getUserList");
+			// 페이징 처리 추가
+			return sqlSession.selectList(NAMESPACE + ".getUserList",cri);
 		}
+		//총 회원 수 조회
+		@Override
+		public int getUserCount() throws Exception {
+			return sqlSession.selectOne(NAMESPACE + ".UserCount");
+		}
+		
 
 		// 등급변경
 		   
@@ -116,5 +122,6 @@ public class UserDAOImpl implements UserDAO{
 	        params.put("user_phone", user_phone);
 	        return sqlSession.selectOne(NAMESPACE+".findUserByNameAndPhone", params);
 	    }
+		
 		
 }

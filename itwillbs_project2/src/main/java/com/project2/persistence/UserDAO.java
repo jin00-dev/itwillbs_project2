@@ -2,6 +2,7 @@ package com.project2.persistence;
 
 import java.util.List;
 
+import com.project2.domain.Criteria;
 import com.project2.domain.UserVO;
 
 public interface UserDAO {
@@ -22,8 +23,10 @@ public interface UserDAO {
 		public int deleteUser(UserVO delVO);	
 		
 		// 회원목록 조회
-		public List<UserVO> getUserList(); 
+		public List<UserVO> getUserList(Criteria cri) throws Exception; 
 		
+		//총 회원 수 조회 
+		public int getUserCount() throws Exception;
 		
 		// 아이디 중복체크
 			public int idCheck(String user_id);
