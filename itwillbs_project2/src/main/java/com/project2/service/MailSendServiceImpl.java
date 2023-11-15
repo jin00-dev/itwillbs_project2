@@ -10,12 +10,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;import lombok.val;
 
 @Component
-public class MailSendService {
+@Service(value = "mailService")
+public class MailSendServiceImpl {
 
-	private static final Logger logger = LoggerFactory.getLogger(MailSendService.class);
+	private static final Logger logger = LoggerFactory.getLogger(MailSendServiceImpl.class);
 
 	@Autowired
 	private JavaMailSenderImpl mailSender;
@@ -29,16 +32,17 @@ public class MailSendService {
 		authNum = checkNum;
 	}// makeAuthNumber
 	
+	@Async
 	public String joinEmail(String email) {
 		makeAuthNumber();
 		String setForm = "parkyeojin1995@gmail.com"; // 보내는 이메일 
 		String toMail = email; // 받는 메일..?
 		String title = "세모클래스 회원가입 인증 이메일 입니다."; // 이메일 제목 
-		String content = "세상의 모든 클래스, 세모클래스에 방문을 환영합니다."
+		String content = "<h2>세상의 모든 클래스, 세모클래스에 방문을 환영합니다."
 						+ "<br>"
 						+ "인증번호는 " + authNum + "입니다."
 						+ "<br>"
-						+ "해당 인증번호를 입력란에 기입하여주십시오"; // 이메일 내용
+						+ "해당 인증번호를 입력란에 기입하여주십시오</h2>"; // 이메일 내용
 		logger.debug("@@@@@ toMail : " + toMail);
 		logger.debug("@@@@@ content : " + content);
 		
@@ -47,6 +51,7 @@ public class MailSendService {
 	}// joinEmail(String email)
 	
 	// 이메일 전송 메서드 
+	@Async
 	public void mailSend(String setForm, String toMail, String title, String content) {
 		MimeMessage message = mailSender.createMimeMessage();
 		
