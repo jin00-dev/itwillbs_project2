@@ -3160,7 +3160,7 @@ textarea.form-control-lg {
   }
 }
 .fade:not(.show) {
-  opacity: 0;
+/*   opacity: 0; */
 }
 
 .collapse:not(.show) {
@@ -3612,10 +3612,11 @@ textarea.form-control-lg {
   --bs-nav-link-hover-color: var(--bs-link-hover-color);
   --bs-nav-link-disabled-color: #6c757d;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap;s
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
+  margin-top: 1%;
 }
 
 .nav-link {
@@ -3713,6 +3714,7 @@ textarea.form-control-lg {
   text-align: center;
 }
 
+
 .nav-fill .nav-item .nav-link,
 .nav-justified .nav-item .nav-link {
   width: 100%;
@@ -3734,7 +3736,7 @@ textarea.form-control-lg {
   --bs-navbar-active-color: rgba(0, 0, 0, 0.9);
   --bs-navbar-brand-padding-y: 0.3125rem;
   --bs-navbar-brand-margin-end: 1rem;
-  --bs-navbar-brand-font-size: 1.25rem;
+  --bs-navbar-brand-font-size: 2.5rem;
   --bs-navbar-brand-color: rgba(0, 0, 0, 0.9);
   --bs-navbar-brand-hover-color: rgba(0, 0, 0, 0.9);
   --bs-navbar-nav-link-padding-x: 0.5rem;
@@ -10824,3 +10826,22 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+
+/* 추가--by장----------- */
+/* 언더라인 추가 */
+.nav-underline .nav-link {
+  border-bottom: 2px solid transparent;
+}
+
+.nav-underline .nav-link:hover,
+.nav-underline .nav-link.active {
+  border-bottom: 2px solid #007bff;
+}
+/* 이미지 옆으로 배치 */
+.card-horizontal {
+    display: flex;
+    flex: 1 1 auto;
+}
+
+/* 추가--by장----------- */

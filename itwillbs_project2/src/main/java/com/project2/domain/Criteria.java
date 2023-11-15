@@ -43,7 +43,6 @@ public class Criteria {
 		return pageSize;
 	}
 
-	// alt shift s + s
 	@Override
 	public String toString() {
 		return "Criteria [page=" + page + ", pageSize=" + pageSize + "]";

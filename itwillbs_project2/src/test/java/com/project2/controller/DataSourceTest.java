@@ -1,6 +1,5 @@
 package com.project2.controller;
 
-import java.lang.annotation.Inherited;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -15,7 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.project2.persistence.TestDAO;
+import com.project2.domain.PaymentVO;
+import com.project2.persistence.PaymentDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
@@ -29,7 +29,9 @@ public class DataSourceTest {
 	private DataSource ds;
 	
 	@Autowired
-	public TestDAO tdao;
+	public PaymentDAO pdao;
+	
+	public PaymentVO vo;
 	
 //	@Test
 	public void ds_test() {
@@ -47,7 +49,7 @@ public class DataSourceTest {
 	public void sql구문실행테스트() {
 		logger.debug("sql 구문 실행 테스트");
 		
-		logger.debug(tdao.getTime());
+		logger.debug("dao"+vo.getUser_id());
 	}
 	
 }//DataSourceTest
