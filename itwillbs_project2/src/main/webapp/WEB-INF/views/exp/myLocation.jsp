@@ -193,7 +193,7 @@
 	                    '     <a href="'+findHref+'" class="btn btn-outline-info" id="findRoute">길찾기</a>'+
 	                    '</div>';
 					 
-					var infowindow = new naver.maps.InfoWindow({
+					let infowindow = new naver.maps.InfoWindow({
 					    content: contentString
 					});
 					
