@@ -15,7 +15,7 @@ import com.project2.domain.QnaVO;
 
 @Repository
 public class QnaDAOImpl implements QnaDAO {
-
+ 
 	private static final Logger logger = LoggerFactory.getLogger(QnaDAOImpl.class);
 
 	@Inject
