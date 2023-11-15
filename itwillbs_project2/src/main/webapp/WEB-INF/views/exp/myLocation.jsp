@@ -29,7 +29,7 @@
 				</thead>
 				<tbody id="mapList">
 					<tr>
-						<td>입력된 값이 없어요</td>
+						<td id="nowRegion">입력된 주소가 없어요</td>
 					</tr>
 				</tbody>
 			</table>
@@ -55,38 +55,15 @@
 	//네이버 지도 api ---------------------------------------------------------
 	selectMapList();
 	
+	var selectedMarker;
+
 	//검색한 주소의 정보를 insertAddress 함수로 넘겨준다.
 	function searchAddressToCoordinate(address) {
-		naver.maps.Service
-				.geocode(
-						{
-							query : address
-						},
-						function(status, response) {
-							if (status === naver.maps.Service.Status.ERROR) {
-								return alert('Something Wrong!');
-							}
-							if (response.v2.meta.totalCount === 0) {
-								return alert('올바른 주소를 입력해주세요.');
-							}
-							var htmlAddresses = [], item = response.v2.addresses[0], point = new naver.maps.Point(
-									item.x, item.y);
-							if (item.roadAddress) {
-								htmlAddresses.push('[도로명 주소] '
-										+ item.roadAddress);
-							}
-							if (item.jibunAddress) {
-								htmlAddresses.push('[지번 주소] '
-										+ item.jibunAddress);
-							}
-							if (item.englishAddress) {
-								htmlAddresses.push('[영문명 주소] '
-										+ item.englishAddress);
-							}
-
-							insertAddress(item.roadAddress, item.x, item.y);
-
-						});
+		getNaverMapCoordinates(address).then(function(result) {
+			insertAddress(result.roadAddress, result.x, result.y);
+		}).catch(function(error) {
+		    console.log(error);
+		});
 	}
 	// 주소 검색의 이벤트
 	$('#address').on('keydown', function(e) {
@@ -106,63 +83,254 @@
 	function insertAddress(address, latitude, longitude) {
 		var mapList = "";
 		mapList += "<tr>"
-		mapList += "	<td>" + address + "</td>"
+		mapList += "	<td id='nowRegion'>" + address + "</td>"
 		mapList += "</tr>"
 
 		$('#mapList').empty();
 		$('#mapList').append(mapList);
 		
-		$('#expList').empty();
-		insertList(address.substring(0, 2));
 		
-		var map = new naver.maps.Map('map', {
+		map = new naver.maps.Map('map', {
 			center : new naver.maps.LatLng(longitude, latitude),
-			zoom : 14
+			zoom : 12
 		});
+		
+		$('#expList').empty();
+		insertList(address,map);
+		
 		var marker = new naver.maps.Marker({
 			map : map,
 			position : new naver.maps.LatLng(longitude, latitude),
+			animation: naver.maps.Animation.DROP,
 		});
-	}
+		
+		// 정보 창 만들기
+		var contentString = [
+		        '<div class="iw_inner">',
+		        '   <h3>내 주소</h3>',
+		        '</div>'
+		    ].join('');
+		 
+		var infowindow = new naver.maps.InfoWindow({
+		    content: contentString
+		});
+		
+		// 마커 클릭 이벤트
+		naver.maps.Event.addListener(marker, "click", function(e) {
+		    if (infowindow.getMap()) {
+		        infowindow.close();
+		    } else {
+		        infowindow.open(map, marker);
+		    }
+		    
+		 	// 현재 선택된 마커에만 애니메이션 효과 적용
+		    if (selectedMarker) {
+		        selectedMarker.setAnimation(null); // 이전에 선택된 마커의 애니메이션 제거
+		    }
 
-	//체험 리스트
-	function insertList(addr) {
+		    selectedMarker = marker;
+		    selectedMarker.setAnimation(naver.maps.Animation.BOUNCE);
+		});
+	}///
+
+	//체험 리스트와 마커
+	async function insertList(addr,map) {
 		list = ${list};
 		
-		for (var i of list) {
+		for (let i of list) {
 			var expList = "";
-			if(i.exp_region.substr(0,2) == addr){
-				expList += '<div class="container-fluid border" style="min-width: 300px">';
-				expList += '    <div class="row justify-content-center">';
-				expList += '        <div class="col-6 m-3">';
-				expList += '            <img class="img-fluid" src="https://dummyimage.com/150x150/dee2e6/6c757d.jpg" class="card-img-left" alt="...">';
-				expList += '        </div>';
-				expList += '        <div class="col-6 m-3">';
-				expList += '            <div class="p-3 text-center">';
-				expList += '                <span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">'
-						+ i.exp_region.substring(0, 2) + '</span>';
-				expList += '                <span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">'
-						+ i.exp_category + '</span>';
-				expList += '                <h4 class="mx-1 my-1">' + i.exp_name
-						+ '</h4>';
-				expList += '                <span>가격 : ' + i.exp_price + '원</span>';
-				expList += '            </div>';
-				expList += '        </div>';
-				expList += '    </div>';
-				expList += '</div>';
+			if(i.exp_region.substr(0,2) == addr.substr(0, 2)){
 				
-				$('#expList').append(expList);
-			}
-		}
-	}
+				var start ={ x: "", y: "" };
+				var end ={ x: "", y: "" };
+				var nowRegion = $('#nowRegion').text();
+				
+				try {
+					let start = await getNaverMapCoordinates(nowRegion);
+	                let end = await getNaverMapCoordinates(i.exp_region);
+
+				    var href= "onclick=location.href='/exp/info?exp_num=" + i.exp_num + "';";
+				    var findHref = "https://map.naver.com/p/directions/" + start.x + "," + start.y + "/" + end.x + "," + end.y + "/-/transit?c=13.00,0,0,0,dh";
+				    
+				    expList += '<div class="container-fluid border" style="min-width: 300px" >';
+					expList += '    <div class="row justify-content-center" style="cursor:pointer;" >';
+					expList += '        <div class="col-6 m-3" '+href+'>';
+					expList += '            <img class="img-fluid" src="https://dummyimage.com/150x150/dee2e6/6c757d.jpg" class="card-img-left" alt="...">';
+					expList += '        </div>';
+					expList += '        <div class="col-6 m-3" '+href+' >';
+					expList += '            <div class="p-3 text-center">';
+					expList += '                <span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">'
+							+ i.exp_region.substring(0, 2) + '</span>';
+					expList += '                <span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">'
+							+ i.exp_category + '</span>';
+					expList += '                <h4 class="mx-1 my-1">' + i.exp_name
+							+ '</h4>';
+					expList += '                <span>가격 : ' + i.exp_price + '원</span>';
+					expList += '            </div>';
+					expList += '        </div>';
+					expList += '    <div class="col-6 m-3 text-center">';
+					expList += '       <a href="'+findHref+'" class="btn btn-outline-info" id="findRoute">길찾기</a>';
+					expList += '    </div>';
+					expList += '    </div>';
+					expList += '</div>';
+					
+					$('#expList').append(expList);
+					
+					//마커 만들기
+					let marker = new naver.maps.Marker({
+						map : map,
+						position : new naver.maps.LatLng(end.y, end.x),
+						animation: naver.maps.Animation.DROP,
+					});
+					
+					// 정보 창 만들기
+					var href= "onclick=location.href='/exp/info?exp_num="+i.exp_num+"';";
+					var contentString = 
+						'<div class="card" '+href+' style="cursor:pointer;">' +
+	                    '   <h3>' + i.exp_name + '</h3>' +
+	                    '   <p>' + i.exp_region + '<br />' +
+	                    '   </p>' +
+	                    '     <a href="'+findHref+'" class="btn btn-outline-info" id="findRoute">길찾기</a>'+
+	                    '</div>';
+					 
+					var infowindow = new naver.maps.InfoWindow({
+					    content: contentString
+					});
+					
+					// 마커 클릭 이벤트
+					naver.maps.Event.addListener(marker, "click", function(e) {
+					    if (infowindow.getMap()) {
+					        infowindow.close();
+					    } else {
+					        infowindow.open(map, marker);
+					    }
+
+						// 현재 선택된 마커에만 애니메이션 효과 적용
+					    if (selectedMarker) {
+					        selectedMarker.setAnimation(null); // 이전에 선택된 마커의 애니메이션 제거
+					    }
+
+					    selectedMarker = marker;
+					    selectedMarker.setAnimation(naver.maps.Animation.BOUNCE);
+					});
+				} catch (error) {
+	                console.log(error);
+	                // 오류 처리 로직
+	            }
+				
+				
+			}//if
+		}//for
+	}////
+	
+	//현재위치 ---------------------------------------------------------------
+	 function initMap(lat, lng) {
+            var mapOptions = {
+                center: new naver.maps.LatLng(lat, lng),
+                zoom: 15
+            };
+
+            map = new naver.maps.Map('map', mapOptions);
+
+            var marker = new naver.maps.Marker({
+                position: new naver.maps.LatLng(lat, lng),
+                map: map,
+                animation: naver.maps.Animation.DROP
+            });
+            
+            naver.maps.Event.addListener(marker, 'click', function() {
+           	  marker.setAnimation(naver.maps.Animation.BOUNCE);
+           	});
+
+           	naver.maps.Event.addListener(marker, 'animation_end', function() {
+           	  marker.setAnimation(null);  // 애니메이션 제거
+           	});
+            
+         // 정보 창 만들기
+			var contentString = [
+		        '<div class="iw_inner">',
+		        '   <h2>내 주소</h2>',
+		        '</div>'
+		    ].join('');
+			 
+			var infowindow = new naver.maps.InfoWindow({
+			    content: contentString
+			});
+			
+			// 마커 클릭 이벤트
+			naver.maps.Event.addListener(marker, "click", function(e) {
+			    if (infowindow.getMap()) {
+			        infowindow.close();
+			    } else {
+			        infowindow.open(map, marker);
+			    }
+			    
+			 	// 현재 선택된 마커에만 애니메이션 효과 적용
+			    if (selectedMarker) {
+			        selectedMarker.setAnimation(null); // 이전에 선택된 마커의 애니메이션 제거
+			    }
+
+			    selectedMarker = marker;
+			    selectedMarker.setAnimation(naver.maps.Animation.BOUNCE);
+			});
+			
+			//주변 체험 목록작성
+			naver.maps.Service.reverseGeocode({
+		        location: new naver.maps.LatLng(lat, lng),
+		    }, function(status, response) {
+		        if (status !== naver.maps.Service.Status.OK) {
+		            return alert('Something wrong!');
+		        }
+	
+		        var result = response.result, // 검색 결과의 컨테이너
+		        	items = result.items; // 검색 결과의 배열
+			
+				getNaverMapCoordinates(items[1].address).then(function(result) {
+					insertAddress(result.roadAddress, result.x, result.y);
+				}).catch(function(error) {
+				    console.log(error);
+				});
+		    });
+        }
+
+        function success(location) {
+            var currentMyLocation = {
+                lat: location.coords.latitude,
+                lng: location.coords.longitude
+            };
+            
+			naver.maps.Service.reverseGeocode({
+		        location: new naver.maps.LatLng(currentMyLocation.lat, currentMyLocation.lng),
+		    }, function(status, response) {
+		        if (status !== naver.maps.Service.Status.OK) {
+		            return alert('Something wrong!');
+		        }
+	
+		        var result = response.result, // 검색 결과의 컨테이너
+		        	items = result.items; // 검색 결과의 배열
+		        
+	            $('#mapList').empty();
+	    		$('#mapList').append(items[1].address);
+		    });
+	
+	            initMap(currentMyLocation.lat, currentMyLocation.lng);
+        }
+
+        function error() {
+        	map = new naver.maps.Map('map', {
+    			center : new naver.maps.LatLng(37.3595704, 127.105399),
+    			zoom : 10
+    		});
+            alert('현재 위치를 가져올 수 없습니다.');
+        }
 
 	//지도를 그려주는 함수
 	function selectMapList() {
-
-		var map = new naver.maps.Map('map', {
-			center : new naver.maps.LatLng(37.3595704, 127.105399),
-			zoom : 10
-		});
+		if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(success, error);
+        } else {
+            alert('Geolocation이 지원되지 않습니다.');
+        }
 	}
 
 	// 지도를 이동하게 해주는 함수
@@ -172,12 +340,57 @@
 			zoom : 15,
 			mapTypeControl : true
 		};
-		var map = new naver.maps.Map('map', mapOptions);
+		map = new naver.maps.Map('map', mapOptions);
 		var marker = new naver.maps.Marker({
 			position : new naver.maps.LatLng(len, lat),
 			map : map
 		});
 	}
+	// 주소를 좌표로 -----------------------------------------------------
+	function getNaverMapCoordinates(address) {
+	    return new Promise((resolve, reject) => {
+	        naver.maps.Service.geocode({
+	            query: address
+	        }, function(status, response) {
+	            if (status === naver.maps.Service.Status.ERROR) {
+	                reject('Something Wrong!');
+	                return;
+	            }
+	            
+	            var htmlAddresses = [], item = response.v2.addresses[0], point = new naver.maps.Point(
+						item.x, item.y);
+				if (item.roadAddress) {
+					htmlAddresses.push('[도로명 주소] '
+							+ item.roadAddress);
+				}
+				if (item.jibunAddress) {
+					htmlAddresses.push('[지번 주소] '
+							+ item.jibunAddress);
+				}
+				if (item.englishAddress) {
+					htmlAddresses.push('[영문명 주소] '
+							+ item.englishAddress);
+				}
 	
+	            if (response.v2.meta.totalCount === 0) {
+	                reject('올바른 주소를 입력해주세요.');
+	                return;
+	            }
 	
+	            //var item = response.v2.addresses[0];
+	            var result = {
+	                x: item.x, 
+	                y: item.y, 
+	                roadAddress: item.roadAddress, 
+	                jibunAddress: item.jibunAddress, 
+	                englishAddress: item.englishAddress
+	            };
+	
+	            resolve(result);
+	        });
+	    });
+	}
+		
+
+
 </script>

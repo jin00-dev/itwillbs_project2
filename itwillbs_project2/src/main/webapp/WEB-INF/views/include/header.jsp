@@ -81,7 +81,7 @@
 	<c:set var="path" value="${requestScope['javax.servlet.forward.servlet_path']}"/>
 	<div>
 		<ul class="nav nav nav-pills justify-content-center">
-			<li class="nav-item"><a class="nav-link ${path == '/' ? 'active' : ''}" href="/?category=공예">체험</a></li>
+			<li class="nav-item"><a class="nav-link ${path == '/' || path == '/exp/info' ? 'active' : ''}" href="/?category=공예">체험</a></li>
 			<li class="nav-item"><a class="nav-link ${path == '/exp/myLocation' ? 'active' : ''}" href="/exp/myLocation">내주변 체험</a></li>
 			<li class="nav-item"><a class="nav-link ${path == '/board/eventListAll' ? 'active' : ''}" href="/board/eventListAll">이벤트</a></li>
 			<li class="nav-item"><a class="nav-link ${path == '/board/boardListAll' ? 'active' : ''}" href="/board/boardListAll">고객지원</a></li>
