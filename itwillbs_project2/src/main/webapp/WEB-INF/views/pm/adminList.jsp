@@ -5,46 +5,44 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+
+	<h3> 관리자 </h3>
+	<h3> 회원예매관리 </h3>
 	
-	<h3> 예매내역 </h3>
+	<table id="table">
 	
-	<table class="table">
 		<tr>
-			<td>사진</td>
-			<td>주문번호</td>
-			<td>클래스이름</td>
-			<td>가격</td>
-			<td>클래스 주문수</td>
-			<td>총결제금액</td>
-			<td></td>
-			<td></td>
+			<td>회원아이디</td>
+			<td>회원이름</td>
+			<td>체험이름</td>
+			<td>결제가격</td>
+			<td>결제일시</td>
+			<td>결제상태</td>
+		</tr>	
+		
+		
+	<c:forEach var="i" items="${list }">
+		<tr>
+			<td>${i.buyer_email }</td>
+			<td>${i.buyer_name }</td>
+			<td>${i.name }</td>
+			<td>${i.paid_amount }</td>
+			<td>${i.payment_date }</td>
+			
+			<td>
+				<c:choose>
+					<c:when test="${i.status eq 'paid' }">결제완료</c:when>
+					<c:when test="${i.status eq 'cancelled' }">취소완료</c:when>
+				</c:choose>
+			</td>
 			
 		</tr>
-			<c:forEach var="i" items="${list }">
-				<tr>
-					<td>${i.exp_summary_img }</td>
-					<td>${i.order_num }</td>
-					<td>${i.exp_name }</td>
-					<td>${i.exp_price }</td>
-					<td><fmt:formatNumber value="${i.paid_amount / i.exp_price }" type="number" pattern="0.#"/></td>
-					<td>${i.paid_amount }</td>
-					<td><button class="btn1" onclick="location.href='/class/paymentInfo?user_id=${param.user_id}&order_num=${i.order_num }'">상세내역</button></td>
-					<td>
-						<c:if test="${i.status eq 'paid'}">
-							<button class="btn2" onclick="cancelPay('${i.order_num}')">환불</button><br>
-						</c:if>	
-						<c:if test="${i.status eq 'cancelled'}">
-							환불완료
-						</c:if>	
-					</td>
-					
-				</tr>
-			</c:forEach>	
-			
-	</table>
-	
-	<script>
-	
+		</c:forEach>
+
+		
+		
+		<script>
+		
 		function cancelPay(order_num) {
 		      jQuery.ajax({
 		       url: "/class/cancelPay", 
@@ -71,13 +69,17 @@
 		       }
 		     }); // refund ajax
 		}
-	
+		
+		</script>
 		
 		
-	</script>
+		
+	</table>
 	
-	
-	
-	
+
+
+
+
+
 
 <%@ include file="../include/footer.jsp" %>

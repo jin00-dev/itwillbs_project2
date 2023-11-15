@@ -37,11 +37,18 @@ public class PaymentDAOImpl implements PaymentDAO {
 		return sqlSession.selectOne(NAMESPACE+".paymentInfo", vo);
 	}
 
+	// 사업자(회원)이 등록한 클래스의 모든 회원의 결제 리스트 출력
 	@Override
 	public List<PaymentVO> hostList(PaymentVO vo) throws Exception {
 		return sqlSession.selectList(NAMESPACE+".hostList", vo);
 	}
-
+	
+	// 관리자 페이지의 모든 회원의 결제 리스트 출력
+	@Override
+	public List<PaymentVO> adminOrderBoard(PaymentVO vo) throws Exception {
+		return sqlSession.selectList(NAMESPACE+".adminList", vo);
+	}
+	
 	@Override
 	public int payment(PaymentVO vo) throws Exception {
 		return sqlSession.insert(NAMESPACE+".getPayment", vo);
@@ -57,8 +64,9 @@ public class PaymentDAOImpl implements PaymentDAO {
 		return sqlSession.update(NAMESPACE+".updateCancelPay", vo);
 	}
 
-	
-	
+
+
+
 	
 	
 

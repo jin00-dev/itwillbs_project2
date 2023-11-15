@@ -10,13 +10,13 @@
 
 	<!-- 회원의 모든 결제 예매 리스트 -->
 	<select id="paymentList" resultType="com.project2.domain.PaymentVO">
-		select u.user_id, u.user_num, e.exp_name, e.exp_summary_img, e.exp_num, e.exp_capacity, e.exp_price, p.order_num
+		select u.user_id, u.user_num, e.exp_name, e.exp_summary_img, e.exp_num, e.exp_capacity, e.exp_price, p.order_num, p.status, p.paid_amount 
 		from userTable u 
 		left join experience e 
 		on u.user_num = e.user_num 
 		left join payment p 
 		on p.name = e.exp_name 
-		where user_id=#{user_id}
+		where p.buyer_email=#{user_id}
 	</select>
 	
 	
@@ -28,18 +28,23 @@
 		on u.user_num = e.user_num 
 		left join payment p 
 		on p.name = e.exp_name 
-		where u.user_num=#{user_num} and p.order_num=#{order_num}
+		where p.buyer_email=#{user_id} and p.order_num=#{order_num}
 	</select>
 	
 	<!-- 사업자가 신청한 클래스의 모든 예약자 리스트로 조회 -->
 	<select id="hostList" resultType="com.project2.domain.PaymentVO">
-		select e.exp_name, e.exp_num, u.user_name, u.user_num, u.user_phone, e.exp_price, p.order_num, p.custom_data, p.status
+		select e.exp_name, e.exp_num, u.user_name, u.user_num, u.user_phone, e.exp_price, p.order_num, p.custom_data, p.status 
 		from payment p 
 		left join experience e 
 		on p.name = e.exp_name 
 		left join userTable u 
 		on p.buyer_email = u.user_id 
 		where e.exp_num in(select exp_num from experience where u.user_num = #{user_num})
+	</select>
+	
+	<!-- 관리자페이지, 모든 회원의 예매 내역 -->
+	<select id="adminList" resultType="com.project2.domain.PaymentVO">
+		select buyer_email, buyer_name, name, status, payment_date, cancel_date, paid_amount from payment
 	</select>
 	
 	

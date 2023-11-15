@@ -46,6 +46,11 @@ public class paymentServiceImpl implements paymentService {
 	public List<PaymentVO> hostList(PaymentVO vo) throws Exception {
 		return pdao.hostList(vo);
 	}
+	
+	@Override
+	public List<PaymentVO> adminOrderBoard(PaymentVO vo) throws Exception {
+		return pdao.adminOrderBoard(vo);
+	}
 
 
 	@Override
@@ -56,7 +61,6 @@ public class paymentServiceImpl implements paymentService {
 
 	@Override
 	public PaymentVO selectPayInfo(Integer order_num) throws Exception {
-		logger.debug("dddddddddddddddddddddddddddddddddddddddddd");
 		return pdao.selectPayInfo(order_num);
 	}
 
@@ -174,13 +178,6 @@ public class paymentServiceImpl implements paymentService {
 	public int updatePayCancel(PaymentVO vo) throws Exception {
 		return pdao.updatePayCancel(vo);
 	}
-	
-	
-	
-	
-	
 
-	
-		
 
 }

@@ -2,8 +2,7 @@
 <%@ page session="false" pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
 
-	<h2> 사업자 페이지 <br><br> 
-		예약 관리 목록 </h2>
+	<h3> 예약 관리 목록 </h3>
 
 	<table class="table">
 		<tr class="table-warning">
@@ -22,8 +21,13 @@
 			<td>${i.custom_data }</td>
 			<td>${i.user_name }</td>
 			<td>${i.user_phone }</td>
-			<td>${i.exp_price }</td>
-			<td>${i.status }</td>
+			<td>${i.exp_price }원</td>
+			<td>
+				<c:choose>
+					<c:when test="${i.status eq 'paid' }">결제완료</c:when>
+					<c:when test="${i.status eq 'cancelled' }">취소완료</c:when>
+				</c:choose>
+			</td>
 		</tr>
 		</c:forEach>
 	</table>

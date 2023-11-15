@@ -21,4 +21,6 @@ public interface paymentService {
 	public PaymentVO cancelPayAction(String accessToken, PaymentVO rvo) throws Exception; 
 	
 	public int updatePayCancel(PaymentVO vo) throws Exception;
+	
+	public List<PaymentVO> adminOrderBoard(PaymentVO vo) throws Exception;
 }
