@@ -3,6 +3,7 @@ package com.project2.persistence;
 import java.util.List;
 
 import com.project2.domain.Criteria;
+import com.project2.domain.ReportVO;
 import com.project2.domain.UserVO;
 
 public interface UserDAO {
@@ -41,4 +42,12 @@ public interface UserDAO {
 		    
 		  //아이디찾기
 		    UserVO findUserByNameAndPhone(String user_name, String user_phone);
+		    
+		// 신고 목록 조회 
+		public List<ReportVO> adminReport(Criteria cri) throws Exception;
+		    
+		//신고 목록 전체
+		public int reportList() throws Exception;
+		
+		
 }

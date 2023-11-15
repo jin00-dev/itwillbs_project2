@@ -13,13 +13,13 @@
   <!-- Default Tabs -->
   <ul class="nav nav-tabs" id="myTab" role="tablist">
    <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true" onclick = "location.href = '/user/adminMain';">회원관리</button>
+    <button class="nav-link " id="home-tab" data-bs-toggle="tab" type="button" role="tab" onclick = "location.href = '/user/adminMain'">회원관리</button>
    	</li>
      <li class="nav-item" role="presentation">
-     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1"onclick = "location.href = '/user/reportList';">신고관리</button>
+     <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" type="button" role="tab" onclick = "location.href = '/user/reportList'">신고관리</button>
      </li>
      <li class="nav-item" role="presentation">
-     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">관리페이지2</button>
+     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" type="button" role="tab" >관리페이지2</button>
      </li>
      </ul>
             
@@ -30,21 +30,21 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th scope="col">회원번호</th>
-				<th scope="col">이름</th>
-				<th scope="col">휴대폰 번호</th>
-				<th scope="col">회원가입일</th>
-				<th scope="col">회원 등급</th>
+				<th scope="col">신고번호</th>
+				<th scope="col">신고내용</th>
+				<th scope="col">신고날짜</th>
+				<th scope="col">처리날짜</th>
+				<th scope="col">처리상태</th>
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach var="vo" items="${userList }">
+		<c:forEach var="vo" items="${reportList }">
 			<tr>
-				<th>${vo.user_num }</th>
-				<td>${vo.user_name }</td>
-				<td>${vo.user_phone }</td>
-				<td>${vo.user_regdate }</td>
-				<td>${vo.user_type }</td>
+				<th>${vo.report_num }</th>
+				<td>${vo.report_content }</td>
+				<td>${vo.report_regdate }</td>
+				<td>${vo.report_updatedate }</td>
+				<td>${vo.report_state }</td>
 			</tr>
 		</tbody>
 		</c:forEach>

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project2.domain.Criteria;
+import com.project2.domain.ReportVO;
 import com.project2.domain.UserVO;
 import com.project2.persistence.UserDAO;
 
@@ -139,6 +140,22 @@ public class UserServiceImpl implements UserService{
 	      logger.debug("Service: 특정 회원 정보 조회 메서드 호출");
 	      return userDAO.getUserByUserId(user_id);
 	   }
+
+	  
+	//관리자 신고 목록 조회 
+	@Override
+	public List<ReportVO> adminReport(Criteria cri) throws Exception {
+		logger.debug("Service : 신고목록 조회");
+		List<ReportVO> adminReport = udao.adminReport(cri);
+		
+		return adminReport;
+	}
+
+	//신고목록 총 갯수 조회
+	@Override
+	public int reportList() throws Exception {
+		return udao.reportList();
+	}
 
 	
 }

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project2.domain.Criteria;
 import com.project2.domain.PageVO;
+import com.project2.domain.ReportVO;
 import com.project2.domain.UserVO;
 import com.project2.service.MailSendServiceImpl;
 import com.project2.service.UserService;
@@ -263,6 +264,10 @@ public class UserController {
 		// 관리자가 아닌경우 로그인페이지로 이동
 		String id = (String) session.getAttribute("user_id");
 
+		if (id == null || !id.equals("admin1")) {
+			return "redirect:/";
+		}
+
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
 		pageVO.setTotalCount(uService.getUserCount());
@@ -275,9 +280,6 @@ public class UserController {
 			cri.setPage((pageVO.getEndPage()));
 		}
 		
-		if (id == null || !id.equals("admin1")) {
-			return "redirect:/";
-		}
 		// 서비스 -> DAO 회원목록 조회
 		List<UserVO> userList = uService.userList(cri);
 		// memberList.add(dto); 리턴의 결과를 수정할 수 있다.
@@ -340,6 +342,36 @@ public class UserController {
 
 		return "/user/findIdResult"; // 아이디 찾기 결과 뷰 페이지로 이동
 	}
+	
+	@RequestMapping(value = "/reportList",method = RequestMethod.GET)
+	public String reportList(Criteria cri, HttpSession session, Model model) throws Exception {
+		logger.debug("reportList() 호출 ");
+		// 관리자가 아닌경우 로그인페이지로 이동
+		String id = (String) session.getAttribute("user_id");
+
+		if (id == null || !id.equals("admin1")) {
+			return "redirect:/";
+		}
+
+		PageVO pageVO = new PageVO();
+		pageVO.setCri(cri);
+		pageVO.setTotalCount(uService.reportList());
+				
+		logger.debug(""+pageVO);
+		model.addAttribute("pageVO", pageVO);
+				
+		if(cri.getPage() > pageVO.getEndPage()) {
+		//잘못된 페이지 정보 입력
+		cri.setPage((pageVO.getEndPage()));
+		}		
+		
+		List<ReportVO> reportList = uService.adminReport(cri);
+		logger.debug("총 신고글 개수 : " + reportList.size());
+		model.addAttribute("reportList", reportList);
+		
+		return "/user/adminReport";
+	}
+	
 
 
 }

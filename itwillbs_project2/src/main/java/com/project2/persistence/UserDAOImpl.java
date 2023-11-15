@@ -8,13 +8,18 @@ import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.project2.domain.Criteria;
+import com.project2.domain.ReportVO;
 import com.project2.domain.UserVO;
 
 @Repository
 public class UserDAOImpl implements UserDAO{
+
+		private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 
 	// 디비연결객체 정보를 주입(Inject또는 autowired)
 		@Inject
@@ -122,6 +127,21 @@ public class UserDAOImpl implements UserDAO{
 	        params.put("user_phone", user_phone);
 	        return sqlSession.selectOne(NAMESPACE+".findUserByNameAndPhone", params);
 	    }
+	    
+	    //신고 목록 조회
+		@Override
+		public List<ReportVO> adminReport(Criteria cri) throws Exception {
+			logger.debug("DAOImpl : adminReport(Criteria cri) 호출");
+			
+			return sqlSession.selectList(NAMESPACE + ".reportList", cri);
+		}
+		
+		//전체 신고 목록 조회
+		@Override
+		public int reportList() throws Exception {
+
+			return sqlSession.selectOne(NAMESPACE + ".reportCount");
+		}
 		
 		
 }

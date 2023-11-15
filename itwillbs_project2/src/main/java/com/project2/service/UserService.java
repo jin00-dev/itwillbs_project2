@@ -3,6 +3,7 @@ package com.project2.service;
 import java.util.List;
 
 import com.project2.domain.Criteria;
+import com.project2.domain.ReportVO;
 import com.project2.domain.UserVO;
 
 public interface UserService {
@@ -43,5 +44,11 @@ public interface UserService {
 
 	// 아이디 찾기
 	UserVO findUserByNameAndPhone(String user_name, String user_phone);
+	
+	//신고 목록 조회
+	public List<ReportVO> adminReport(Criteria cri) throws Exception;
+	
+	//총 신고 목록 조회 
+	public int reportList() throws Exception;
 	
 }

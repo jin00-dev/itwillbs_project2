@@ -81,6 +81,18 @@
 		WHERE user_name = #{user_name} AND user_phone = #{user_phone}
 	</select>
     
+    <!-- 신고 목록 조회 -->
+    <select id="reportList" resultType="ReportVO">
+    	select * from c6d2305t2_2.user_report
+    	limit #{pageStart}, #{pageSize}
+    </select>
+    <!-- 신고목록 전체 -->
+    <select id="reportCount" resultType="int">
+    	<![CDATA[
+    		select count(*) from c6d2305t2_2.user_report
+    		where report_num
+    	]]>
+    </select>
   
   
   
