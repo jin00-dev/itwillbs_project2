@@ -31,7 +31,7 @@
 					<td><button class="btn1" onclick="location.href='/class/paymentInfo?user_id=${param.user_id}&order_num=${i.order_num }'">상세내역</button></td>
 					<td>
 						<c:if test="${i.status eq 'paid'}">
-							<button class="btn2" onclick="cancelPay('${i.order_num}')">환불</button><br>
+							<button class="btn2" onclick="cancelPay('${i.order_num}')">환불</button>
 						</c:if>	
 						<c:if test="${i.status eq 'cancelled'}">
 							환불완료
@@ -40,8 +40,26 @@
 					
 				</tr>
 			</c:forEach>	
-			
 	</table>
+	
+	<div class="box-footer clearfix">
+		<ul class="pagination pagination-sm no-margin pull-right">
+			<c:if test="${pageVO.preview }">
+			<li><a href="/class/paymentList?user_id=${user_id }&page=${pageVO.startPage - 1 }">«</a></li>
+			</c:if>
+			
+			<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+			<li ${pageVO.cri.page == i? 'class="active"':'' }>
+			<a href="/class/paymentList?user_id=${user_id }&page=${i }">${i }</a>
+			</li>
+			</c:forEach>
+			
+			<c:if test="${pageVO.next }">
+			<li><a href="/class/paymentList?user_id=${user_id }&page=${pageVO.endPage + 1 }">»</a></li>
+			</c:if>
+			
+		</ul>
+	</div>
 	
 	<script>
 	
