@@ -6,7 +6,7 @@
 <style>
 .notice-detail{background:#fff;padding:20px;margin:20px auto;max-width:800px;border:1px solid #ddd;border-radius:5px;box-shadow:0 0 10px rgba(0,0,0,.1)}.notice-detail h3{border-bottom:2px solid #e65c00;color:#555;padding-bottom:10px;margin-bottom:20px}.notice-detail div,.notice-detail h5,.notice-detail hr{margin-bottom:10px}.notice-detail h5{color:#333}.notice-detail button{background:#f76b1c;color:#fff;border:0;padding:3px 6px;margin-right:10px;border-radius:5px;cursor:pointer}.notice-detail button:hover{background:#e65c00}.notice-detail form{display:inline}.notice-detail .title-date{display:flex;justify-content:space-between;align-items:center}.notice-detail .title-date h5{margin:0}.notice-detail hr{border:0;height:1px;background-color:#333;margin-top:10px}.notice-detail .content{padding-top:10px}.enf_title{font-weight:600;font-size:18px}.notice{font-weight:700}
 </style>
-<!-- header-->
+
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 
 <div class="notice-detail">

@@ -13,7 +13,7 @@
 		<result property="enf_content" column="enf_content" />
 		<result property="enf_title" column="enf_title" />
 		<result property="enf_regdate" column="enf_regdate" />
-
+ 
 	</resultMap>
 
 	<!-- 최대 글번호 조회 -->

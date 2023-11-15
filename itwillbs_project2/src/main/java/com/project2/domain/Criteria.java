@@ -1,13 +1,8 @@
 package com.project2.domain;
 
-/**
- * 
- * - 페이징 처리를 계산하는 기준의 정보를 저장
- */
 public class Criteria {
 
 	private int page;
-	// private int pagestart; 시작 인덱스
 	private int pageSize;
 
 	public Criteria() {

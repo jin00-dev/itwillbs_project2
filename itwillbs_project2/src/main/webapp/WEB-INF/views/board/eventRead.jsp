@@ -40,7 +40,7 @@
 	border-radius: 10px;
 	overflow: hidden;
 }
-
+ 
 .responsive-img {
 	max-width: 50%;
 	height: auto;

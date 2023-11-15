@@ -18,10 +18,10 @@
 				<h5 class="list-group-item list-group-item-action active"
 					aria-current="true">고객지원</h5>
 				<a href="/board/boardListAll"
-					class="list-group-item list-group-item-action">공지사항</a> 
-				<a href="/board/faqListAll" class="list-group-item list-group-item-action">자주 묻는 질문</a> 
-				<a href="/board/"
-					class="list-group-item list-group-item-action">1:1문의</a>
+					class="list-group-item list-group-item-action">공지사항</a> <a
+					href="/board/" class="list-group-item list-group-item-action">챗봇
+					상담</a> <a href="/board/" class="list-group-item list-group-item-action">1:1
+					문의</a>
 			</div>
 		</div>
 
@@ -42,9 +42,9 @@
 						<th scope="col">조회수</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody> 
 					<!-- 고정된 공지사항 -->
-					<c:forEach var="vo" items="${boardListAll}">
+					<c:forEach var="vo" items="${boardList}"> 
 						<c:if
 							test="${vo.enf_category == 1 && pinnedNotices.contains(vo.enf_notice_num)}">
 							<tr class="font-weight-bold">
@@ -59,7 +59,7 @@
 					</c:forEach>
 
 					<!-- 일반 공지사항 -->
-					<c:forEach var="vo" items="${boardListAll}">
+					<c:forEach var="vo" items="${boardList}">
 						<c:if
 							test="${vo.enf_category == 1 && !pinnedNotices.contains(vo.enf_notice_num)}">
 							<tr>
@@ -75,27 +75,25 @@
 			</table>
 
 			<nav aria-label="Page navigation">
-				<c:if test="${!empty boardListAll && boardListAll.size() > 1}">
-					<ul class="pagination justify-content-center">
-						<c:if test="${pageVO.prev}">
-							<li class="page-item"><a class="page-link"
-								href="/board/boardListAll?page=${pageVO.startPage - 1}"
-								aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-						</c:if>
+				<ul class="pagination justify-content-center">
+					<c:if test="${pageVO.prev}">
+						<li class="page-item"><a class="page-link"
+							href="/board/boardListPage?page=${pageVO.startPage - 1}"
+							aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+					</c:if>
 
-						<c:forEach var="i" begin="${pageVO.startPage}"
-							end="${pageVO.endPage}" step="1">
-							<li class="page-item ${pageVO.cri.page == i? 'active':''}"><a
-								class="page-link" href="/board/boardListAll?page=${i}">${i}</a></li>
-						</c:forEach>
-
-						<c:if test="${pageVO.next}">
-							<li class="page-item"><a class="page-link"
-								href="/board/boardListAll?page=${pageVO.endPage + 1}"
-								aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-						</c:if>
-					</ul>
-				</c:if>
+					<c:forEach var="i" begin="${pageVO.startPage}"
+						end="${pageVO.endPage}" step="1">
+						<li class="page-item ${pageVO.cri.page == i? 'active':''}"><a
+							class="page-link" href="/board/boardListPage?page=${i}">${i}</a></li>
+					</c:forEach>
+ 
+					<c:if test="${pageVO.next}">
+						<li class="page-item"><a class="page-link"
+							href="/board/boardListPage?page=${pageVO.endPage + 1}"
+							aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+					</c:if>
+				</ul>
 			</nav>
 
 			<!-- 검색 바 -->

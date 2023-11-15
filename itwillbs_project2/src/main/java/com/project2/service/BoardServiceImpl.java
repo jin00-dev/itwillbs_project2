@@ -14,7 +14,7 @@ import com.project2.persistence.BoardDAO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
-
+ 
 	private static final Logger logger = LoggerFactory.getLogger(BoardServiceImpl.class);
 
 	@Inject

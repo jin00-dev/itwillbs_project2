@@ -6,7 +6,7 @@ import com.project2.domain.BoardVO;
 import com.project2.domain.Criteria;
 
 public interface BoardService {
-
+ 
 	// 게시판 글쓰기
 	public void insert(BoardVO vo) throws Exception;
 

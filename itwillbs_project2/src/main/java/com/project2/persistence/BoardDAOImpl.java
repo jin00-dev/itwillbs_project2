@@ -15,7 +15,7 @@ import com.project2.domain.Criteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
-
+ 
 	private static final Logger logger = LoggerFactory.getLogger(BoardDAOImpl.class);
 
 	@Inject

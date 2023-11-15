@@ -6,7 +6,7 @@ import com.project2.domain.BoardVO;
 import com.project2.domain.Criteria;
 
 public interface BoardDAO {
-
+ 
 	// 최대 글번호 조회
 	public int getMaxNoticeNum() throws Exception;
 
