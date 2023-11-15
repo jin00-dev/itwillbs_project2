@@ -41,10 +41,6 @@ public class ExpController {
 		}
 
 		try {
-			if (session.getAttribute("user_num") != null) {
-				UserVO uVo = service.getUserOne(Integer.parseInt((String) session.getAttribute("user_num")));
-				model.addAttribute(uVo);
-			}
 			ExpVO expOne = service.getExpOne(vo.getExp_num());
 			List<RevVO> rList = service.getExpRevList(vo.getExp_num());
 			double avgStar = service.getExpRevAvg(vo.getExp_num());
@@ -168,7 +164,7 @@ public class ExpController {
 		re.addFlashAttribute("isWork", false);
 		return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 	}
-
+	
 	// 리뷰 삭제
 	@GetMapping("/revDel")
 	public String deleteReview(RevVO vo, HttpSession session, RedirectAttributes re) {
