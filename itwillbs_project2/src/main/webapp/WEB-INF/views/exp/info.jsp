@@ -18,10 +18,10 @@
 
 <!-- 로그인 테스트 -->
 <%
-	session.setAttribute("user_num", "6");
-	session.setAttribute("user_id", "totoro");
-	session.setAttribute("user_name", "몽실이누나서영");
-	session.setAttribute("user_type", "1");
+// 	session.setAttribute("user_num", "6");
+// 	session.setAttribute("user_id", "totoro");
+// 	session.setAttribute("user_name", "몽실이누나서영");
+// 	session.setAttribute("user_type", "1");
 	 	//	session.invalidate();
 %>
 <!-- Section-->
@@ -547,6 +547,7 @@
 			alert('날짜를 선택해 주세요');
 		}else if(${userVO.user_id == null}){
 			alert('로그인을 해주세요');
+			location.href = "/user/login";
 		}else{
 	        IMP.request_pay({
 	            pg : 'html5_inicis',
