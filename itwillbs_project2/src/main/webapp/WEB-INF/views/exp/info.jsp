@@ -15,6 +15,11 @@
 
 <!-- Vue.js 스크립트 불러오기 -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+<%
+	session.setAttribute("user_num", "1");
+	session.setAttribute("user_id", "test1");
+	session.setAttribute("user_type", "1");
+%>
 <!-- Section-->
 <section class="py-5">
 	<!-- 상단 전체 박스 -->
@@ -26,7 +31,7 @@
 					<!-- 왼쪽 ------------------------>
 					<div class="container border" style="min-width: 300px">
 						<div class="col-md-6 m-3">
-							<img class="img-fluid" src="https://dummyimage.com/400x500/dee2e6/6c757d.jpg" class="card-img-left" alt="...">
+							<img class="img-fluid" src="https://dummyimage.com/700x1000/dee2e6/6c757d.jpg" class="card-img-left" alt="...">
 						</div>
 						<div class="col-md-6 m-3">
 							<div class="row p-3">
@@ -211,8 +216,8 @@
 							<div class="col-md-12">
 								<!-- 이미지 -->
 								<c:if test="${review.rev_img ne null }">
-									<%-- <img src="${review.rev_img }" alt="이미지 설명"> --%>
-									<img src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt="이미지 설명">
+									<img src="/exp/thumbDownload?fileName=${review.rev_img}&wid=150&hei=150" alt="이미지 설명">
+<!-- 									<img src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt="이미지 설명"> -->
 								</c:if>
 							</div>
 						</div>
@@ -273,7 +278,7 @@
 			<!-- 리뷰 작성 -------------------------------------------------->
 			<div class="tab-pane" id="bnm5">
 				<div class="border-top">
-					<form action="/exp/reviewInsert?exp_num=${param.exp_num }" method="post">
+					<form action="/exp/reviewInsert?exp_num=${param.exp_num }" method="post" enctype="multipart/form-data">
 						<div class="card-header">
 							<h3 class="card-title">후기를 작성해주세요</h3>
 							<div class="rating">
@@ -286,7 +291,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="custom-file">
-										<input type="file" name="rev_img" class="custom-file-input" id="exampleInputFile">
+										<input type="file" name="rev_img_file" class="custom-file-input" id="exampleInputFile">
 									</div>
 								</div>
 							</div>
