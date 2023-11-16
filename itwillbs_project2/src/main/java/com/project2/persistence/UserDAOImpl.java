@@ -116,6 +116,7 @@ public class UserDAOImpl implements UserDAO{
 	        params.put("user_phone", user_phone);
 	        return sqlSession.selectOne(NAMESPACE+".findUserByNameAndPhone", params);
 	    }
+<<<<<<< Updated upstream
 		//회원정보수정(관리자)
 	    @Override
 	    public void updateUserAdmin(UserVO vo) {
@@ -133,4 +134,23 @@ public class UserDAOImpl implements UserDAO{
 	        return sqlSession.delete(NAMESPACE + ".userDeleteById", user_id);
 	    }
 	    
+=======
+	    //비벚찾기
+	    @Override
+	    public UserVO findUserByNameAndId(String user_name, String user_id) {
+	        Map<String, String> params = new HashMap<>();
+	        params.put("user_name", user_name);
+	        params.put("user_id", user_id);
+	        return sqlSession.selectOne(NAMESPACE + ".findUserByNameAndId", params);
+	    }
+	    
+	    //새비번
+	    @Override
+	    public void updateUserPassword(String userId, String newPassword) {
+	        Map<String, String> params = new HashMap<>();
+	        params.put("userId", userId);
+	        params.put("newPassword", newPassword);
+	        sqlSession.update("updateUserPassword", params);
+	    }
+>>>>>>> Stashed changes
 }

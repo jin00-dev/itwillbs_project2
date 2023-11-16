@@ -244,6 +244,7 @@ public class UserController {
 	// 이메일
 
 	// 아이디찾기
+<<<<<<< Updated upstream
 	@RequestMapping(value = "/findId")
 	public String showFindIdPage() {
 		return "/user/findId"; // 아이디 찾기 폼 뷰 페이지로 이동
@@ -258,11 +259,19 @@ public class UserController {
 			model.addAttribute("userId", user.getUser_id());
 		} else {
 			model.addAttribute("message", "일치하는 아이디를 찾을 수 없습니다.");
+=======
+		@RequestMapping(value = "/findId")
+		public String showFindIdPage() {
+			return "/user/findId"; // 아이디 찾기 폼 뷰 페이지로 이동
+>>>>>>> Stashed changes
 		}
 
-		return "/user/findIdResult"; // 아이디 찾기 결과 뷰 페이지로 이동
-	}
+		@RequestMapping(value = "/findId", method = RequestMethod.POST)
+		public String findUserId(@RequestParam("user_name") String user_name, @RequestParam("user_phone") String user_phone,
+				Model model, HttpSession session) {
+			UserVO user = uService.findUserByNameAndPhone(user_name, user_phone);
 
+<<<<<<< Updated upstream
 	// 회원 상세 페이지로 이동
 
 	@RequestMapping(value = "/userDetail", method = RequestMethod.GET)
@@ -320,3 +329,79 @@ public class UserController {
 	}
 
 
+=======
+			if (user != null) {
+				model.addAttribute("userId", user.getUser_id());
+			} else {
+				model.addAttribute("message", "일치하는 아이디를 찾을 수 없습니다.");
+			}
+
+			return "/user/findIdResult"; // 아이디 찾기 결과 뷰 페이지로 이동
+		}
+		
+		
+	//비번찾기
+		@RequestMapping(value = "/findPassword")
+		public String showFindPwPage() {
+			return "/user/findPassword"; // 비번 찾기 폼 뷰 페이지로 이동
+		}
+		
+		// 비밀번호 찾기 기능
+		@RequestMapping(value = "/findPassword", method = RequestMethod.POST)
+		public String findPassword(@RequestParam("user_name") String user_name,
+		                           @RequestParam("user_id") String user_id,
+		                           Model model) {
+		    // 이름과 아이디로 사용자 정보 조회
+		    UserVO user = uService.findUserByNameAndId(user_name, user_id);
+
+		    if (user != null) {
+		        // 사용자 정보가 일치하면 새로운 비밀번호를 생성하고 DB에 업데이트
+		        String newPassword = generateRandomPassword();
+		        String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+		        user.setUser_pw(hashedPassword);
+		        uService.userUpdate(user);
+
+		        // 생성된 비밀번호를 사용자에게 전송하거나, 다른 방법으로 제공할 수 있음
+		        model.addAttribute("newPassword", newPassword);
+		        return "/user/changePw"; // 비밀번호 표시 페이지로 이동
+		    } else {
+		        // 사용자 정보가 일치하지 않으면 에러 메시지 등을 처리할 수 있도록 하세요.
+		        model.addAttribute("error", "일치하는 정보를 찾을 수 없습니다.");
+		        return "/user/PwX";
+		    }	
+		}
+
+		private String generateRandomPassword() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		//새비번
+		@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+		
+		    public String changePassword(
+		            @RequestParam("user_name") String userName,
+		            @RequestParam("user_id") String userId,
+		            @RequestParam("new_password") String newPassword,
+		            @RequestParam("confirm_password") String confirmPassword,
+		            Model model) {
+
+		        // 비밀번호 유효성 검사 등을 수행할 수 있습니다.
+
+		        if (newPassword.equals(confirmPassword)) {
+		            // 비밀번호가 일치하면 비밀번호 변경 수행
+		            uService.changePassword(userId, newPassword);
+
+		            // 변경 성공 메시지를 모델에 추가
+		            model.addAttribute("success", "비밀번호가 성공적으로 변경되었습니다.");
+		        } else {
+		            // 변경 실패 메시지를 모델에 추가
+		            model.addAttribute("error", "비밀번호가 일치하지 않습니다. 다시 시도해주세요.");
+		        }
+
+		        // 결과 페이지로 이동
+		        return "/user/changePasswordResult";
+		    }
+
+}
+>>>>>>> Stashed changes

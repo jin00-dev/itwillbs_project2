@@ -18,6 +18,7 @@
 		</div>
 		
 			
+<<<<<<< Updated upstream
 			<button class="btn btn-default">로그인</button>
 			<input type="button" value="회원가입"
 					onclick=" location.href='/user/join';">
@@ -25,5 +26,13 @@
 			<button type="button">비밀번호찾기</button>
 			</form>
 		
+=======
+			<button class="btn btn-primary infoModBtn pull-right">로그인</button>
+			<button class="btn btn-primary infoModBtn pull-right" onclick=" location.href='/user/join';">회원가입</button>
+			<button type="button" class="btn btn-primary infoModBtn pull-right" onclick=" location.href='/user/findId';">아이디찾기</button>
+			<button type="button" class="btn btn-primary infoModBtn pull-right" onclick=" location.href='/user/findPassword';">비밀번호찾기</button>
+			
+		</form>
+>>>>>>> Stashed changes
 	</div>
 <%@include file="../include/footer.jsp"%>

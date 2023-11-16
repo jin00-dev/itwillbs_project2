@@ -40,8 +40,17 @@ public interface UserService {
 	// 아이디 찾기
 	UserVO findUserByNameAndPhone(String user_name, String user_phone);
 
+<<<<<<< Updated upstream
 	//회원수정
 	public void updateUser(UserVO vo);
+=======
+	//비번찾기 
+	UserVO findUserByNameAndId(String user_name, String user_id);
+	
+	//새비번
+	void changePassword(String userId, String newPassword);
+	
+>>>>>>> Stashed changes
 	
 	// 회원정보 삭제 동작
 	//	public void deleteUser(UserVO deleteVO);

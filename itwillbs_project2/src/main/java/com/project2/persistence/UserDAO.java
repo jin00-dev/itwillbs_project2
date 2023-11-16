@@ -1,6 +1,7 @@
 package com.project2.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import com.project2.domain.UserVO;
 
@@ -39,6 +40,7 @@ public interface UserDAO {
 		  //아이디찾기
 		    UserVO findUserByNameAndPhone(String user_name, String user_phone);
 		    
+<<<<<<< Updated upstream
 		  //회원정보수정(관리자)
 		    public void updateUserAdmin(UserVO vo);
 		    
@@ -46,6 +48,13 @@ public interface UserDAO {
 		   // void UserDelete(UserVO deleteVO);
 		    int userDeleteById(String user_id);
 		    
+=======
+		    //비번찾기
+		    UserVO findUserByNameAndId(String user_name, String user_id);
+		    
+		    //새비번
+		    void updateUserPassword(String userId, String newPassword);
+>>>>>>> Stashed changes
 }
 
 

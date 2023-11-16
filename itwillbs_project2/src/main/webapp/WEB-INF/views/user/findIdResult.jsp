@@ -8,7 +8,18 @@
 </head>
 <body>
     <h1>아이디 찾기 결과</h1>
+<<<<<<< Updated upstream
     <p>회원님의 아이디는 <span>${userId}</span> 입니다.</p>
 </body>
 </body>
 </html>
+=======
+    <p>회원님의 아이디는 <span>${user_id}</span> 입니다.</p>
+    
+    <button type="button" class="btn btn-default" onclick=" location.href='/';">메인페이지로</button>
+    
+    
+<hr>    
+
+<%@include file="/WEB-INF/views/include/footer.jsp"%>
+>>>>>>> Stashed changes

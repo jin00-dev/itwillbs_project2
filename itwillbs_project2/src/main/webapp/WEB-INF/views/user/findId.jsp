@@ -15,5 +15,13 @@
         <input type="text" name="user_phone" id="phone" required><br>
         <button type="submit">아이디 찾기</button>
     </form>
+<<<<<<< Updated upstream
 </body>
 </html>
+=======
+    
+  <hr>
+  
+
+<%@include file="/WEB-INF/views/include/footer.jsp"%>
+>>>>>>> Stashed changes

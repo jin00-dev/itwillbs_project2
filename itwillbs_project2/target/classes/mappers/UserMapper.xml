@@ -73,6 +73,7 @@
 		WHERE user_name = #{user_name} AND user_phone = #{user_phone}
 	</select>
 	
+<<<<<<< Updated upstream
     <!-- 회원정보수정(관리자) -->
     <update id="updateList">
 		update c6d2305t2_2.userTable set user_pw=#{user_pw}, 
@@ -87,6 +88,25 @@
 <delete id="userDeleteById">
     delete from userTable where user_id=#{user_id}
 </delete>
+=======
+	<!-- 비번찾기 -->
+	  <!-- 비밀번호 찾기 기능 -->
+    <select id="findUserByNameAndId" resultType="com.project2.domain.UserVO">
+        SELECT *
+        FROM c6d2305t2_2.userTable
+        WHERE user_name = #{user_name} AND user_id = #{user_id}
+    </select>
+	
+    <!-- 새비번 -->
+    
+
+    <update id="changePassword">
+        UPDATE userTable
+        SET user_pw = #{user_pw}
+        WHERE user_id = #{user_id}
+    </update>
+  
+>>>>>>> Stashed changes
   
   
   
