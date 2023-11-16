@@ -2,6 +2,8 @@ package com.project2.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,9 @@ public class MainController {
 
 	@GetMapping("/")
 	public String mainGET(Model model,
-			String category,String region1,String region2, String sort, Criteria cri) throws Exception{
+			String category,String region1,String region2, String sort, Criteria cri,
+			HttpSession session) throws Exception{
+		
 		ExpVO vo = new ExpVO();
 		
 		//category exp_category
@@ -63,6 +67,8 @@ public class MainController {
 			break;
 		}
 		
+		//찜 여부
+		//int user_num
 		
 		logger.debug("@@@@@@@@@@@@@"+ vo);
 		List<ExpVO> list = service.getExpList(vo);
