@@ -29,8 +29,9 @@
 	<select id="getListAll" resultType="QnaVO" resultMap="qnaMap">
 		SELECT *
 		FROM qna_board
-		WHERE user_num = 1
+		WHERE user_num = #{user_num}
 		ORDER BY qna_regdate DESC
+		limit #{pageStart}, #{pageSize}
 	</select>
 	<!-- 글 목록 조회 -->
 
