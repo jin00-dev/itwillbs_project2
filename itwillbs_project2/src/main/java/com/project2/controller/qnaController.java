@@ -56,11 +56,27 @@ public class qnaController {
 	// http://localhost:8088/qna/qnaListAll
 	// 1대1 리스트 조회GET
 	@RequestMapping(value = "/qnaListAll", method = RequestMethod.GET)
-	public void qnaListAllGet(Model model, HttpSession session) throws Exception {
+	public void qnaListAllGet(Criteria cri, Model model, HttpSession session) throws Exception {
 		logger.debug(" boardlistAllGet() 호출! ");
+		
+		// 페이징처리( 페이지 블럭 처리 객체 )
+				PageVO pageVO = new PageVO();
+				pageVO.setCri(cri);
+				// pageVO.setTotalCount(1664);
+				pageVO.setTotalCount(qService.getQnaCount());
 
+				logger.debug("" + pageVO);
+				// 페이징처리 정보도 뷰페이지로 전달
+				model.addAttribute("pageVO", pageVO);
+				// 페이지 이동시 받아온 페이지 번호
+				if (cri.getPage() > pageVO.getEndPage()) {
+					// 잘못된 페이지 정보 입력
+					cri.setPage(pageVO.getEndPage());
+				}
+			cri.setUser_num(Integer.parseInt(String.valueOf(session.getAttribute("user_num"))));
+				
 		// 서비스 -> DAO -> 글 목록을 조회하는 동작 수행
-		List<QnaVO> qnaListAll = qService.listAll();
+		List<QnaVO> qnaListAll = qService.listAll(cri);
 
 		logger.debug("결과 리스트 크기 : " + qnaListAll.size());
 
@@ -137,11 +153,11 @@ public class qnaController {
 	// http://localhost:8088/qna/noAnswer
 	// 관리자 미답변 문의사항 리스트 조회GET
 	@RequestMapping(value = "/noAnswer", method = RequestMethod.GET)
-	public void noAnswerGet(Model model, HttpSession session) throws Exception {
+	public void noAnswerGet(Criteria cri,Model model, HttpSession session) throws Exception {
 		logger.debug(" noAnswerGet() 호출! ");
 
 		// 서비스 -> DAO -> 글 목록을 조회하는 동작 수행
-		List<QnaVO> qnaListAll = qService.listAll();
+		List<QnaVO> qnaListAll = qService.listAll(cri);
 
 		logger.debug("결과 리스트 크기 : " + qnaListAll.size());
 
