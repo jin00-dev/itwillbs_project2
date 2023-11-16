@@ -18,6 +18,8 @@
     object-fit: contain; /* 이미지를 카드 안에 맞게 조정 */
     background-color: #f8f9fa; /* 이미지 뒷배경 색상 설정 */
   }
+  
+  /* footer 고정  */
   .abx{
   height: auto;
   min-height: 100%;

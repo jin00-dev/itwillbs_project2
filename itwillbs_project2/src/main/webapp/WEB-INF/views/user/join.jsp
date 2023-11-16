@@ -1,7 +1,12 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@include file="../include/header.jsp"%>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<style>
+.container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+    max-width: 800px;
+}
 
+</style>
 
 <script type="text/javascript">
 
@@ -351,10 +356,16 @@
 </script>
 
 <div class="container">
-	<h2>회원가입 페이지</h2>
 	<!-- action="" 인경우 자기자신의 경로 호출 -->
-	<form action="" id="writeForm" method="post">
-		<div class="form-group">
+	<div class="card mb-3">
+	<div class="card-body">
+	  <div class="pt-4 pb-2">
+      <h5 class="card-title text-center pb-0 fs-4">회원가입</h5>
+      <p class="text-center small">세상의 모든 클래스, 세모클래스에 오신것을 환영합니다.</p>
+      </div>
+	
+	<form action="" id="writeForm"  method="post">
+		<div class="form-group ">
 			<label for="id">아이디 </label> 
 			<input id="id" name="user_id" required="required" class="form-control" type="text">
 			<div class="alert alert-danger" id="idCheckDiv">아이디는 4자 이상 입력하셔야합니다.</div>
@@ -408,15 +419,17 @@
 
 		<div class="row mt-1">
 			<div class="col-lg-5">
-				<a type="button" class="btn btn-primary infoModBtn pull-right"
-					href="../user/userMain">취소</a>
 				<button type="submit" class="btn btn-primary infoModBtn pull-right"
 					id="joinButton">회원가입</button>
+				<a type="button" class="btn btn-primary infoModBtn pull-right"
+					href="../user/userMain">취소</a>
 			</div>
 		</div>
-
 	</form>
+	</div>
+	</div>
 </div>
+
 
 
 

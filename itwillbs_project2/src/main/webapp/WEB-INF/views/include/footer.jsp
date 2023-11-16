@@ -1,4 +1,14 @@
 <%@ page pageEncoding="UTF-8"%>
+
+<style>
+footer{
+  height: 180px;
+  position : relative;
+/*   transform : translateY(-100%); */
+}
+
+</style>
+
  <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container">

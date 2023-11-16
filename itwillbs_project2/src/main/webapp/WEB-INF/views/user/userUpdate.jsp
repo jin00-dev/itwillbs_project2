@@ -2,9 +2,15 @@
  <%@page import="org.springframework.web.context.annotation.SessionScope"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../include/header.jsp"%>
+<style>
+  /* footer 고정  */
+  .abx{
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 180px;
+}	
+</style>
 
-    <h2>${vo.user_name }님의 마이페이지 입니다. </h2>
-    
     <!-- 로그인 정보가 없으면 로그인 페이지로 이동 -->
     <c:if test="${empty user_id}">
        <c:redirect url="/user/login" />
@@ -12,15 +18,16 @@
     
     <!-- <input type="button" value="로그아웃" onclick=" location.href='/user/logout'; ">
     <hr> 상단에 로그아웃 버튼 있음 -->
-   <div class="container mt-5">
+   <div class="container mt-5 abx">
 	<div class="row">
           <div class="card">
               <!-- 회원정보 확인 -->
             <div class="card-body pt-3">
+               <h4>${vo.user_name }님의 마이페이지 입니다. </h4>
               <ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
 				
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active" data-bs-toggle="tab" onclick= "location.href='/user/userMain';" aria-selected="true" role="tab">회원 정보 조회 및 수정</button>
+                  <button class="nav-link active" data-bs-toggle="tab" onclick= "location.href='/user/update';" aria-selected="true" role="tab">회원 정보 조회 및 수정</button>
                 </li>
                 <li class="nav-item" role="presentation">
 		           <button class="nav-link" data-bs-toggle="tab" onclick= "location.href='/class/paymentList';" aria-selected="false" role="tab" tabindex="-1">클래스 예약 관리</button>
@@ -69,7 +76,7 @@
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">정보수정하기</button>
+                      <button type="submit" class="btn btn-primary" id="userUpdate">정보수정하기</button>
                       <button type="button" class="btn btn-primary">회원탈퇴</button>
                     </div>
                   </form>
