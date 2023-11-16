@@ -80,7 +80,7 @@
 	<!-- 관리자페이지, 모든 회원의 예매 내역 -->
 	<select id="adminList" resultType="com.project2.domain.PaymentVO">
 		select buyer_email, buyer_name, name, status, payment_date, cancel_date, paid_amount, order_num 
-		from payment limit #{pageStart},#{pageSize} 
+		from payment 
 		order by order_num desc 
 		limit #{pageStart},#{pageSize}
 	</select>

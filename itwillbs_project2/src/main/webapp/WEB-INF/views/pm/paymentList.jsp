@@ -115,16 +115,16 @@
 
 	<script type="text/javascript">
 		function cancelPayCheck (order_num){
-			var inputPw = prompt("비밀번호를 입력해주세요", "1111");
-			
+			var inputPw = prompt("비밀번호를 입력해주세요", "");
+			console.log(inputPw);
 			jQuery.ajax({
 				url : "/class/cancelPayCheck",
 				type : "POST",
 				contentType : "application/json",
-				data : {user_id:${user_id},user_pw:inputPw},
+				data : JSON.stringify({"user_id": "${user_id}", "user_pw": inputPw}),
 				success : function(data) {
 					// refund ajax 실행 후 작업 수행
-					if(data == true){
+					if(data == "true"){
 						cancelPay(order_num);
 					} else {
 						alert('비밀번호를 다시 입력해주세요');

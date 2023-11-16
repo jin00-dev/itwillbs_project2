@@ -62,7 +62,7 @@
 	
 <nav aria-label="Page navigation">
 			<ul class="pagination justify-content-center">
-				<c:if test="${pageVO.prev }">	
+				<c:if test="${pageVO.preview }">	
                   <li class="page-item">
                     <a class="page-link" href="/user/adminMain?page=${pageVO.startPage - 1 }" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>

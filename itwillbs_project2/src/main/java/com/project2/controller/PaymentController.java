@@ -160,14 +160,19 @@ public class PaymentController {
 	
 	// 회원결제리스트에서 환불 버튼 눌렀을때
 	@RequestMapping(value = "/cancelPayCheck", method = RequestMethod.POST)
-	public String cancelPayCheck(UserVO vo, Model model) {
-		
+	@ResponseBody
+	public String cancelPayCheck(@RequestBody UserVO vo) {
+		logger.debug("vo"+vo);
 		try {
-			model.addAttribute(pService.pwCheck(vo));
+		UserVO result =  pService.pwCheck(vo);
+	
+			if(result != null) {
+				return "true";
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "";
+		return "false";
 	}
 
 }
