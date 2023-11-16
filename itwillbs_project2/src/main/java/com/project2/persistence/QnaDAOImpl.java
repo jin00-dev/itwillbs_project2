@@ -38,9 +38,9 @@ public class QnaDAOImpl implements QnaDAO {
 	}
 
 	@Override
-	public List<QnaVO> getQnaListAll() throws Exception {
+	public List<QnaVO> getQnaListAll(Criteria cri) throws Exception {
 
-		return sqlSession.selectList(NAMESPACE + ".getListAll");
+		return sqlSession.selectList(NAMESPACE + ".getListAll", cri);
 	}
 
 	@Override

@@ -27,9 +27,9 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
-	public List<QnaVO> listAll() throws Exception {
+	public List<QnaVO> listAll(Criteria cri) throws Exception {
 		
-		return qdao.getQnaListAll();
+		return qdao.getQnaListAll(cri);
 	}
 
 	@Override

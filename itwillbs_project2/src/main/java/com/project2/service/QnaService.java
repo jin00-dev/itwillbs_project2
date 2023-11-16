@@ -12,7 +12,7 @@ public interface QnaService {
 	public void insert(QnaVO vo) throws Exception;
 
 	// QNA 전체 목록 조회
-	public List<QnaVO> listAll() throws Exception;
+	public List<QnaVO> listAll(Criteria cri) throws Exception;
 
 	// 특정 QNA 정보 조회
 	public QnaVO getQna(Integer qna_num) throws Exception;

@@ -12,7 +12,7 @@ public interface QnaDAO {
 	public void create(QnaVO vo) throws Exception;
 
 	// 글목록 조회(Read) 동작
-	public List<QnaVO> getQnaListAll() throws Exception;
+	public List<QnaVO> getQnaListAll(Criteria cri) throws Exception;
 
 	// 특정 글 정보조회(Read) 동작
 	public QnaVO getQna(Integer qna_num) throws Exception;
