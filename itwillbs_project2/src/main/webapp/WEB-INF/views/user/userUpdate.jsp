@@ -1,17 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <%@page import="org.springframework.web.context.annotation.SessionScope"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../include/header.jsp"%>
-		
-		<h2> 회원수정 페이지 </h2>
 
-<div class="container mt-5">
-	<div class="row">		
-      <div class="card">
-		<div class="card-body pt-3">
+    <h2>${vo.user_name }님의 마이페이지 입니다. </h2>
+    
+    <!-- 로그인 정보가 없으면 로그인 페이지로 이동 -->
+    <c:if test="${empty user_id}">
+       <c:redirect url="/user/login" />
+    </c:if>
+    
+    <!-- <input type="button" value="로그아웃" onclick=" location.href='/user/logout'; ">
+    <hr> 상단에 로그아웃 버튼 있음 -->
+   <div class="container mt-5">
+	<div class="row">
+          <div class="card">
+              <!-- 회원정보 확인 -->
+            <div class="card-body pt-3">
               <ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
-
+				
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link" data-bs-toggle="tab" onclick= "location.href='/user/userMain';" aria-selected="true" role="tab">회원 정보 조회 및 수정</button>
+                  <button class="nav-link active" data-bs-toggle="tab" onclick= "location.href='/user/userMain';" aria-selected="true" role="tab">회원 정보 조회 및 수정</button>
                 </li>
                 <li class="nav-item" role="presentation">
 		           <button class="nav-link" data-bs-toggle="tab" onclick= "location.href='/class/paymentList';" aria-selected="false" role="tab" tabindex="-1">클래스 예약 관리</button>
@@ -22,12 +31,11 @@
 		            </li>
 				</c:if>
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active" data-bs-toggle="tab" onclick= "location.href='/qna/qnaListAll';" aria-selected="false" role="tab" tabindex="-1">1:1문의</button>
+                  <button class="nav-link" data-bs-toggle="tab" onclick= "location.href='/qna/qnaListAll';" aria-selected="false" role="tab" tabindex="-1">1:1문의</button>
                 </li>
               </ul>
-         </div>
-		
-		  <!-- 회원정보 수정 -->
+              
+             <!-- 회원정보 수정 -->
                 <div class="tab-pane fade profile-edit pt-3" >
 
                   <form action="" method="post">
@@ -62,6 +70,7 @@
 
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">정보수정하기</button>
+                      <button type="button" class="btn btn-primary">회원탈퇴</button>
                     </div>
                   </form>
                 </div>
@@ -69,5 +78,33 @@
                </div>
             </div>
 		</div>
-		
-<%@include file="../include/footer.jsp"%>
+					<!-- End Change Password Form -->	
+						
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
+        </div>
+        </div>
+       
+   
+    
+    
+<!--     <h3><a href="/user/info">회원정보 조회</a></h3> -->
+   
+<!--     <hr><hr> -->
+    
+<!--     <h3><a href="/user/update">회원정보 수정</a></h3> -->
+<!--     <hr><hr> -->
+    
+<!--     <h3><a href="/user/delete">회원정보 삭제</a></h3> -->
+                                  
+<%--     <c:if test="${!empty id && id eq 'admin'}"> --%>
+<%--     <c:if test="${!empty user_id && user_id.equals('admin1')}"> --%>
+<!--        관리자(admin)일때 확인가능한 메뉴  admin 페이지 새로 만듦   -->
+<!--        <hr><hr> -->
+<!--        <h3><a href="/user/list">회원정보 목록</a></h3> -->
+<%--     </c:if> --%>
+<%@include file="../include/footer.jsp"%>    
+    
