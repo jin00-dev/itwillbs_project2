@@ -20,7 +20,7 @@ public interface UserDAO {
 		public UserVO getUser(String sessionUserid);
 		
 		// 회원정보 수정
-		public void  updateUser(UserVO updateVO);
+		public void updateUser(UserVO updateVO);
 		
 		// 회원정보 삭제
 		public int deleteUser(UserVO delVO);	

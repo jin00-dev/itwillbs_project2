@@ -198,7 +198,7 @@ public class UserController {
 
 	// 회원정보 수정POST
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String updatePOST(UserVO vo, HttpServletResponse response) throws Exception{
+	public String updatePOST(UserVO vo, HttpServletResponse response, HttpSession session) throws Exception{
 		logger.debug(" updatePOST() 호출 ");
 		// 수정할 정보를 저장(파라메터)
 		logger.debug(" vo " + vo);
@@ -209,20 +209,23 @@ public class UserController {
 		
 		// 서비스 -> DAO 회원정보 수정
 		uService.userUpdate(vo);
+		
+		// 세션에 유저 번호, 권한, 이름 저장
+		session.setAttribute("user_name", vo.getUser_name());
 		 
-		if (vo == null) {
-			// 회원정보수정 실패 -> 로그인 페이지로 이동
-			out.println("<script> alert('회원정보 수정에 실패했습니다.');");
-			out.println("history.go(-1); </script>");
-			out.close();
-			return "redirect:/user/update";
-		}else {
-			out.println("<script> alert('회원정보 수정을 성공했습니다.');");
-			out.println("history.go(-1); </script>");
-			out.close();
-			// 메인페이지로 이동
-			return "redirect:/user/update";
-		}
+//		if (vo == null) {
+//			// 회원정보수정 실패 -> 로그인 페이지로 이동
+//			out.println("<script> alert('회원정보 수정에 실패했습니다.');");
+//			out.println("history.go(-1); </script>");
+//			out.close();
+//			return "redirect:/user/update";
+//		}else {
+//			out.println("<script> alert('회원정보 수정을 성공했습니다.');");
+//			out.println("history.go(-1); </script>");
+//			out.close();
+//			// 메인페이지로 이동
+//		}
+		return "redirect:/user/update";
 	}
 
 	// 회원정보 탈퇴GET
