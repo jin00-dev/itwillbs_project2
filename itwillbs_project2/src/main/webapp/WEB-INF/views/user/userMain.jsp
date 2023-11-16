@@ -20,11 +20,7 @@
               <ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
 				
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active" data-bs-toggle="tab" onclick= "location.href='/user/userMain';" aria-selected="true" role="tab">회원 정보 조회</button>
-                </li>
-
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" data-bs-toggle="tab" onclick= "location.href='/user/update';" aria-selected="false" role="tab" tabindex="-1">회원 정보 수정</button>
+                  <button class="nav-link active" data-bs-toggle="tab" onclick= "location.href='/user/userMain';" aria-selected="true" role="tab">회원 정보 조회 및 수정</button>
                 </li>
                 <li class="nav-item" role="presentation">
 		           <button class="nav-link" data-bs-toggle="tab" onclick= "location.href='/class/paymentList';" aria-selected="false" role="tab" tabindex="-1">클래스 예약 관리</button>
@@ -34,61 +30,54 @@
 		                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password" aria-selected="false" role="tab" tabindex="-1">사업자 클래스 관리</button>
 		            </li>
 				</c:if>
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" data-bs-toggle="tab" onclick= "location.href='/qna/qnaListAll';" aria-selected="false" role="tab" tabindex="-1">1:1문의</button>
+                </li>
               </ul>
               
-              <div class="tab-content pt-2">
+             <!-- 회원정보 수정 -->
+                <div class="tab-pane fade profile-edit pt-3" >
 
-                <div class="tab-pane fade profile-overview active show" id="profile-overview" role="tabpanel">
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">이름 : </div>
-                    <div class="col-lg-9 col-md-8">${vo.user_name }</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">아이디 : </div>
-                    <div class="col-lg-9 col-md-8">${vo.user_id }</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">휴대폰 번호 : </div>
-                    <div class="col-lg-9 col-md-8">${vo.user_phone }</div>
-                  </div>
-
-                </div>
-                  <!-- 회원정보 조회 끝 -->
-                
-                  <!-- Change Password Form -->
-                <div class="tab-pane fade pt-3" id="profile-change-password" role="tabpanel">
-                  <form>
-
-                    <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                  <form action="" method="post">
+                  
+                  	<div class="row mb-3">
+                      <label for="user_id" class="col-md-4 col-lg-3 col-form-label">아이디 : </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
+                        <input name="user_id" type="text" class="form-control" id="user_id" value="${vo.user_id }" readonly>
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                      <label for="user_name" class="col-md-4 col-lg-3 col-form-label">이름 : </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                        <input name="user_name" type="text" class="form-control" id="user_name" value="${vo.user_name } ">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                      <label for="user_phone" class="col-md-4 col-lg-3 col-form-label">휴대폰 번호 : </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                        <input name="user_phone" type="text" class="form-control" id="user_phone" value="${vo.user_phone }">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">비밀번호</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="user_pw" type="text" class="form-control" id="user_pw" placeholder="비밀번호를 입력 해 주세요.">
                       </div>
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
+                      <button type="submit" class="btn btn-primary">정보수정하기</button>
+                      <button type="button" class="btn btn-primary">회원탈퇴</button>
                     </div>
                   </form>
-
                 </div>
+                <!-- 회원정보 수정 -->
+               </div>
+            </div>
+		</div>
 					<!-- End Change Password Form -->	
 						
               </div><!-- End Bordered Tabs -->
