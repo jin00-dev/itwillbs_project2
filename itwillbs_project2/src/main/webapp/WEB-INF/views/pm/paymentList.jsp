@@ -51,20 +51,14 @@
 				<ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
 
 					<li class="nav-item" role="presentation">
-						<button class="nav-link " data-bs-toggle="tab"
-							onclick="location.href='/user/userMain';" aria-selected="true"
-							role="tab">회원 정보 조회 및 수정</button>
+						<button class="nav-link " data-bs-toggle="tab" onclick="location.href='/user/userMain';" aria-selected="true" role="tab">회원 정보 조회 및 수정</button>
 					</li>
 					<li class="nav-item" role="presentation">
-						<button class="nav-link active" data-bs-toggle="tab"
-							onclick="location.href='/class/paymentList';"
-							aria-selected="false" role="tab" tabindex="-1">클래스 예약 관리</button>
+						<button class="nav-link active" data-bs-toggle="tab" onclick="location.href='/class/paymentList';" aria-selected="false" role="tab" tabindex="-1">클래스 예약 관리</button>
 					</li>
 					<c:if test="${user_type eq 1 }">
 						<li class="nav-item" role="presentation">
-							<button class="nav-link" data-bs-toggle="tab"
-								data-bs-target="#profile-change-password" aria-selected="false"
-								role="tab" tabindex="-1">사업자 클래스 관리</button>
+							<button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password" aria-selected="false" role="tab" tabindex="-1">사업자 클래스 관리</button>
 						</li>
 					</c:if>
 					<li class="nav-item" role="presentation">

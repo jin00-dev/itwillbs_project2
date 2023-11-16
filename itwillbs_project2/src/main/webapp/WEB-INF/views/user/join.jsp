@@ -2,11 +2,7 @@
 <%@include file="../include/header.jsp"%>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-<<<<<<< HEAD
-=======
 
-<h1>join.jsp</h1>
->>>>>>> 26fb7997bfc552df670a8f1ac1d53750446afc12
 <script type="text/javascript">
 
 	$(document).ready(function() {
@@ -311,7 +307,6 @@
 			
 				
 				alert(name+"회원님 가입을 환영합니다.");
-<<<<<<< HEAD
 		});
 			
 			//인증코드 발송 버튼 클릭
@@ -350,13 +345,6 @@
 				}
 				
 			});//checkEmail.blur
-=======
-			
-
-			
-			
-		});
->>>>>>> 26fb7997bfc552df670a8f1ac1d53750446afc12
 		
 	}); // $(function(){})의 끝
 	
@@ -368,7 +356,6 @@
 	<form action="" id="writeForm" method="post">
 		<div class="form-group">
 			<label for="id">아이디 </label> 
-<<<<<<< HEAD
 			<input id="id" name="user_id" required="required" class="form-control" type="text">
 			<div class="alert alert-danger" id="idCheckDiv">아이디는 4자 이상 입력하셔야합니다.</div>
 		</div>
@@ -376,40 +363,21 @@
 		<span class="id_input_box_warn"></span>
 		<div class="form-group">
 			<button type="button" id="checkEmailButton" class="btn btn-primary">인증코드 발송</button>
-=======
-			<input id="id" name="user_id" 
-				required="required" class="form-control" type="email">
-			<div class="alert alert-danger" id="idCheckDiv">아이디는 4자 이상 입력하셔야합니다.</div>
-		</div>
-		<span class="id_input_box_warn"></span>
-		<div class="form-group">
-			<button type="button" id="checkEmailButton" class="btn btn-primary"
-				onclick="sendEmail()" disabled='disabled'>인증코드 발송</button>
->>>>>>> 26fb7997bfc552df670a8f1ac1d53750446afc12
 		</div>
 
 		<div class="row mt-1">
 			<div class="col bi bi-exclamation-square-fill deepblue">인증번호
-<<<<<<< HEAD
 				발송은 서버 상황에 따라 1분정도 걸릴 수 있어요</div>
-=======
-				발송은 서버 상황에 따라 5초~10초정도 걸릴 수 있어요</div>
->>>>>>> 26fb7997bfc552df670a8f1ac1d53750446afc12
 		</div>
 
 		<div class="row mt-1">
 			<div class="col-lg-5">
 				<input class="form-control" id="checkEmail" type="text"
-<<<<<<< HEAD
 					placeholder="인증번호 6자리를 입력해주세요." aria-label="default input example"
 					disabled="disabled">
 				<div>
 					<span id="mail_check_msg"></span>
 				</div>
-=======
-					placeholder="인증번호를 입력해주세요." aria-label="default input example"
-					disabled="disabled">
->>>>>>> 26fb7997bfc552df670a8f1ac1d53750446afc12
 			</div>
 			<div class="form-group">
 				<label for="pw">비밀번호</label> 
@@ -440,11 +408,7 @@
 
 		<div class="row mt-1">
 			<div class="col-lg-5">
-<<<<<<< HEAD
 				<a type="button" class="btn btn-primary infoModBtn pull-right"
-=======
-				<a type="button" class="btn btn-default pull-left"
->>>>>>> 26fb7997bfc552df670a8f1ac1d53750446afc12
 					href="../user/userMain">취소</a>
 				<button type="submit" class="btn btn-primary infoModBtn pull-right"
 					id="joinButton">회원가입</button>
