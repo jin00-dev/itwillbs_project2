@@ -12,8 +12,8 @@
     
     <!-- <input type="button" value="로그아웃" onclick=" location.href='/user/logout'; ">
     <hr> 상단에 로그아웃 버튼 있음 -->
-   
-   <div class="col-xl-8">
+   <div class="container mt-5">
+	<div class="row">
           <div class="card">
               <!-- 회원정보 확인 -->
             <div class="card-body pt-3">
@@ -97,6 +97,8 @@
           </div>
 
         </div>
+        </div>
+       
    
     
     

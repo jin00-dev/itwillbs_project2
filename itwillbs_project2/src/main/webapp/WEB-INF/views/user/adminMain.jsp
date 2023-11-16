@@ -35,7 +35,7 @@
 	<!-- Default Table -->
 	<h3 class="mb-4">전체 회원 정보</h3>
 	<table class="table">
-		<thead class="thead-light">
+		
 			<tr>
 				<th scope="col">회원번호</th>
 				<th scope="col">이름</th>
