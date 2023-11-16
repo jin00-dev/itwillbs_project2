@@ -50,22 +50,18 @@
 					<c:when test="${empty user_num }">
 						<li class="nav-item"><a class="nav-link" href="/user/join">회원가입</a></li>
 						<li class="nav-item"><a class="nav-link" href="/user/login">로그인</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
-					</c:when>
-					<c:when test="${empty user_id }">
-						<li class="nav-item"><a class="nav-link" href="/user/join">회원가입</a></li>
-						<li class="nav-item"><a class="nav-link" href="/user/login">로그인</a></li>
+						<li class="nav-item"><a class="nav-link" href="/exp/wishList">찜목록</a></li>
 					</c:when>
 					<c:when test="${user_type eq 0 }">
 						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
 						<li class="nav-item"><a class="nav-link" href="/user/userMain">마이페이지</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
+						<li class="nav-item"><a class="nav-link" href="/exp/wishList">찜목록</a></li>
 						<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 					</c:when>
 					<c:when test="${user_type eq 1 }">
 						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
 						<li class="nav-item"><a class="nav-link" href="/user/userMain">마이페이지</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
+						<li class="nav-item"><a class="nav-link" href="/exp/wishList">찜목록</a></li>
 						<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 					</c:when>
 					<c:when test="${user_type eq 2 }">
