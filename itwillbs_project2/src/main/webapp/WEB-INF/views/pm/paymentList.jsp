@@ -2,8 +2,8 @@
 <%@ include file="../include/header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
-<!-- <script src="https://cdn.iamport.kr/v1/iamport.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 
 <h2>${user_name }님의마이페이지입니다.</h2>
 <h3>예매내역</h3>
@@ -41,6 +41,7 @@
 						<c:if test="${user_type eq 1 }">
 							<li class="nav-item" role="presentation">
 								<button class="nav-link" data-bs-toggle="tab"
+								onclick="location.href='/class/hostPage';"
 									data-bs-target="#profile-change-password" aria-selected="false"
 									role="tab" tabindex="-1">사업자 클래스 관리</button>
 							</li>
@@ -55,10 +56,10 @@
 							<td>주문번호</td>
 							<td>클래스이름</td>
 							<td>가격</td>
-							<td>클래스 주문수</td>
+							<td>주문수</td>
 							<td>총결제금액</td>
-							<td></td>
-							<td></td>
+							<td>상세내역</td>
+							<td>결제</td>
 						</tr>
 						</thead>
 						<c:forEach var="i" items="${list }" varStatus="status">
@@ -72,9 +73,9 @@
 										pattern="0.#" /></td>
 								<td>${i.paid_amount }</td>
 								<td><button class="btn1"
-										onclick="location.href='/class/paymentInfo?user_id=${user_id}&order_num=${i.order_num }'">상세내역</button></td>
+										onclick="location.href='/class/paymentInfo?order_num=${i.order_num }'">상세내역</button></td>
 								<td><c:if test="${i.status eq 'paid'}">
-										<button class="btn2" onclick="cancelPay('${i.order_num}')">환불</button>
+										<button class="btn2" onclick="cancelPayCheck('${i.order_num}')">환불</button>
 									</c:if> <c:if test="${i.status eq 'cancelled'}">
 							환불완료
 						</c:if></td>
@@ -85,7 +86,7 @@
 
 					<div class="box-footer clearfix">
 						<ul class="pagination pagination-sm no-margin pull-right">
-							<c:if test="${pageVO.prev }">
+							<c:if test="${pageVO.preview }">
 								<li><a
 									href="/class/paymentList?page=${pageVO.startPage - 1 }">«</a></li>
 							</c:if>
@@ -107,11 +108,37 @@
 				</div>
 		</div>
 	</div>
-	
+</div>
 	
 	<%@ include file="../include/footer.jsp"%>
 
-	<script>
+
+	<script type="text/javascript">
+		function cancelPayCheck (order_num){
+			var inputPw = prompt("비밀번호를 입력해주세요", "1111");
+			
+			jQuery.ajax({
+				url : "/class/cancelPayCheck",
+				type : "POST",
+				contentType : "application/json",
+				data : {user_id:${user_id},user_pw:inputPw},
+				success : function(data) {
+					// refund ajax 실행 후 작업 수행
+					if(data == true){
+						cancelPay(order_num);
+					} else {
+						alert('비밀번호를 다시 입력해주세요');
+					}
+	
+				},
+				error : function(error) {
+					// refund ajax 실행 중 에러 발생 시 처리
+				}
+			}); // refund ajax
+		}
+     
+     
+	
 		function cancelPay(order_num) {
 			jQuery.ajax({
 				url : "/class/cancelPay",
@@ -138,6 +165,9 @@
 				}
 			}); // refund ajax
 		}
+		
+		
+		
 	</script>
 
 

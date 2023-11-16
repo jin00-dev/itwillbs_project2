@@ -15,8 +15,6 @@
 
 <!-- Vue.js 스크립트 불러오기 -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
-<<<<<<< HEAD
-
 <!-- Section-->
 <section class="py-5">
 	<!-- 상단 전체 박스 -->
@@ -504,7 +502,7 @@
 	function requestPay() {
 		if($('#selectedDateResult').val() === "null"){
 			alert('날짜를 선택해 주세요');
-		}else if(${userVO.user_id == null}){
+		}else if(${empty user_id }){
 			alert('로그인을 해주세요');
 			location.href = "/user/login";
 		}else{

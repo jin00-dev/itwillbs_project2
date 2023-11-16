@@ -8,10 +8,23 @@ public class Criteria {
 	
 	private String user_id;
 	private int user_num;
+	private int order_num;
 	
 	
 	
 	
+	public int getOrder_num() {
+		return order_num;
+	}
+
+
+
+	public void setOrder_num(int order_num) {
+		this.order_num = order_num;
+	}
+
+
+
 	public String getUser_id() {
 		return user_id;
 	}

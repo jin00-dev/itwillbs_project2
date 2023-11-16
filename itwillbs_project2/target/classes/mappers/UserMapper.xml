@@ -61,8 +61,6 @@
    	]]>   
    </select>
    
-   
-
 
 	<!-- 회원등급 변경 -->
 	<select id="getUserByUserId" resultType="UserVO">

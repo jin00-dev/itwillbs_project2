@@ -32,7 +32,7 @@
 		left join experience e 
 		on p.name = e.exp_name 
 		left join userTable u 
-		on p.buyer_email = u.user_id 
+		on p.buyer_tel = u.user_phone 
 		where e.exp_num in(select exp_num from experience where user_num = #{user_num})
 	   	]]>
 	  	</select>
@@ -47,7 +47,7 @@
 		on u.user_num = e.user_num 
 		left join payment p 
 		on p.name = e.exp_name 
-		where p.buyer_email=#{user_id} 
+		where p.buyer_tel=(select user_phone from userTable where user_id = #{user_id}) 
 		order by p.order_num desc 
 		limit #{pageStart},#{pageSize}
 	</select>
@@ -66,12 +66,12 @@
 	
 	<!-- 사업자가 신청한 클래스의 모든 예약자 리스트로 조회 -->
 	<select id="hostList" resultType="com.project2.domain.PaymentVO">
-		select e.exp_name, e.exp_num, u.user_name, u.user_num, u.user_phone, e.exp_price, p.order_num, p.custom_data, p.status 
+		select e.exp_name, e.exp_num, u.user_name, u.user_num, u.user_phone, e.exp_price, p.order_num, p.custom_data, p.status, p.paid_amount 
 		from payment p 
 		left join experience e 
 		on p.name = e.exp_name 
 		left join userTable u 
-		on p.buyer_email = u.user_id 
+		on p.buyer_tel = u.user_phone 
 		where e.exp_num in(select exp_num from experience where user_num = #{user_num}) 
 		order by p.order_num desc 
 		limit #{pageStart},#{pageSize}
