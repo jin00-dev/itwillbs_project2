@@ -1,12 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="../include/header.jsp"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<!-- 부트스트랩 CSS 추가 -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<%@include file="../include/header.jsp"%>
 
 <hr>
-
-<div class="card-body">
+<div class="container mt-5">
+	<div class="row">
               <h5 class="card-title">관리자 페이지</h5>
 
 
@@ -16,19 +22,20 @@
     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true" onclick = "location.href = '/user/adminMain';">회원관리</button>
    	</li>
      <li class="nav-item" role="presentation">
-     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1"onclick = "location.href = '/user/reportList';">신고관리</button>
+     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1" onclick = "location.href = '/user/reportList';">신고관리</button>
      </li>
      <li class="nav-item" role="presentation">
-     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1">관리페이지2</button>
+     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1" onclick = "location.href = '/qna/adminQnaListPage';">1:1 문의 관리</button>
      </li>
      </ul>
             
 
-<div class="card-body">
+
 
 	<!-- Default Table -->
+	<h3 class="mb-4">전체 회원 정보</h3>
 	<table class="table">
-		<thead>
+		<thead class="thead-light">
 			<tr>
 				<th scope="col">회원번호</th>
 				<th scope="col">이름</th>
@@ -38,7 +45,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach var="vo" items="${userList }">
+		<c:forEach var="vo" items="${userList }" varStatus="status">
 			<tr>
 				<th>${vo.user_num }</th>
 				<td>${vo.user_name }</td>
@@ -50,14 +57,15 @@
 		</c:forEach>
 	</table>
 	<!-- End Default Table Example -->
+	</div>
 </div>
-
-	<div class="card-body">
-			<ul class="pagination">
+	
+<nav aria-label="Page navigation">
+			<ul class="pagination justify-content-center">
 				<c:if test="${pageVO.prev }">	
                   <li class="page-item">
                     <a class="page-link" href="/user/adminMain?page=${pageVO.startPage - 1 }" aria-label="Previous">
-                      <span aria-hidden="true">«</span>
+                      <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
                   </c:if>
@@ -70,12 +78,18 @@
 				<c:if test="${pageVO.next }">
                   <li class="page-item">
                     <a class="page-link" aria-label="Next" href= "/user/adminMain?page=${pageVO.endPage + 1 }">
-                      <span aria-hidden="true">»</span>
+                      <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
                   </c:if>
                 </ul>		
-		
-	</div>
-</div>
+	</nav>
+
 <%@include file="../include/footer.jsp"%>
+<!-- 부트스트랩 JS 추가 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
