@@ -18,14 +18,20 @@
     object-fit: contain; /* 이미지를 카드 안에 맞게 조정 */
     background-color: #f8f9fa; /* 이미지 뒷배경 색상 설정 */
   }
+  .abx{
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 180px;
+}	
 </style>
 
 <!-- header -->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 
+
 <h1 class="text-center mb-4">이벤트 게시판</h1>
 
-<div class="container">
+<div class="container abx">
  <div class="text-right mb-3">
       <a href="/board/eventInsert" class="btn btn-primary">글쓰기</a>
     </div>
@@ -63,9 +69,10 @@
     </c:if>
   </c:forEach>
 </div>
+</div>
 
 <!-- footer -->
-<%@include file="/WEB-INF/views/include/footer.jsp"%>
+<%@include file="../include/footer.jsp"%>
 
 <!-- Bootstrap JS 추가 -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
