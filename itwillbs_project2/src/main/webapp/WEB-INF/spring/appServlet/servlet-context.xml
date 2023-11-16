@@ -48,5 +48,14 @@
 		<beans:property name="maxInMemorySize" value="1000000"/>
 		<beans:property name="defaultEncoding" value="UTF-8"/>
 	</beans:bean>
+	<!-- messageSource -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<beans:property name="basename" value="src/main/resources/messages/*"/>
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+		<beans:property name="cacheSeconds" value="60"/>
+	</beans:bean>
 	
+	<beans:bean id="messageSourceAccessor" class="org.springframework.context.support.MessageSourceAccessor">
+		<beans:constructor-arg ref="messageSource" />
+	 </beans:bean>
 </beans:beans>

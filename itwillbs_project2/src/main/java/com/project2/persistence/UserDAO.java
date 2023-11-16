@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.project2.domain.Criteria;
 import com.project2.domain.ReportVO;
+import java.util.Map;
+
 import com.project2.domain.UserVO;
 
 public interface UserDAO {
@@ -49,5 +51,16 @@ public interface UserDAO {
 		//신고 목록 전체
 		public int reportList() throws Exception;
 		
-		
-}
+		  //회원정보수정(관리자)
+		    public void updateUserAdmin(UserVO vo);
+		    
+		    //회원삭제
+		   // void UserDelete(UserVO deleteVO);
+		    int userDeleteById(String user_id);
+		    
+		    //비번찾기
+		    UserVO findUserByNameAndId(String user_name, String user_id);
+		    
+		    //새비번
+		    void updateUserPassword(String userId, String newPassword);
+	}

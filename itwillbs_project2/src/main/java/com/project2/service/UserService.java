@@ -51,4 +51,15 @@ public interface UserService {
 	//총 신고 목록 조회 
 	public int reportList() throws Exception;
 	
+	//회원수정
+	public void updateUser(UserVO vo);
+	//비번찾기 
+	UserVO findUserByNameAndId(String user_name, String user_id);
+	
+	//새비번
+	void changePassword(String userId, String newPassword);
+	
+	// 회원정보 삭제 동작
+	//	public void deleteUser(UserVO deleteVO);
+	int userDeleteById(String user_id);
 }
