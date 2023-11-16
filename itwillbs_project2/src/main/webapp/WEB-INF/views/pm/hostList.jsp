@@ -31,6 +31,24 @@
 		</tr>
 		</c:forEach>
 	</table>
+	<div class="box-footer clearfix">
+		<ul class="pagination pagination-sm no-margin pull-right">
+			<c:if test="${pageVO.preview }">
+			<li><a href="/class/hostPage?user_num=${user_num }&page=${pageVO.startPage - 1 }">«</a></li>
+			</c:if>
+			
+			<c:forEach var="i" begin="${pageVO.startPage }" end="${pageVO.endPage }" step="1">
+			<li ${pageVO.cri.page == i? 'class="active"':'' }>
+			<a href="/class/hostPage?user_num=${user_num }&page=${i }">${i }</a>
+			</li>
+			</c:forEach>
+			
+			<c:if test="${pageVO.next }">
+			<li><a href="/class/hostPage?user_num=${user_num }&page=${pageVO.endPage + 1 }">»</a></li>
+			</c:if>
+			
+		</ul>
+	</div>
 
 
 <%@ include file="../include/footer.jsp" %>

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.project2.domain.Criteria;
 import com.project2.domain.PaymentVO;
 import com.project2.persistence.PaymentDAO;
 
@@ -31,31 +32,25 @@ public class paymentServiceImpl implements paymentService {
 	
 	// 결제한 회원의 상세 리스트 출력
 	@Override
-	public PaymentVO boardPaymentList(PaymentVO vo) throws Exception {
+	public PaymentVO boardPaymentList(Criteria vo) throws Exception {
 		return pdao.boardPaymentList(vo);
 	}
 
 
 	@Override
-	public List<PaymentVO> paymentList(PaymentVO vo) throws Exception {
+	public List<PaymentVO> paymentList(Criteria vo) throws Exception {
 		return pdao.paymentList(vo);
 	}
 
 
 	@Override
-	public List<PaymentVO> hostList(PaymentVO vo) throws Exception {
+	public List<PaymentVO> hostList(Criteria vo) throws Exception {
 		return pdao.hostList(vo);
 	}
 	
 	@Override
-	public List<PaymentVO> adminOrderBoard(PaymentVO vo) throws Exception {
-		return pdao.adminOrderBoard(vo);
-	}
-
-
-	@Override
-	public int payment(PaymentVO vo) throws Exception {
-		return pdao.payment(vo);
+	public List<PaymentVO> adminOrderBoard(Criteria cri) throws Exception {
+		return pdao.adminOrderBoard(cri);
 	}
 
 
@@ -178,6 +173,26 @@ public class paymentServiceImpl implements paymentService {
 	public int updatePayCancel(PaymentVO vo) throws Exception {
 		return pdao.updatePayCancel(vo);
 	}
+
+
+	@Override
+	public int paymentListCount(String user_id) throws Exception {
+		return pdao.paymentListCount(user_id);
+	}
+
+
+	@Override
+	public int adminOrderListCount() throws Exception {
+		return pdao.adminOrderListCount();
+	}
+
+
+	@Override
+	public int hostOrderListCount(Criteria cri) throws Exception {
+		return pdao.hostOrderListCount(cri);
+	}
+	
+	
 
 
 }

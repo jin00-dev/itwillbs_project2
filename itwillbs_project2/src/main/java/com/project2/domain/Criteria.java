@@ -1,22 +1,48 @@
 package com.project2.domain;
 
-/**
- * 
- * - 페이징 처리를 계산하는 기준의 정보를 저장
- */
 public class Criteria {
-
+	
 	private int page;
-	// private int pagestart; 시작 인덱스
 	private int pageSize;
+	
+	private String user_id;
+	private int user_num;
+	
+	
+	
+	
+	public String getUser_id() {
+		return user_id;
+	}
+
+
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+
+
+	public int getUser_num() {
+		return user_num;
+	}
+
+
+
+	public void setUser_num(int user_num) {
+		this.user_num = user_num;
+	}
+
 
 	public Criteria() {
 		this.page = 1;
 		this.pageSize = 10;
 	}
+	
+	
 
 	public void setPage(int page) {
-		if (page <= 0) {
+		if(page <= 0) {
 			this.page = 1;
 			return;
 		}
@@ -43,11 +69,11 @@ public class Criteria {
 	public int getPage() {
 		return page;
 	}
-
+	
 	public int getPageSize() {
 		return pageSize;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Criteria [page=" + page + ", pageSize=" + pageSize + "]";
