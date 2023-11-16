@@ -5,7 +5,6 @@
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-	
 	<h3> 예매내역 </h3>
 	
 	<table class="table">
