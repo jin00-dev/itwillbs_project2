@@ -25,13 +25,7 @@
 						<li class="nav-item" role="presentation">
 							<button class="nav-link " data-bs-toggle="tab"
 								onclick="location.href='/user/userMain';" aria-selected="true"
-								role="tab">회원 정보 조회</button>
-						</li>
-
-						<li class="nav-item" role="presentation">
-							<button class="nav-link" data-bs-toggle="tab"
-								onclick="location.href='/user/update';" aria-selected="false"
-								role="tab" tabindex="-1">회원 정보 수정</button>
+								role="tab">회원 정보 조회 및 수정</button>
 						</li>
 						<li class="nav-item" role="presentation">
 							<button class="nav-link active" data-bs-toggle="tab"
@@ -46,25 +40,28 @@
 									role="tab" tabindex="-1">사업자 클래스 관리</button>
 							</li>
 						</c:if>
+						<li class="nav-item" role="presentation">
+							<button class="nav-link" data-bs-toggle="tab"
+								onclick="location.href='/user/update';" aria-selected="false"
+								role="tab" tabindex="-1">1:1문의</button>
+						</li>
 					</ul>
 
 
 					<table class="table">
 					<thead class="thead-light">
 						<tr>
-							<td>사진</td>
 							<td>주문번호</td>
 							<td>클래스이름</td>
 							<td>가격</td>
 							<td>클래스 주문수</td>
 							<td>총결제금액</td>
-							<td></td>
-							<td></td>
+							<td>상세내역</td>
+							<td>현재상태</td>
 						</tr>
 						</thead>
 						<c:forEach var="i" items="${list }" varStatus="status">
 							<tr>
-								<td>${i.exp_summary_img }</td>
 								<td>${i.order_num }</td>
 								<td>${i.exp_name }</td>
 								<td>${i.exp_price }</td>

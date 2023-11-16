@@ -62,9 +62,9 @@ public class PaymentController {
 	// 주문한 내역 하나를 눌렀을때 상세 내역 출력
 	@RequestMapping(value = "/paymentInfo")
 	public String paymentInfo(Model model, Criteria cri, HttpSession session) {
-		PaymentVO result;
+//		PaymentVO result;
 		try {
-			result = (PaymentVO) session.getAttribute("user_num");
+//			result = (PaymentVO) session.getAttribute("user_num");
 //			if(result == null) {
 //				return "redirect:로그인페이지로이동";
 //			}

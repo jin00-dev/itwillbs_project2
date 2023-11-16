@@ -1,5 +1,8 @@
 package com.project2.domain;
 
+import lombok.Data;
+
+@Data
 public class Criteria {
 	
 	private int page;
@@ -7,6 +10,7 @@ public class Criteria {
 	
 	private String user_id;
 	private int user_num;
+	private int order_num;
 	
 	
 	
