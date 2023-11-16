@@ -71,7 +71,7 @@
                     <div class="row mb-3">
                       <label for="Job" class="col-md-4 col-lg-3 col-form-label">비밀번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="user_pw" type="text" class="form-control" id="user_pw" placeholder="비밀번호를 입력 해 주세요.">
+                        <input name="user_pw" type="password" class="form-control" id="user_pw" placeholder="비밀번호를 입력 해 주세요.">
                       </div>
                     </div>
 
