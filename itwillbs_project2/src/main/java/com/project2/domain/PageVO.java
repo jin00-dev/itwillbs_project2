@@ -14,6 +14,7 @@ public class PageVO {
 	private int displayPageNum = 10; // 페이지 블럭의 크기
 	
 	private Criteria cri; // 페이지 정보, 페이지 사이즈 저장 객체
+
 	
 	public void setCri(Criteria cri) {
 		this.cri = cri;
@@ -51,8 +52,6 @@ public class PageVO {
 		return totalCount;
 	}
 
-
-
 	public int getStartPage() {
 		return startPage;
 	}
@@ -75,6 +74,7 @@ public class PageVO {
 
 	public void setPreview(boolean preview) {
 		this.preview = preview;
+
 	}
 
 	public boolean isNext() {
@@ -104,3 +104,4 @@ public class PageVO {
 	
 
 }
+

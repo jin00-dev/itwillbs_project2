@@ -16,7 +16,7 @@ local.properties
 
 .classpath
 .project
-
+itwillbs_project2/target/m2e-wtp/web-resources/META-INF/maven/com.project2/controller/pom.properties
 
 # External tool builders
 .externalToolBuilders/

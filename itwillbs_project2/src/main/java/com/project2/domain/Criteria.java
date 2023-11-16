@@ -1,5 +1,6 @@
 package com.project2.domain;
 
+
 public class Criteria {
 	
 	private int page;
@@ -35,15 +36,16 @@ public class Criteria {
 
 
 
+
 	public Criteria() {
 		this.page = 1;
 		this.pageSize = 10;
 	}
-	
-	
+
 
 	public void setPage(int page) {
-		if(page <= 0) {
+		if (page <= 0) {
+
 			this.page = 1;
 			return;
 		}
@@ -51,42 +53,33 @@ public class Criteria {
 	}
 
 	public void setPageSize(int pageSize) {
-		if(pageSize <=0 || pageSize > 100) {
+		if (pageSize <= 0 || pageSize > 100) {
 			this.pageSize = 10;
 			return;
 		}
+
 		this.pageSize = pageSize;
+
 	}
-	
-	
-	
+
+	// 변수를 저장하기위한 목적 아님
+	// mapper에서 호출되는 메서드 # {pageStart}을 호출함
+	public int getPageStart() {
+		// 출력문 (필요에 따라)
+		return (this.page - 1) * pageSize;
+	}
 
 	public int getPage() {
 		return page;
 	}
-	
+
 	public int getPageSize() {
 		return pageSize;
 	}
-	
-	public int getPageStart() {
-		return (this.page-1) * pageSize;
-	}
-	
-	
-
-
 
 	@Override
 	public String toString() {
 		return "Criteria [page=" + page + ", pageSize=" + pageSize + "]";
 	}
-	
-	
-	
-	
-	
-
-	
 
 }

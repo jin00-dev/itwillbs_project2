@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project2.mapper.QnaMapper">
+
+	<resultMap type="com.project2.domain.QnaVO" id="qnaMap">
+		<result property="qna_num" column="qna_num" />
+		<result property="user_num" column="user_num" />
+		<result property="qna_title" column="qna_title" />
+		<result property="qna_content" column="qna_content" />
+		<result property="qna_regdate" column="qna_regdate" />
+		<result property="qna_update_date" column="qna_update_date" />
+		<result property="qna_state" column="qna_state" />
+		<result property="qna_answer" column="qna_answer" />
+	</resultMap>
+
+	<!-- 글쓰기 -->
+	<insert id="createQna" parameterType="com.project2.domain.QnaVO">
+		INSERT INTO qna_board
+		(user_num, qna_title, qna_content, qna_regdate,
+		qna_state)
+		VALUES (1,
+		#{qna_title}, #{qna_content}, NOW(), 0)
+	</insert>
+
+	<!-- 글쓰기 -->
+
+	<!-- 글 목록 조회 -->
+	<select id="getListAll" resultType="QnaVO" resultMap="qnaMap">
+		SELECT *
+		FROM qna_board
+		WHERE user_num = 1
+		ORDER BY qna_regdate DESC
+	</select>
+	<!-- 글 목록 조회 -->
+
+	<!-- 특정 글정보를 조회 -->
+	<select id="getQna" resultType="QnaVO">
+		select * from qna_board
+		where
+		qna_num = #{qna_num}
+	</select>
+	<!-- 특정 글정보를 조회 -->
+
+	<!-- 특정 글정보 수정 -->
+	<update id="modifyQna">
+		update qna_board
+		set qna_title = #{qna_title},
+		qna_content = #{qna_content}
+		where qna_num =
+		#{qna_num}
+	</update>
+	<!-- 특정 글정보 수정 -->
+
+	<!-- 특정 글 삭제 -->
+	<delete id="removeQna">
+		delete from qna_board
+		where qna_num = #{qna_num}
+	</delete>
+	<!-- 특정 글 삭제 -->
+
+	<!-- 답변 달기 -->
+	<update id="updateAnswer"
+		parameterType="com.project2.domain.QnaVO">
+		UPDATE qna_board
+		SET qna_answer = #{qna_answer},
+		qna_state = 1, qna_updatedate = NOW()
+		WHERE qna_num = #{qna_num}
+	</update>
+
+	<!-- 답변 글 삭제 -->
+	<delete id="removeAnswer">
+		UPDATE qna_board
+		SET qna_answer = NULL, qna_state = 0,
+		qna_updatedate = NOW()
+		WHERE qna_num = #{qna_num}
+	</delete>
+	<!-- 답변 글 삭제 -->
+
+	<!-- 글 목록 조회 -->
+	<select id="getAdminListAll" resultType="QnaVO"
+		resultMap="qnaMap">
+		SELECT *
+		FROM qna_board
+		ORDER BY qna_regdate DESC
+	</select>
+	<!-- 글 목록 조회 -->
+
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+	<select id="QnaPage" resultType="QnaVO">
+		select * from
+		qna_board
+		order by qna_num desc, qna_regdate desc
+		limit #{page}, 10
+	</select>
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+	<select id="QnaCri" resultType="QnaVO">
+		select * from
+		qna_board
+		order by qna_num desc, qna_regdate desc
+		limit #{pageStart}, #{pageSize}
+	</select>
+	<!-- 페이징 처리 후 글 리스트 조회 -->
+
+	<!-- 게시판에 저장된 총 글의 개수 조회 -->
+	<select id="QnaCount" resultType="int">
+ 		<![CDATA[ 
+ 		select count(*) from event_notice_faq_board
+ 		where enf_notice_num > 0
+ 		]]>
+	</select>
+	<!-- 게시판에 저장된 총 글의 개수 조회 -->
+
+
+</mapper>
