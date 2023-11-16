@@ -8,26 +8,28 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
+
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 
+<hr>
 <div class="container mt-5">
 	<div class="row">
-		<!-- 고객센터 섹션 -->
-		<div class="col-md-3">
-			<div class="list-group mb-4">
-				<h5 class="list-group-item list-group-item-action active"
-					aria-current="true">고객센터</h5>
-				<a href="/board/boardListAll"
-					class="list-group-item list-group-item-action">공지사항</a> <a
-					href="/board/" class="list-group-item list-group-item-action">챗봇
-					상담</a> <a href="/board/qnaList"
-					class="list-group-item list-group-item-action">1:1문의</a>
-			</div>
-		</div>
+              <h5 class="card-title">관리자 페이지</h5>
+              
+		 <ul class="nav nav-tabs" id="myTab" role="tablist">
+   <li class="nav-item" role="presentation">
+    <button class="nav-link " id="home-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true" onclick = "location.href = '/user/adminMain';">회원관리</button>
+   	</li>
+     <li class="nav-item" role="presentation">
+     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1" onclick = "location.href = '/user/reportList';">신고관리</button>
+     </li>
+     <li class="nav-item" role="presentation">
+     <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1" onclick = "location.href = '/qna/qnaListAll';">1:1 문의 관리</button>
+     </li>
+     </ul>
 
 		<!-- 1대1 문의사항 리스트 섹션 -->
-		<div class="col-md-9">
 			<h3 class="mb-4">전체 회원 1대1 문의사항 리스트</h3>
 			<table class="table">
 				<thead class="thead-light">
@@ -60,14 +62,14 @@
 			</table>
 		</div>
 	</div>
-</div>
 
 <nav aria-label="Page navigation">
 	<ul class="pagination justify-content-center">
 		<c:if test="${pageVO.prev}">
-			<li class="page-item"><a class="page-link"
-				href="/qna/adminQnaListPage?page=${pageVO.startPage - 1}"
-				aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+			<li class="page-item">
+			<a class="page-link" href="/qna/adminQnaListPage?page=${pageVO.startPage - 1}" aria-label="Previous">
+		<span aria-hidden="true">&laquo;</span>
+		</a></li>
 		</c:if>
 
 		<c:forEach var="i" begin="${pageVO.startPage}" end="${pageVO.endPage}"

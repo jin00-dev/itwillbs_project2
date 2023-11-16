@@ -15,8 +15,7 @@
 		e.exp_ad_state,e.exp_summary_img,e.exp_detail_img,
 		e.exp_ad_state,avg(r.rev_star) "rev_avgStar" 
 		from experience e  
-		left join review r 
-		on e.exp_num = r.exp_num 
+		left join review r on e.exp_num = r.exp_num 
 		where e.exp_category = #{exp_category} and substr(e.exp_region,1,2) in (#{exp_region},#{exp_name}) 
 		group by e.exp_num
         order by ${exp_ad_state};

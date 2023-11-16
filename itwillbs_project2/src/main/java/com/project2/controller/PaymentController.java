@@ -31,12 +31,14 @@ public class PaymentController {
 
 	// 마이페이지 - 예매내역 ( 한명의 회원이 주문한 모든 클래스 리스트)
 	@RequestMapping(value = "/paymentList")
-	public String hostaymentList(Criteria cri, Model model) {
+	public String hostaymentList(Criteria cri, Model model,HttpSession session) {
 
 		try {
 			PageVO pageVO = new PageVO();
 			pageVO.setCri(cri);
 			// pageVO.setTotalCount(518);
+			String id = (String) session.getAttribute("user_id");
+			cri.setUser_id(id);
 			pageVO.setTotalCount(pService.paymentListCount(cri.getUser_id()));
 
 			// 리스트 사이즈 확인

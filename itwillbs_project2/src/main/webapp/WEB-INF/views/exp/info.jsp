@@ -15,15 +15,8 @@
 
 <!-- Vue.js 스크립트 불러오기 -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+<<<<<<< HEAD
 
-<!-- 로그인 테스트 -->
-<%
-// 	session.setAttribute("user_num", "6");
-// 	session.setAttribute("user_id", "totoro");
-// 	session.setAttribute("user_name", "몽실이누나서영");
-// 	session.setAttribute("user_type", "1");
-	 	//	session.invalidate();
-%>
 <!-- Section-->
 <section class="py-5">
 	<!-- 상단 전체 박스 -->
@@ -35,7 +28,7 @@
 					<!-- 왼쪽 ------------------------>
 					<div class="container border" style="min-width: 300px">
 						<div class="col-md-6 m-3">
-							<img class="img-fluid" src="https://dummyimage.com/400x500/dee2e6/6c757d.jpg" class="card-img-left" alt="...">
+							<img class="img-fluid" src="https://dummyimage.com/700x1000/dee2e6/6c757d.jpg" class="card-img-left" alt="...">
 						</div>
 						<div class="col-md-6 m-3">
 							<div class="row p-3">
@@ -220,8 +213,8 @@
 							<div class="col-md-12">
 								<!-- 이미지 -->
 								<c:if test="${review.rev_img ne null }">
-									<%-- <img src="${review.rev_img }" alt="이미지 설명"> --%>
-									<img src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt="이미지 설명">
+									<img src="/exp/thumbDownload?fileName=${review.rev_img}&wid=150&hei=150" alt="이미지 설명">
+<!-- 									<img src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt="이미지 설명"> -->
 								</c:if>
 							</div>
 						</div>
@@ -282,7 +275,7 @@
 			<!-- 리뷰 작성 -------------------------------------------------->
 			<div class="tab-pane" id="bnm5">
 				<div class="border-top">
-					<form action="/exp/reviewInsert?exp_num=${param.exp_num }" method="post">
+					<form action="/exp/reviewInsert?exp_num=${param.exp_num }" method="post" enctype="multipart/form-data">
 						<div class="card-header">
 							<h3 class="card-title">후기를 작성해주세요</h3>
 							<div class="rating">
@@ -295,7 +288,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<div class="custom-file">
-										<input type="file" name="rev_img" class="custom-file-input" id="exampleInputFile">
+										<input type="file" name="rev_img_file" class="custom-file-input" id="exampleInputFile">
 									</div>
 								</div>
 							</div>
@@ -355,42 +348,8 @@
 
 
 </section>
-<!-- <button onclick="cancelPay('7')">환불하기</button> -->
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script>
-
-// function cancelPay(order_num) {
-//  	  jQuery.ajax({
-//        url: "/payrest/cancelPay", 
-//        type: "POST",
-//        contentType: "application/json",
-//        data: order_num,
-//        success: function(refundResponse) {
-//          // refund ajax 실행 후 작업 수행
-         
-//        	  if(refundResponse === "ok"){	
-//                  alert('환불 요청이 완료되었습니다.');
-//                  location.reload();
-//               // 예약취소 버튼 수정하기
-//              }else if(refundResponse === "already refund"){ 
-//           	  alert('이미 환불 처리된 주문 건입니다.');
-            	  
-// 	      }else{
-//                  alert('실패: 관리자에게 문의해주세요');
-//              }	
-         
-//        },
-//        error: function(error) {
-//          // refund ajax 실행 중 에러 발생 시 처리
-//        }
-//      }); // refund ajax
-// }
-
-</script>
-
-
-
 <!-- footer -->
 <%@include file="../include/footer.jsp"%>
 
@@ -574,9 +533,12 @@
 	                    data: rsp,
 	                    success: function (response) {
 	                        console.log(response);
+	                        alert('결제가 완료되었습니다');
+	                        location.href = '/class/paymentList?user_id=${user_id}';
 	                    },
 	                    error: function (error) {
 	                        console.error(error);
+	                        alert('결제를 다시 시도해주세요');
 	                    }
 	                });
 	            } else {

@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" pageEncoding="UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
 
 	<h3> 예약 관리 목록 </h3>

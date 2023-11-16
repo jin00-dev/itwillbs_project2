@@ -1,7 +1,13 @@
 package com.project2.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,7 +18,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
@@ -22,6 +31,8 @@ import com.project2.domain.ReportVO;
 import com.project2.domain.RevVO;
 import com.project2.domain.UserVO;
 import com.project2.service.ExpServiceImpl;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 @RequestMapping("/exp/*")
@@ -34,7 +45,7 @@ public class ExpController {
 
 	// 클래스 상세페이지
 	@GetMapping("/exp/info")
-	public String infoGET(ExpVO vo, Model model, HttpSession session) {
+	public String infoGET(ExpVO vo, Model model, HttpSession session, HttpServletRequest req) {
 
 		if (vo.getExp_num() == 0) {
 			return "redirect:/";
@@ -86,7 +97,8 @@ public class ExpController {
 
 	// 리뷰 작성
 	@PostMapping("/reviewInsert")
-	public String insertRevGET(RevVO vo, HttpSession session, Model model, RedirectAttributes re) {
+	public String insertRevGET(RevVO vo, HttpSession session, @RequestParam("rev_img_file") MultipartFile file,
+			HttpServletRequest req, Model model, RedirectAttributes re) {
 		logger.debug("리뷰작성 실행");
 
 		if (session.getAttribute("user_id") == null) {
@@ -97,6 +109,8 @@ public class ExpController {
 		vo.setUser_num(Integer.parseInt((String) session.getAttribute("user_num")));
 
 		try {
+			String fileName = service.revFileUpload(file, req);
+			vo.setRev_img(fileName);
 			int result = service.insertReview(vo);
 
 			if (result == 1) {
@@ -168,6 +182,7 @@ public class ExpController {
 	// 리뷰 삭제
 	@GetMapping("/revDel")
 	public String deleteReview(RevVO vo, HttpSession session, RedirectAttributes re) {
+
 		if (session.getAttribute("user_id") == null) {
 			re.addFlashAttribute("isRogin", false);
 			return "redirect:/exp/info?exp_num=" + vo.getExp_num();
@@ -209,24 +224,77 @@ public class ExpController {
 		return false;
 	}
 
-	//내 주변 체험
+	// 내 주변 체험
 	@GetMapping("/myLocation")
 	public String myLocationGET(Model model) {
 		try {
 			List<ExpVO> list = service.getExpList();
-			
+
 			// Gson 객체 생성
 			Gson gson = new Gson();
 
 			// List<ExpVO>를 JSON 문자열로 변환
 			String json = gson.toJson(list);
-			
-			model.addAttribute("list",json);
-			model.addAttribute("region","");
+
+			model.addAttribute("list", json);
+			model.addAttribute("region", "");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "/exp/myLocation";
 	}
+
+	// 파일(썸네일) 다운로드 처리
+		@RequestMapping(value = "/thumbDownload", method = RequestMethod.GET)
+		public void fileThumbDownloadGET(@RequestParam("fileName") String fileName, @RequestParam("wid") int wid,
+				@RequestParam("hei") int hei, HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+			logger.debug(" fileThumbDownloadGET() 호출 ");
+
+			// 다운로드할 폴더 (= 업로드한 폴더)에 있는 파일정보
+			String downFile = request.getRealPath("\\upload\\rev") + "\\" + fileName;
+			logger.debug(" 다운로드할 파일 : " + downFile);
+
+			// 다운로드할 파일을 준비
+			File file = new File(downFile);
+
+			// 업로드했던(다운로드할) 파일의 확장자 확인
+			// "itwill.jpg"
+			int lastIdx = fileName.lastIndexOf(".");
+			// 파일의 확장자를 제외한 이름을 저장
+			String thumbName = fileName.substring(0, lastIdx);
+
+			// 파일명이 한글일때 인코딩문제 해결
+			// thumbName = URLEncoder.encode(thumbName,"UTF-8");
+			// 출력객체
+			OutputStream out = response.getOutputStream();
+
+			// File thumbNail = new File(request.getRealPath("\\upload\\rev") +
+			// "\\thumbnail\\" + thumbName + ".png");
+
+			if (file.exists()) {
+				// 썸네일 폴더 생성
+				// thumbNail.getParentFile().mkdirs();
+				// 썸네일 파일 생성
+				// Thumbnails.of(file).size(50, 50).outputFormat("png").toFile(thumbNail);
+				Thumbnails.of(file).size(wid, hei).outputFormat("png").toOutputStream(out);
+			}
+
+			// 파일 전송(썸네일 이미지 출력)
+
+			// 파일 읽기 객체
+//				FileInputStream fis = new FileInputStream(thumbNail);
+//				
+//				byte[] buffer = new byte[1024*8];
+//				int data = 0;
+//				while( (data = fis.read(buffer)) != -1) { //파일이 끝날때까지 파일읽기
+//					out.write(buffer,0,data);
+//				}
+
+			// 자원해제
+			out.close();
+//				fis.close();
+
+		}
 
 }// controller

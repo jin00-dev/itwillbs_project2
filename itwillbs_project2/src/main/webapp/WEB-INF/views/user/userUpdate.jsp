@@ -16,8 +16,9 @@
 <!-- 				<input type="submit" value=" 회 원 수 정 ">			 -->
 <!-- 			</form>		 -->
 <!-- 		</fieldset> -->
-		
-	<div class="col-xl-8">
+
+<div class="container mt-5">
+	<div class="row">		
       <div class="card">
 		<div class="card-body pt-3">
               <ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
@@ -81,6 +82,6 @@
                 <!-- 회원정보 수정 -->
                </div>
             </div>
-		
+		</div>
 		
 <%@include file="../include/footer.jsp"%>

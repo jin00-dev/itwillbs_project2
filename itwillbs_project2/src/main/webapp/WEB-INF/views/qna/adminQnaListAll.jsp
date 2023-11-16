@@ -6,20 +6,28 @@
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 
+<hr>
+
+<div class="card-body">
+              <h5 class="card-title">관리자 페이지</h5>
+
+  <!-- Default Tabs -->
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+   <li class="nav-item" role="presentation">
+    <button class="nav-link " id="home-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="home" aria-selected="true" onclick = "location.href = '/user/adminMain';">회원관리</button>
+   	</li>
+     <li class="nav-item" role="presentation">
+     <button class="nav-link" id="profile-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1" onclick = "location.href = '/user/reportList';">신고관리</button>
+     </li>
+     <li class="nav-item" role="presentation">
+     <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1" onclick = "location.href = '/qna/qnaListAll';">1:1 문의 관리</button>
+     </li>
+     </ul>
+
+
 <table class="table">
-	<tr>
-		<!-- 고객센터 섹션 -->
-		<td>
-			<h3>고객센터</h3>
-			<ul>
-				<li><a href="/board/boardListAll">공지사항</a></li>
-				<li><a href="/board/">챗봇 상담</a></li>
-				<li><a href="/board/qnaList">1:1문의</a></li>
-			</ul>
-		</td>
 
 		<!-- 1대1 문의사항 리스트 섹션 -->
-		<td>
 			<h3> 전체 회원 1대1 문의사항 리스트</h3> 
 			<table class="table">
 				<tr>
@@ -41,9 +49,9 @@
 					</tr>
 				</c:forEach>
 			</table>
-		</td>
-	</tr>
 </table>
+
+</div>
 
 <!-- footer -->
 <%@include file="/WEB-INF/views/include/footer.jsp"%>
