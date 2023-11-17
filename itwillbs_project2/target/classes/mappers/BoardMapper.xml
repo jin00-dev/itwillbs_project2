@@ -13,7 +13,6 @@
 		<result property="enf_content" column="enf_content" />
 		<result property="enf_title" column="enf_title" />
 		<result property="enf_regdate" column="enf_regdate" />
- 
 	</resultMap>
 
 	<!-- 최대 글번호 조회 -->
@@ -295,5 +294,19 @@
 	</select>
 	<!-- 게시판에 저장된 총 글의 개수 조회 -->
 
-
+	<!-- 클래스 등록 insert -->
+	<insert id="classCreate">
+		insert into experience (exp_num, user_num, exp_phone,
+		exp_place, exp_name,
+		exp_start_date, exp_end_date, exp_price,
+		exp_region, exp_category,
+		exp_capacity, exp_inout, exp_summary_img,
+		exp_detail_img)
+		values
+		(default, #{user_num}, #{exp_phone}, #{exp_place}, #{exp_name},
+		#{exp_start_date}, #{exp_end_date}, #{exp_price}, #{exp_region},
+		#{exp_category},#{exp_capacity}, #{exp_inout}, #{exp_summary_img},
+		#{exp_detail_img})
+	</insert>
+	<!-- 클래스 등록 insert -->
 </mapper>

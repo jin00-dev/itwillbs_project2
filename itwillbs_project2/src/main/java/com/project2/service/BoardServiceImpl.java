@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.project2.domain.BoardVO;
 import com.project2.domain.Criteria;
+import com.project2.domain.ExpVO;
 import com.project2.persistence.BoardDAO;
 
 @Service
@@ -170,5 +171,13 @@ public class BoardServiceImpl implements BoardService {
 
 		return bdao.getFaqCount();
 	}
+
+	@Override
+	public void classInsert(ExpVO vo) throws Exception {
+		
+		bdao.classInsert(vo); 
+	}
+	
+	
 
 }

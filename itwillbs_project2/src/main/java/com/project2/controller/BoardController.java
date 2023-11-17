@@ -2,7 +2,9 @@ package com.project2.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -503,7 +505,7 @@ public class BoardController {
 		model.addAttribute("faqList", faqList);
 
 	}
-
+ 
 	/////////////////////////// 클래스 글쓰기 ////////////////////////
 
 	// http://localhost:8088/board/uploadForm
@@ -516,38 +518,47 @@ public class BoardController {
 
 	// 파일 업로드 처리
 	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
-	public /* ModelAndView */ String fileUploadPOST(MultipartHttpServletRequest multiRequest,
-			HttpServletResponse response, HttpServletRequest request, Model model) throws Exception {
+	public String fileUploadPOST(MultipartHttpServletRequest multiRequest, 
+			HttpServletResponse response, HttpServletRequest request, Model model, HttpSession session) throws Exception {
 		logger.debug(" fileUploadPOST() 실행 ");
 
 		ExpVO vo = new ExpVO();
-		List<MultipartFile> files = multiRequest.getFiles("exp_detail_img");
-//		vo.setExpDetailImg(files);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-		List<MultipartFile> files1 = multiRequest.getFiles("exp_summary_img");
-//		vo.setExpDetailImg(files1);user_num (사업자 번호)
+		MultipartFile files = multiRequest.getFile("exp_detail_img");
+		vo.setExp_detail_img((files.getOriginalFilename())); 
+
+		MultipartFile files1 = multiRequest.getFile("exp_summary_img");
+		vo.setExp_summary_img((files1.getOriginalFilename()));
+
+		vo.setExp_phone(multiRequest.getParameter("exp_phone"));
+		vo.setExp_place(multiRequest.getParameter("exp_place"));
+		vo.setExp_name(multiRequest.getParameter("exp_name"));
 		
-		vo.setExp_phone((String)multiRequest.getAttribute("exp_phone"));
-		vo.setExp_place((String)multiRequest.getAttribute("exp_place"));
-		vo.setExp_name((String)multiRequest.getAttribute("exp_name"));
-		vo.setExp_start_date((Timestamp)multiRequest.getAttribute("exp_start_date"));
-		vo.setExp_end_date((Timestamp)multiRequest.getAttribute("exp_end_date"));
-		vo.setExp_price((Integer.parseInt((String) multiRequest.getAttribute("exp_price"))));
-		vo.setExp_region((String)multiRequest.getAttribute("exp_region"));
-		vo.setExp_category((String)multiRequest.getAttribute("exp_category"));
-		vo.setExp_capacity((Integer)multiRequest.getAttribute("exp_capacity"));
-
-		HttpSession session = request.getSession();
-//		int userNum = Integer.parseInt(String.valueOf(session.getAttribute("user_num"))); 
-			//vo.setUser_num(userNum);
-			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@" + vo.getUser_num());
-//		if (userNum != null) {
-//		}
+		String startDateStr = multiRequest.getParameter("exp_start_date");
+		Date parsedDate = java.sql.Date.valueOf(startDateStr);
+		vo.setExp_start_date(new Timestamp(parsedDate.getTime()));
+ 
+		String endDateStr = multiRequest.getParameter("exp_end_date");
+		Date parsedEndDate = java.sql.Date.valueOf(endDateStr);
+		vo.setExp_end_date(new Timestamp(parsedEndDate.getTime()));
+		
+		vo.setExp_inout(Integer.parseInt(multiRequest.getParameter("exp_inout")));
+		vo.setExp_price((Integer.parseInt(multiRequest.getParameter("exp_price"))));
+		vo.setExp_region(multiRequest.getParameter("exp_region"));
+		vo.setExp_category(multiRequest.getParameter("exp_category"));
+		vo.setExp_capacity((Integer.parseInt(multiRequest.getParameter("exp_capacity"))));
 
 		multiRequest.setCharacterEncoding("UTF-8");
+		
+		// 로그인 세션
+		int userNum = Integer.parseInt(String.valueOf(session.getAttribute("user_num")));
+		vo.setUser_num(userNum);
+		
 
 		// 1. 전달정보(파라메터) 저장
 		Map paramMap = new HashMap();
+		
 
 		Enumeration enu = multiRequest.getParameterNames();
 		while (enu.hasMoreElements()) {
@@ -619,7 +630,7 @@ public class BoardController {
 		logger.debug(" fileList : " + fileList);
 
 		logger.debug(" fileProcess() - 파일업로드 처리 끝");
- 
+
 		return fileList;
 	} // 파일 업로드 처리 메서드
 

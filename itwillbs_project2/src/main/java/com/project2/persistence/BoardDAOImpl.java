@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project2.domain.BoardVO;
 import com.project2.domain.Criteria;
+import com.project2.domain.ExpVO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -252,5 +253,14 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	
+	// 클래스 등록 
+	@Override
+	public void classInsert(ExpVO vo) throws Exception {
+		logger.debug("######################"+vo.getUser_num());
+		sqlSession.insert(NAMESPACE + ".classCreate", vo);
+		
+	}
+
 	
-}
+	
+} 

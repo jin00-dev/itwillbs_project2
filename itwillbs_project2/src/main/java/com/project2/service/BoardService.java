@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project2.domain.BoardVO;
 import com.project2.domain.Criteria;
+import com.project2.domain.ExpVO;
 
 public interface BoardService {
  
@@ -85,4 +86,9 @@ public interface BoardService {
 
 	// 게시판 글 총 개수 조회
 	public int getFaqCount() throws Exception;
+	
+	////////////////////////////////// 클래스 등록 ////////////////////////////
+	
+	public void classInsert(ExpVO vo) throws Exception;
+	
 }
