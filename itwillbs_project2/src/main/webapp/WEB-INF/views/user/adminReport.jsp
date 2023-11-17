@@ -33,7 +33,6 @@
 <div class="card-body">
 
 	<!-- Default Table -->
-	<h3 class="mb-4">신고 정보</h3>
 	<table class="table">
 		<thead class="thead-light">
 			<tr>
@@ -48,15 +47,42 @@
 		<c:forEach var="vo" items="${reportList }" varStatus="status">
 			<tr>
 				<th>${vo.report_num }</th>
-				<td>${vo.report_content }</td>
+				<td><button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#basicModal">${vo.report_content }</button></td>
 				<td>${vo.report_regdate }</td>
 				<td>${vo.report_updatedate }</td>
-				<td>${vo.report_state }</td>
+				<c:choose>
+				<c:when test="${vo.report_state eq 0 }">
+				<td>처리대기</td>
+				</c:when>
+				<c:when test="${vo.report_state eq 1 }">
+				<td>처리완료</td>
+				</c:when>
+				</c:choose>
 			</tr>
 		</tbody>
 		</c:forEach>
 	</table>
-	<!-- End Default Table Example -->
+			<!-- 가라로 만든 모달 -->
+	  		<div class="modal fade" id="basicModal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">신고 처리</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                     <p>신고 날짜 : 2023.11.17</p><br>
+                     <p>신고 내용 : 어쩌구 저쩌구 </p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="button" class="btn btn-primary">차단</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Basic Modal-->
+	
+	
 </div>
 
 <nav aria-label="Page navigation">

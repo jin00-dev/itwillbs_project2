@@ -28,7 +28,6 @@
      </ul>
 
 		<!-- 1대1 문의사항 리스트 섹션 -->
-			<h3 class="mb-4">전체 회원 1대1 문의사항 리스트</h3>
 			<table class="table">
 				<thead class="thead-light">
 					<tr>

@@ -33,9 +33,8 @@
 
 
 	<!-- Default Table -->
-	<h3 class="mb-4">전체 회원 정보</h3>
 	<table class="table">
-		
+		<thead class="thead-light">
 			<tr>
 				<th scope="col">회원번호</th>
 				<th scope="col">이름</th>
@@ -51,7 +50,17 @@
 				<td>${vo.user_name }</td>
 				<td>${vo.user_phone }</td>
 				<td>${vo.user_regdate }</td>
-				<td>${vo.user_type }</td>
+				<c:choose>
+				<c:when test="${vo.user_type eq 0}">
+				<td>일반회원</td>
+				</c:when>
+				<c:when test="${vo.user_type eq 1}">
+				<td>사업자</td>
+				</c:when>
+				<c:when test="${vo.user_type eq 2}">
+				<td>관리자</td>
+				</c:when>
+				</c:choose>
 			</tr>
 		</tbody>
 		</c:forEach>
