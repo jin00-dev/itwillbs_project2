@@ -18,6 +18,7 @@ import com.project2.domain.BoardVO;
 import com.project2.domain.Criteria;
 import com.project2.domain.PageVO;
 import com.project2.domain.PaymentVO;
+import com.project2.domain.UserVO;
 import com.project2.service.paymentService;
 
 @Controller
@@ -36,7 +37,6 @@ public class PaymentController {
 		try {
 			PageVO pageVO = new PageVO();
 			pageVO.setCri(cri);
-			// pageVO.setTotalCount(518);
 			String id = (String) session.getAttribute("user_id");
 			cri.setUser_id(id);
 			pageVO.setTotalCount(pService.paymentListCount(cri.getUser_id()));
@@ -62,13 +62,11 @@ public class PaymentController {
 	// 주문한 내역 하나를 눌렀을때 상세 내역 출력
 	@RequestMapping(value = "/paymentInfo")
 	public String paymentInfo(Model model, Criteria cri, HttpSession session) {
-//		PaymentVO result;
+		
+		String user_id = (String)session.getAttribute("user_id");
+		cri.setUser_id(user_id);
 		try {
-//			result = (PaymentVO) session.getAttribute("user_num");
-//			if(result == null) {
-//				return "redirect:로그인페이지로이동";
-//			}
-			PaymentVO resultVO = pService.boardPaymentList(cri);
+		PaymentVO resultVO = pService.boardPaymentList(cri);
 			model.addAttribute("testVO", resultVO);
 			logger.debug("vo : " + resultVO);
 
@@ -81,9 +79,12 @@ public class PaymentController {
 
 	// 한 사업자 클래스를 예매한 모든 회원의 리스트 출력
 	@RequestMapping(value = "/hostPage")
-	public String hostPaymentList(Criteria cri, Model model) {
+	public String hostPaymentList(Criteria cri, Model model, HttpSession session) {
 		try {
+			
 			PageVO pageVO = new PageVO();
+			int num = Integer.parseInt(String.valueOf(session.getAttribute("user_num")));
+			cri.setUser_num(num);
 			pageVO.setCri(cri);
 			pageVO.setTotalCount(pService.hostOrderListCount(cri));
 
@@ -154,6 +155,24 @@ public class PaymentController {
 		}
 
 		return "ok";
+	}
+	
+	
+	// 회원결제리스트에서 환불 버튼 눌렀을때
+	@RequestMapping(value = "/cancelPayCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public String cancelPayCheck(@RequestBody UserVO vo) {
+		logger.debug("vo"+vo);
+		try {
+		UserVO result =  pService.pwCheck(vo);
+	
+			if(result != null) {
+				return "true";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "false";
 	}
 
 }

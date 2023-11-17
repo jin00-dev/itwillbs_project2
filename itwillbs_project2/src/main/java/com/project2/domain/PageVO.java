@@ -4,18 +4,17 @@ import lombok.Data;
 
 @Data
 public class PageVO {
+	
+	private int totalCount; // 총 글의 수
+	private int startPage;
+	private int endPage;
+	private boolean preview; // 이전
+	private boolean next; // 다음
+	
+	private int displayPageNum = 10; // 페이지 블럭의 크기
+	
+	private Criteria cri; // 페이지 정보, 페이지 사이즈 저장 객체
 
-	private int totalCount;		// 총 글의 수
-	private int startPage;		// 페이지 블럭 시작 번호
-	private int endPage;		// 페이지 블럭 끝 번호
-	private boolean prev;		// 이전
-	private boolean next;		// 다음
-	
-	private int displayPageNum = 10;	//  페이지블럭의 크기
-	
-//	private int page;
-//	private int pageSize;
-	private Criteria cri;		// 페이지 정보, 사이즈 저장객체
 	
 	public void setCri(Criteria cri) {
 		this.cri = cri;
@@ -27,9 +26,7 @@ public class PageVO {
 	}
 	
 	
-	// 페이징처리에 필요한 정보를 계산하는 메서드
 	public void calcPageData() {
-		
 		endPage 
 		= (int)(Math.ceil(cri.getPage()/(double)displayPageNum) * displayPageNum);
 		
@@ -43,12 +40,13 @@ public class PageVO {
 			endPage = tmpEndPage;
 		}
 		
-		prev = startPage != 1;
+		preview = startPage != 1;
 		
 		next = endPage * cri.getPageSize() < totalCount;
 		
 		System.out.println(startPage + endPage + "@@@@@@@@@@@@@@@@@@@@@@");
 	}
+	
 
 	public int getTotalCount() {
 		return totalCount;
@@ -70,12 +68,13 @@ public class PageVO {
 		this.endPage = endPage;
 	}
 
-	public boolean isPrev() {
-		return prev;
+	public boolean isPreview() {
+		return preview;
 	}
 
-	public void setPrev(boolean prev) {
-		this.prev = prev;
+	public void setPreview(boolean preview) {
+		this.preview = preview;
+
 	}
 
 	public boolean isNext() {
@@ -98,4 +97,11 @@ public class PageVO {
 		return cri;
 	}
 
+
+	
+	
+	
+	
+
 }
+

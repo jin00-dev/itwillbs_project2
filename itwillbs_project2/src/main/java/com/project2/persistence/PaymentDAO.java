@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project2.domain.Criteria;
 import com.project2.domain.PaymentVO;
+import com.project2.domain.UserVO;
 
 public interface PaymentDAO {
 	
@@ -25,5 +26,7 @@ public interface PaymentDAO {
 	public int adminOrderListCount() throws Exception;
 	
 	public int hostOrderListCount(Criteria cri) throws Exception;
+	
+	public UserVO pwCheck (UserVO vo) throws Exception;
 
 }

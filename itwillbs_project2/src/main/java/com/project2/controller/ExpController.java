@@ -50,8 +50,10 @@ public class ExpController {
 		if (vo.getExp_num() == 0) {
 			return "redirect:/";
 		}
-
+		int user_num = Integer.parseInt(String.valueOf(session.getAttribute("user_num")));
 		try {
+			UserVO userVO = service.getUserOne(user_num);
+			
 			ExpVO expOne = service.getExpOne(vo.getExp_num());
 			List<RevVO> rList = service.getExpRevList(vo.getExp_num());
 			double avgStar = service.getExpRevAvg(vo.getExp_num());
@@ -81,7 +83,7 @@ public class ExpController {
 					break;
 				}
 			}
-
+			model.addAttribute(userVO);
 			model.addAttribute(expOne);
 			model.addAttribute("rList", rList);
 			model.addAttribute("ratings", ratings);

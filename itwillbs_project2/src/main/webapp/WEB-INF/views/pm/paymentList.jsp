@@ -2,50 +2,18 @@
 <%@ include file="../include/header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script> -->
-<!-- <script src="https://cdn.iamport.kr/v1/iamport.js"></script> -->
-
-<script>
-		function cancelPay(order_num) {
-			jQuery.ajax({
-				url : "/class/cancelPay",
-				type : "POST",
-				contentType : "application/json",
-				data : order_num,
-				success : function(refundResponse) {
-					// refund ajax 실행 후 작업 수행
-
-					if (refundResponse === "ok") {
-						alert('환불 요청이 완료되었습니다.');
-						location.reload();
-						// 예약취소 버튼 수정하기
-					} else if (refundResponse === "already refund") {
-						alert('이미 환불 처리된 주문 건입니다.');
-
-					} else {
-						alert('실패: 관리자에게 문의해주세요');
-					}
-
-				},
-				error : function(error) {
-					// refund ajax 실행 중 에러 발생 시 처리
-				}
-			}); // refund ajax
-		}
-	</script>
 
 <h2>${user_name }님의마이페이지입니다.</h2>
-
-<!-- 로그인 정보가 없으면 로그인 페이지로 이동 -->
-<%-- <c:if test="${empty user_id}"> --%>
-<%-- 	<c:redirect url="/user/login" /> --%>
-<%-- </c:if> --%>
 
 
 <div class="container mt-5">
 	<div class="row">
 		<div class="card">
+
+<h3>예매내역</h3>
 
 			<div class="card-body pt-3">
 				<ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
@@ -130,8 +98,65 @@
 			</div>
 		</div>
 	</div>
+	
+	<%@ include file="../include/footer.jsp"%>
 
 
-<%@ include file="../include/footer.jsp"%>
+	<script type="text/javascript">
+		function cancelPayCheck (order_num){
+			var inputPw = prompt("비밀번호를 입력해주세요", "");
+			console.log(inputPw);
+			jQuery.ajax({
+				url : "/class/cancelPayCheck",
+				type : "POST",
+				contentType : "application/json",
+				data : JSON.stringify({"user_id": "${user_id}", "user_pw": inputPw}),
+				success : function(data) {
+					// refund ajax 실행 후 작업 수행
+					if(data == "true"){
+						cancelPay(order_num);
+					} else {
+						alert('비밀번호를 다시 입력해주세요');
+					}
+	
+				},
+				error : function(error) {
+					// refund ajax 실행 중 에러 발생 시 처리
+				}
+			}); // refund ajax
+		}
+     
+     
+	
+		function cancelPay(order_num) {
+			jQuery.ajax({
+				url : "/class/cancelPay",
+				type : "POST",
+				contentType : "application/json",
+				data : order_num,
+				success : function(refundResponse) {
+					// refund ajax 실행 후 작업 수행
+
+					if (refundResponse === "ok") {
+						alert('환불 요청이 완료되었습니다.');
+						location.reload();
+						// 예약취소 버튼 수정하기
+					} else if (refundResponse === "already refund") {
+						alert('이미 환불 처리된 주문 건입니다.');
+
+					} else {
+						alert('실패: 관리자에게 문의해주세요');
+					}
+
+				},
+				error : function(error) {
+					// refund ajax 실행 중 에러 발생 시 처리
+				}
+			}); // refund ajax
+		}
+		
+		
+		
+	</script>
 
 	

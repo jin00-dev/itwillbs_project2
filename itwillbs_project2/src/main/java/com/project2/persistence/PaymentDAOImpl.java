@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.project2.domain.Criteria;
 import com.project2.domain.PaymentVO;
+import com.project2.domain.UserVO;
 
 @Repository
 public class PaymentDAOImpl implements PaymentDAO {
@@ -76,7 +77,14 @@ public class PaymentDAOImpl implements PaymentDAO {
 		return sqlSession.selectOne(NAMESPACE+".hostOrderListCount", cri);
 	}
 
+	@Override
+	public UserVO pwCheck(UserVO vo) throws Exception {
+		logger.debug("@@@@@@@@@@@@@@@"+vo);
+		return sqlSession.selectOne("com.project2.mapper.UserMapper.loginUser", vo);
+	}
 
+	
+	
 	
 	
 

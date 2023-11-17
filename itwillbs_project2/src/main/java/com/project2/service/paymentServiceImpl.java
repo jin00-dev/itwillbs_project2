@@ -18,6 +18,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.project2.domain.Criteria;
 import com.project2.domain.PaymentVO;
+import com.project2.domain.UserVO;
 import com.project2.persistence.PaymentDAO;
 
 @Service
@@ -190,6 +191,12 @@ public class paymentServiceImpl implements paymentService {
 	@Override
 	public int hostOrderListCount(Criteria cri) throws Exception {
 		return pdao.hostOrderListCount(cri);
+	}
+
+
+	@Override
+	public UserVO pwCheck(UserVO vo) throws Exception {
+		return pdao.pwCheck(vo);
 	}
 	
 	

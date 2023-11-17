@@ -15,6 +15,18 @@ public class Criteria {
 	
 	
 	
+	public int getOrder_num() {
+		return order_num;
+	}
+
+
+
+	public void setOrder_num(int order_num) {
+		this.order_num = order_num;
+	}
+
+
+
 	public String getUser_id() {
 		return user_id;
 	}
@@ -38,15 +50,17 @@ public class Criteria {
 	}
 
 
+
+
 	public Criteria() {
 		this.page = 1;
 		this.pageSize = 10;
 	}
-	
-	
+
 
 	public void setPage(int page) {
-		if(page <= 0) {
+		if (page <= 0) {
+
 			this.page = 1;
 			return;
 		}
@@ -73,11 +87,11 @@ public class Criteria {
 	public int getPage() {
 		return page;
 	}
-	
+
 	public int getPageSize() {
 		return pageSize;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Criteria [page=" + page + ", pageSize=" + pageSize + "]";
