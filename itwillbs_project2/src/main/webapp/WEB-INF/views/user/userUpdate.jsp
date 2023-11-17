@@ -22,8 +22,8 @@
 	<div class="row">
           <div class="card">
               <!-- 회원정보 확인 -->
+               <h3>${vo.user_name }님의 마이페이지 입니다. </h3>
             <div class="card-body pt-3">
-               <h4>${vo.user_name }님의 마이페이지 입니다. </h4>
               <ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
 				
                 <li class="nav-item" role="presentation">
