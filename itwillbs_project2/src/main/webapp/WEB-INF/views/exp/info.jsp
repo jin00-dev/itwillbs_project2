@@ -517,11 +517,7 @@
 	function requestPay() {
 		if($('#selectedDateResult').val() === "null"){
 			alert('날짜를 선택해 주세요');
-<<<<<<< HEAD
-		}else if(${empty user_id }){
-=======
 		}else if(${empty user_id}){
->>>>>>> 8e6b17ad91161d862ecc9bf20106fec37bb1abd1
 			alert('로그인을 해주세요');
 			location.href = "/user/login";
 		}else{
