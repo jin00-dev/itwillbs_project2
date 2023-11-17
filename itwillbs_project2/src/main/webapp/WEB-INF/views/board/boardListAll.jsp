@@ -22,27 +22,18 @@
 	<div class="row">
 		<div class="col-md-3">
 			<div class="list-group mb-4 h-100">
-<<<<<<< HEAD
 				<h5 class="list-group-item list-group-item-action active"
 					aria-current="true">고객지원</h5>
 				<a href="/board/boardListAll"
 					class="list-group-item list-group-item-action">공지사항</a> 
 				<a href="/board/faqListAll" class="list-group-item list-group-item-action">자주 묻는 질문</a> 
-				<a href="/board/"
-					class="list-group-item list-group-item-action">1:1문의</a>
-=======
-				<h5 class="list-group-item list-group-item-action active" aria-current="true">고객지원</h5>
-				<a href="/board/boardListAll" class="list-group-item list-group-item-action">공지사항</a> 
-<!-- 				<a href="/board/" class="list-group-item list-group-item-action">챗봇상담</a>  삭제 -->
-				<a href="/qna/qnaCreate" class="list-group-item list-group-item-action">1:1 문의</a>
-				<a href="#" class="list-group-item list-group-item-action">자주 묻는 질문</a>
->>>>>>> 3265dc4c53e76c5b123817c2ae0ee71a93762fae
+				<a href="/qna/qnaCreate" class="list-group-item list-group-item-action">1:1문의</a>
 			</div>
 		</div>
 
 		<div class="col-md-9">
 			<h2 class="mb-4">공지사항</h2>
-			<c:if test="${uer_type eq 2}">
+			<c:if test="${user_type eq 2}">
 			<a href="/board/insert" class="btn btn-primary mb-3">글쓰기</a>
 			</c:if>
 			
