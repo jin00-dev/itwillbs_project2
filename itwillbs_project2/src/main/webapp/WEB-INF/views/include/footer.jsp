@@ -4,7 +4,7 @@
 footer{
   height: 180px;
   position : relative;
-/*   transform : translateY(-100%); */
+/*   transform : translateY(-100%);  */
 }
 
 </style>
