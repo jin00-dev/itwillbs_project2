@@ -80,11 +80,4 @@ public class QnaServiceImpl implements QnaService {
 		return qdao.getQnaCount();
 	}
 	
-	
-	
-	
-	
-	
-	
-	
 }

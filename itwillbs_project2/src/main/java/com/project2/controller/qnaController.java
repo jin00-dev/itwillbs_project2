@@ -21,7 +21,7 @@ import com.project2.domain.Criteria;
 import com.project2.domain.PageVO;
 import com.project2.domain.QnaVO;
 import com.project2.service.QnaService;
-
+ 
 @Controller
 @RequestMapping(value = "/qna/*")
 public class qnaController {

@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class BoardVO {
-
+ 
 	private int enf_category;
     private int enf_event_num;
     private int enf_notice_num;

@@ -16,8 +16,8 @@
 
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
-
-<div class="container mt-5 abx">
+ 
+<div class="container mt-5">
     <div class="row">
         <!-- 고객센터 메뉴 섹션 -->
         <div class="col-md-3">

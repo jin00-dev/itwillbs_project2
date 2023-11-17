@@ -15,7 +15,7 @@ import com.project2.domain.Criteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
-
+ 
 	private static final Logger logger = LoggerFactory.getLogger(BoardDAOImpl.class);
 
 	@Inject
@@ -101,29 +101,26 @@ public class BoardDAOImpl implements BoardDAO {
 	public List<BoardVO> getBoardPage(Criteria cri) throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".boardCri", cri);
 	}
-	
-	
+
 	@Override
 	public int getBoardCount() throws Exception {
-		
+
 		return sqlSession.selectOne(NAMESPACE + ".boardCount");
 	}
-	
+
 	@Override
 	public int getEventCount() throws Exception {
-		
+
 		return sqlSession.selectOne(NAMESPACE + ".eventCount");
 	}
-	
+
 	@Override
 	public List<BoardVO> searchByTitle(String title) {
-	
+
 		return sqlSession.selectList(NAMESPACE + ".searchByTitle", title);
 	}
 
 ///////////////////////////////////이벤트///////////////////////////////////////////// 
-
-
 
 	@Override
 	public void evinsert(BoardVO vo) throws Exception {
@@ -184,10 +181,76 @@ public class BoardDAOImpl implements BoardDAO {
 
 		return sqlSession.selectList(NAMESPACE + ".eventPage", page);
 	}
- 
+
 	@Override
 	public List<BoardVO> getEventPage(Criteria cri) throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".eventCri", cri);
 	}
 
+///////////////////////////////////FAQ///////////////////////////////////////////// 
+
+	@Override
+	public int getMaxEnfFaqNum() throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".getMaxEnfFaqNum");
+	}
+
+	@Override
+	public void faInsert(BoardVO vo) throws Exception {
+		// DB에 글쓰기(insert) 수행
+		int result = sqlSession.insert(NAMESPACE + ".createFaq", vo);
+
+		if (result >= 1) {
+			logger.debug(" DB 글쓰기 완료! ");
+		}
+
+	}
+
+	@Override
+	public List<BoardVO> getFaListAll() throws Exception {
+
+		return sqlSession.selectList(NAMESPACE + ".getFaListAll");
+	}
+
+	@Override
+	public BoardVO getFaqBoard(Integer enf_faq_num) throws Exception {
+
+		return sqlSession.selectOne(NAMESPACE + ".getFaqBoard", enf_faq_num);
+	}
+
+	@Override
+	public void faqUpdateBoard(BoardVO vo) throws Exception {
+
+		sqlSession.update(NAMESPACE + ".faqUpdateBoard", vo);
+	}
+
+	@Override
+	public int faqRemoveBoard(Integer enf_faq_num) throws Exception {
+
+		return sqlSession.delete(NAMESPACE + ".faqRemoveBoard", enf_faq_num);
+	}
+
+	@Override
+	public List<BoardVO> getFaqPage(Integer page) throws Exception {
+		if (page <= 0) {
+			page = 1;
+		}
+		// 1 -> 1페이지 / 2 -> 2페이지
+		// page가 1이라면 if문 안 들어가고 밑에 코드는 값이 0임.
+		page = (page - 1) * 10;
+
+		return sqlSession.selectList(NAMESPACE + ".faqPage", page);
+	}
+
+	@Override
+	public List<BoardVO> getFaqPage(Criteria cri) throws Exception {
+		return sqlSession.selectList(NAMESPACE + ".faqCri", cri);
+	}
+
+	@Override
+	public int getFaqCount() throws Exception {
+		return sqlSession.selectOne(NAMESPACE + ".faqCount");
+	}
+
+	
+	
 }

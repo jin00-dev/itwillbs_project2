@@ -6,7 +6,7 @@ import com.project2.domain.BoardVO;
 import com.project2.domain.Criteria;
 
 public interface BoardService {
-
+ 
 	// 게시판 글쓰기
 	public void insert(BoardVO vo) throws Exception;
 
@@ -30,7 +30,7 @@ public interface BoardService {
 
 	// 게시판 글 총 개수 조회
 	public int getBoardCount() throws Exception;
-	
+
 	// 게시판 검색
 	public List<BoardVO> searchByTitle(String title);
 
@@ -60,4 +60,29 @@ public interface BoardService {
 	// 이벤트 글 총 개수 조회
 	public int getEventCount() throws Exception;
 
+	/////////////////////////////////// FAQ ////////////////////////////////
+
+	// 최대 enf_event_num 조회
+	public Integer getMaxEnfFaqNum() throws Exception;
+
+	// 게시판 글쓰기
+	public void fainsert(BoardVO vo) throws Exception;
+
+	// 게시판 전체 목록 조회
+	public List<BoardVO> faListAll() throws Exception;
+
+	// 페이징처리 후 리스트 목록조회
+	public List<BoardVO> getFaqPage(Criteria cri) throws Exception;
+
+	// 특정 게시판 글 정보 조회
+	public BoardVO getFaqBoard(Integer enf_faq_num) throws Exception;
+
+	// 특정 글 정보 수정
+	public void faqUpdateBoard(BoardVO vo) throws Exception;
+
+	// 특정 글 정보 삭제
+	public int faqRemoveBoard(Integer enf_faq_num) throws Exception;
+
+	// 게시판 글 총 개수 조회
+	public int getFaqCount() throws Exception;
 }

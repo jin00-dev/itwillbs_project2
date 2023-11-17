@@ -7,7 +7,7 @@ import com.project2.domain.Criteria;
 import com.project2.domain.QnaVO;
 
 public interface QnaService {
-
+ 
 	// QNA 글쓰기
 	public void insert(QnaVO vo) throws Exception;
 

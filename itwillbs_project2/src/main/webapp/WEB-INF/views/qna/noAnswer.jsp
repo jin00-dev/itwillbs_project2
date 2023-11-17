@@ -8,7 +8,7 @@
 <!-- 부트스트랩 CSS 추가 -->
 <link rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
+ 
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 

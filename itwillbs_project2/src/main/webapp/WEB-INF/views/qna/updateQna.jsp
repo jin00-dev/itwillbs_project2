@@ -6,7 +6,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
-
+ 
 <div class="container mt-3">
     <h3 class="mb-3">1:1문의 수정</h3>
     <form method="post">

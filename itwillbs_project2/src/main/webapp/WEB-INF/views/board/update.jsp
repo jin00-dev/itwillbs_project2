@@ -6,7 +6,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%> 
-
+ 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-6">

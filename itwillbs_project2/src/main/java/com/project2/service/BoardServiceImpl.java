@@ -14,7 +14,7 @@ import com.project2.persistence.BoardDAO;
 
 @Service
 public class BoardServiceImpl implements BoardService {
-
+ 
 	private static final Logger logger = LoggerFactory.getLogger(BoardServiceImpl.class);
 
 	@Inject
@@ -28,67 +28,59 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardVO> listAll() throws Exception {
-		logger.debug(" 컨트롤러가 서비스를 호출 ");
 
-		logger.debug(" DAO의 결과를 받아서 컨트롤러 전달");
 		return bdao.getBoardListAll();
 	}
 
 	@Override
 	public void increaseViewCount(Integer enf_notice_num) throws Exception {
-		logger.debug(" 조회수 1증가!! ");
+
 		bdao.increaseViewCount(enf_notice_num);
 	}
 
 	@Override
 	public BoardVO getBoard(Integer enf_notice_num) throws Exception {
-		logger.debug(" getBoard(Integer bno) 호출 ");
 
 		return bdao.getBoard(enf_notice_num);
 	}
 
 	@Override
 	public void updateBoard(BoardVO vo) throws Exception {
-		logger.debug(" updateBoard(BoardVO vo) 호출 @@@ ");
 
 		bdao.updateBoard(vo);
 	}
 
 	@Override
 	public int removeBoard(Integer enf_notice_num) throws Exception {
-		logger.debug(" removeBoard(Integer enf_notice_num)  호출 ");
 
 		return bdao.removeBoard(enf_notice_num);
-	} 
-	
+	}
+
 	@Override
 	public List<BoardVO> getBoardPage(Criteria cri) throws Exception {
-		
+
 		return bdao.getBoardPage(cri);
-	}	
-	
+	}
+
 	@Override
 	public int getBoardCount() throws Exception {
-		
+
 		return bdao.getBoardCount();
 	}
-	
+
 	@Override
 	public List<BoardVO> searchByTitle(String title) {
-		
-		 return bdao.searchByTitle(title);
-	}
-	
-	
-///////////////////////////////////이벤트/////////////////////////////////////////////
-	
 
+		return bdao.searchByTitle(title);
+	}
+
+	/////////////////////////////////// 이벤트/////////////////////////////////////////////
 
 	@Override
 	public Integer getMaxEnfEventNum() throws Exception {
-	    return bdao.getMaxEnfEventNum();
+		return bdao.getMaxEnfEventNum();
 	}
-	
+
 	@Override
 	public void evinsert(BoardVO vo) throws Exception {
 		bdao.evinsert(vo);
@@ -97,17 +89,14 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public List<BoardVO> evListAll() throws Exception {
-		logger.debug(" 컨트롤러가 서비스를 호출 ");
 
-		logger.debug(" DAO의 결과를 받아서 컨트롤러 전달");
 		return bdao.getEvListAll();
 	}
-	
+
 	@Override
 	public BoardVO evGetBoard(Integer enf_event_num) throws Exception {
-		logger.debug(" getBoard(Integer enf_event_num) 호출 ");
 
-		return bdao.evGetBoard(enf_event_num); 
+		return bdao.evGetBoard(enf_event_num);
 	}
 
 	@Override
@@ -115,15 +104,15 @@ public class BoardServiceImpl implements BoardService {
 		bdao.eventUpdateBoard(vo);
 	}
 
-	@Override 
+	@Override
 	public int eventRemoveBoard(Integer enf_event_num) throws Exception {
-		
+
 		return bdao.eventRemoveBoard(enf_event_num);
 	}
 
 	@Override
 	public List<BoardVO> getEventPage(Criteria cri) throws Exception {
-		
+
 		return bdao.getEventPage(cri);
 	}
 
@@ -131,9 +120,55 @@ public class BoardServiceImpl implements BoardService {
 	public int getEventCount() throws Exception {
 		return bdao.getEventCount();
 	}
+
+	/////////////////////////////////// FAQ
+	/////////////////////////////////// /////////////////////////////////////////////
+
+	@Override
+	public Integer getMaxEnfFaqNum() throws Exception {
+		return bdao.getMaxEnfFaqNum();
+	}
+
+	@Override
+	public void fainsert(BoardVO vo) throws Exception {
+		bdao.faInsert(vo);
+
+	}
+
+	@Override
+	public List<BoardVO> faListAll() throws Exception {
+
+		return bdao.getFaListAll();
+	}
+
+	@Override
+	public List<BoardVO> getFaqPage(Criteria cri) throws Exception {
+
+		return bdao.getFaqPage(cri);
+	}
+
+	@Override
+	public BoardVO getFaqBoard(Integer enf_faq_num) throws Exception {
+
+		return bdao.getFaqBoard(enf_faq_num);
+	}
+
+	@Override
+	public void faqUpdateBoard(BoardVO vo) throws Exception {
+
+		bdao.faqUpdateBoard(vo);
+	}
+
+	@Override
+	public int faqRemoveBoard(Integer enf_faq_num) throws Exception {
+
+		return bdao.faqRemoveBoard(enf_faq_num);
+	}
 	
-	
-	
-	
+	@Override
+	public int getFaqCount() throws Exception {
+
+		return bdao.getFaqCount();
+	}
 
 }
