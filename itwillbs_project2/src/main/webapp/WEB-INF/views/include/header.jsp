@@ -12,7 +12,7 @@
   }
   #searchbar{
   width : 130%;
-  margin : sauto;
+  margin : auto;
   margin-top : 5%;
   }
   
@@ -62,7 +62,7 @@
 					</c:when>
 					<c:when test="${user_type eq 1 }">
 						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
-						<li class="nav-item"><a class="nav-link" href="/user/userMain">마이페이지</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/update">마이페이지</a></li>
 						<li class="nav-item"><a class="nav-link" href="/exp/wishList">찜목록</a></li>
 						<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 					</c:when>
