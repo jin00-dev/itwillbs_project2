@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.project2.domain.BoardVO;
 import com.project2.domain.Criteria;
+import com.project2.domain.ExpVO;
 
 public interface BoardDAO {
  
@@ -40,8 +41,7 @@ public interface BoardDAO {
 	// 게시판 검색
 	public List<BoardVO> searchByTitle(String title);
 
-	/////////////////////////////////// 이벤트
-	/////////////////////////////////// /////////////////////////////////////////////////////////////
+	//////////////////////////// 이벤트 ///////////////////////////////
 
 	// 최대 enf_event_num 조회
 	public Integer getMaxEnfEventNum() throws Exception;
@@ -70,8 +70,7 @@ public interface BoardDAO {
 	// 게시판 글 총 개수 조회
 	public int getEventCount() throws Exception;
 
-	/////////////////////////////////// FAQ
-	/////////////////////////////////// /////////////////////////////////////////
+	///////////////////////// FAQ ///////////////////////////////
 
 	// 최대 글번호 조회
 	public int getMaxEnfFaqNum() throws Exception;
@@ -99,4 +98,7 @@ public interface BoardDAO {
 
 	// 게시판 글 총 개수 조회
 	public int getFaqCount() throws Exception;
+	
+	// 클래스등록
+	public void classInsert(ExpVO vo) throws Exception;
 }

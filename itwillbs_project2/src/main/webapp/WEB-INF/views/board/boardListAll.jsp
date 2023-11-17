@@ -12,7 +12,8 @@
 </style>
 
 <!-- 부트스트랩 CSS 추가 -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
@@ -24,8 +25,7 @@
 			<div class="list-group mb-4 h-100">
 				<h5 class="list-group-item list-group-item-action active"
 					aria-current="true">고객지원</h5>
-				<a href="/board/boardListAll"
-					class="list-group-item list-group-item-action">공지사항</a> 
+				<a href="/board/boardListAll" class="list-group-item list-group-item-action">공지사항</a> 
 				<a href="/board/faqListAll" class="list-group-item list-group-item-action">자주 묻는 질문</a> 
 				<a href="/qna/qnaCreate" class="list-group-item list-group-item-action">1:1문의</a>
 			</div>
@@ -45,14 +45,15 @@
 				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
 			</form>
 
-			<!-- <c:if
+			<c:if
 				test="${sessionScope.user_id != null && sessionScope.user_id.equals('admin')}">
 				<a href="/board/insert" class="btn btn-primary mb-3">글쓰기</a>
-			</c:if> -->
+			</c:if>
 
 			<table class="table">
 				<thead class="thead-light">
 					<tr>
+						<th scope="col">번호</th>
 						<th scope="col">제목</th>
 						<th scope="col">작성일</th>
 						<th scope="col">조회수</th>
@@ -64,8 +65,9 @@
 						<c:if
 							test="${vo.enf_category == 1 && pinnedNotices.contains(vo.enf_notice_num)}">
 							<tr class="font-weight-bold">
+								<td>📌</td>
 								<td><a
-									href="/board/read?enf_notice_num=${vo.enf_notice_num}">📌
+									href="/board/read?enf_notice_num=${vo.enf_notice_num}">
 										${vo.enf_title}</a></td>
 								<td><fmt:formatDate value="${vo.enf_regdate}"
 										pattern="yy-MM-dd" /></td>
@@ -75,10 +77,12 @@
 					</c:forEach>
 
 					<!-- 일반 공지사항 -->
-					<c:forEach var="vo" items="${boardListAll}">
+					<c:forEach var="vo" items="${boardList}" varStatus="status">
 						<c:if
 							test="${vo.enf_category == 1 && !pinnedNotices.contains(vo.enf_notice_num)}">
 							<tr>
+								<!-- 수정된 번호 계산 로직 -->
+								<td>${pageVO.totalCount - (pageVO.cri.page - 1) * pageVO.cri.pageSize - status.index - pinnedNotices.size()}</td>
 								<td><a
 									href="/board/read?enf_notice_num=${vo.enf_notice_num}">${vo.enf_title}</a></td>
 								<td><fmt:formatDate value="${vo.enf_regdate}"
@@ -87,6 +91,7 @@
 							</tr>
 						</c:if>
 					</c:forEach>
+
 				</tbody>
 			</table>
 
@@ -114,7 +119,13 @@
 				</c:if>
 			</nav>
 
-			
+			<!-- 검색 바 -->
+			<form class="form-inline my-2 my-lg-0" action="/board/boardSearch"
+				method="get">
+				<input class="form-control mr-sm-2" type="search" placeholder="검색"
+					aria-label="Search" name="searchTerm">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+			</form>
 
 
 

@@ -17,7 +17,7 @@ public class ExpVO {
 	private String exp_name;
 	private String exp_region;
 	private String exp_category;
-	private String exp_capacity;
+	private int exp_capacity;
 	private String exp_ad_state;
 	private String exp_summary_img;
 	private String exp_detail_img;

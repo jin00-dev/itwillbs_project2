@@ -2,7 +2,9 @@ package com.project2.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -503,124 +505,133 @@ public class BoardController {
 		model.addAttribute("faqList", faqList);
 
 	}
-
+ 
 	/////////////////////////// 클래스 글쓰기 ////////////////////////
 
-//	// http://localhost:8088/board/uploadForm
-//	// 파일업로드 페이지열기
-//	@RequestMapping(value = "/uploadForm", method = RequestMethod.GET)
-//	public void uploadForm() throws Exception {
-//		logger.debug(" uploadForm() 호출 ->뷰페이지 연결");
-//
-//	}
-//
-//	// 파일 업로드 처리
-//	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
-//	public /* ModelAndView */ String fileUploadPOST(MultipartHttpServletRequest multiRequest,
-//			HttpServletResponse response, HttpServletRequest request, Model model) throws Exception {
-//		logger.debug(" fileUploadPOST() 실행 ");
-//
-//		ExpVO vo = new ExpVO();
-//		List<MultipartFile> files = multiRequest.getFiles("exp_detail_img");
-////		vo.setExpDetailImg(files);
-//
-//		List<MultipartFile> files1 = multiRequest.getFiles("exp_summary_img");
-////		vo.setExpDetailImg(files1);user_num (사업자 번호)
-//		
-//		vo.setExp_phone((String)multiRequest.getAttribute("exp_phone"));
-//		vo.setExp_place((String)multiRequest.getAttribute("exp_place"));
-//		vo.setExp_name((String)multiRequest.getAttribute("exp_name"));
-//		vo.setExp_start_date((Timestamp)multiRequest.getAttribute("exp_start_date"));
-//		vo.setExp_end_date((Timestamp)multiRequest.getAttribute("exp_end_date"));
-//		vo.setExp_price((Integer.parseInt((String) multiRequest.getAttribute("exp_price"))));
-//		vo.setExp_region((String)multiRequest.getAttribute("exp_region"));
-//		vo.setExp_category((String)multiRequest.getAttribute("exp_category"));
-//		vo.setExp_capacity((String)multiRequest.getAttribute("exp_capacity"));
-//
-//		HttpSession session = request.getSession();
-////		int userNum = Integer.parseInt(String.valueOf(session.getAttribute("user_num"))); 
-//			//vo.setUser_num(userNum);
-//			logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@" + vo.getUser_num());
-////		if (userNum != null) {
-////		}
-//
-//		multiRequest.setCharacterEncoding("UTF-8");
-//
-//		// 1. 전달정보(파라메터) 저장
-//		Map paramMap = new HashMap();
-//
-//		Enumeration enu = multiRequest.getParameterNames();
-//		while (enu.hasMoreElements()) {
-//			String name = (String) enu.nextElement();
-//			logger.debug(" name : 	" + name);
-//			String value = multiRequest.getParameter(name);
-//			logger.debug(" value : 	" + value);
-//			// 모든 파라메터정보를 map 저장
-//			paramMap.put(name, value);
-//		}
-//		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " + paramMap);
-//
-//		// 2. 파일 업로드 처리
-//		List fileList = fileProcess(multiRequest);
-//
-//		// 2-1. db 호출
-//		bService.classInsert(vo);
-//
-//		// 3. map에 파라메터정보 + 파일업로드 정보 저장
-//		paramMap.put("fileList", fileList);
-//
-//		// 연결된 뷰페이지에 저장된 정보 전달
-//		model.addAttribute("paramMap", paramMap);
-//
-//		return "/exp/uploadForm";
-//	}// fileUploadPOST
-//
-//	// 파일 업로드 처리 메서드
-//	private List<String> fileProcess(MultipartHttpServletRequest multiRequest) throws Exception {
-//		logger.debug(" fileProcess() - 파일업로드 처리 시작");
-//
-//		// 업로드한 파일의 정보를 저장하는 리스트
-//		List<String> fileList = new ArrayList<String>();
-//		// form태그-input/file태그의 이름 정보 모두를 가져오기
-//		Iterator<String> fileNames = multiRequest.getFileNames();
-//		while (fileNames.hasNext()) {
-//			// form태그-input/file태그의 이름 정보
-//			String fileName = fileNames.next();
-//			logger.debug(" fileName : " + fileName);
-//
-//			// 업로드한 파일을 임시 저장
-//			MultipartFile mFile = multiRequest.getFile(fileName);
-//			// 임시저장된 파일의 원본이름을 리스트에 저장
-//			String oFileName = mFile.getOriginalFilename();
-//			fileList.add(oFileName);
-//
-//			// 업로드 저장경로 생성 /WEB-INF/upload (가상경로)
-//			// 임시저장된 파일을 생성하기 위한 준비 (실제파일 생성)
-//			File file = new File(multiRequest.getRealPath("\\upload") + "\\" + fileName);
-//			logger.debug(" realPath : " + multiRequest.getRealPath("\\upload"));
-//			if (mFile.getSize() != 0) { // 첨부파일(업로드한 임시파일)이 존재할때 진행
-//				if (!file.exists()) { // 해당파일이 존재하는지 체크
-//					// 해당경로에 파일이 없을경우,자동으로 폴더 생성후 진행
-//					if (file.getParentFile().mkdirs()) {
-//						file.createNewFile();
-//						file.delete();
-//						logger.debug(" 임시파일 생성완료-삭제 (첨부파일 폴더생성)! ");
-//					}
-//				}
-//				// 임시로 생성된(저장된) 파일mFile -> 실제파일로 데이터 전송
-//				// mFile.transferTo(new File("D:\\springupload2\\"+oFileName));
-//				mFile.transferTo(new File(multiRequest.getRealPath("\\upload") + "\\" + oFileName));
-//			}
-//			logger.debug(" 파일 업로드 성공! ");
-//
-//		} // while
-//
-//		String joinedFilePaths = String.join(",", fileList);
-//		logger.debug(" fileList : " + fileList);
-//
-//		logger.debug(" fileProcess() - 파일업로드 처리 끝");
-// 
-//		return fileList;
-//	} // 파일 업로드 처리 메서드
+	// http://localhost:8088/board/uploadForm
+	// 파일업로드 페이지열기
+	@RequestMapping(value = "/uploadForm", method = RequestMethod.GET)
+	public void uploadForm() throws Exception {
+		logger.debug(" uploadForm() 호출 ->뷰페이지 연결");
+
+	}
+
+	// 파일 업로드 처리
+	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
+	public String fileUploadPOST(MultipartHttpServletRequest multiRequest, 
+			HttpServletResponse response, HttpServletRequest request, Model model, HttpSession session) throws Exception {
+		logger.debug(" fileUploadPOST() 실행 ");
+
+		ExpVO vo = new ExpVO();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		MultipartFile files = multiRequest.getFile("exp_detail_img");
+		vo.setExp_detail_img((files.getOriginalFilename())); 
+
+		MultipartFile files1 = multiRequest.getFile("exp_summary_img");
+		vo.setExp_summary_img((files1.getOriginalFilename()));
+
+		vo.setExp_phone(multiRequest.getParameter("exp_phone"));
+		vo.setExp_place(multiRequest.getParameter("exp_place"));
+		vo.setExp_name(multiRequest.getParameter("exp_name"));
+		
+		String startDateStr = multiRequest.getParameter("exp_start_date");
+		Date parsedDate = java.sql.Date.valueOf(startDateStr);
+		vo.setExp_start_date(new Timestamp(parsedDate.getTime()));
+ 
+		String endDateStr = multiRequest.getParameter("exp_end_date");
+		Date parsedEndDate = java.sql.Date.valueOf(endDateStr);
+		vo.setExp_end_date(new Timestamp(parsedEndDate.getTime()));
+		
+		vo.setExp_inout(Integer.parseInt(multiRequest.getParameter("exp_inout")));
+		vo.setExp_price((Integer.parseInt(multiRequest.getParameter("exp_price"))));
+		vo.setExp_region(multiRequest.getParameter("exp_region"));
+		vo.setExp_category(multiRequest.getParameter("exp_category"));
+		vo.setExp_capacity((Integer.parseInt(multiRequest.getParameter("exp_capacity"))));
+
+		multiRequest.setCharacterEncoding("UTF-8");
+		
+		// 로그인 세션
+		int userNum = Integer.parseInt(String.valueOf(session.getAttribute("user_num")));
+		vo.setUser_num(userNum);
+		
+
+		// 1. 전달정보(파라메터) 저장
+		Map paramMap = new HashMap();
+		
+
+		Enumeration enu = multiRequest.getParameterNames();
+		while (enu.hasMoreElements()) {
+			String name = (String) enu.nextElement();
+			logger.debug(" name : 	" + name);
+			String value = multiRequest.getParameter(name);
+			logger.debug(" value : 	" + value);
+			// 모든 파라메터정보를 map 저장
+			paramMap.put(name, value);
+		}
+		logger.debug("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ " + paramMap);
+
+		// 2. 파일 업로드 처리
+		List fileList = fileProcess(multiRequest);
+
+		// 2-1. db 호출
+		bService.classInsert(vo);
+
+		// 3. map에 파라메터정보 + 파일업로드 정보 저장
+		paramMap.put("fileList", fileList);
+
+		// 연결된 뷰페이지에 저장된 정보 전달
+		model.addAttribute("paramMap", paramMap);
+
+		return "/exp/uploadForm";
+	}// fileUploadPOST
+
+	// 파일 업로드 처리 메서드
+	private List<String> fileProcess(MultipartHttpServletRequest multiRequest) throws Exception {
+		logger.debug(" fileProcess() - 파일업로드 처리 시작");
+
+		// 업로드한 파일의 정보를 저장하는 리스트
+		List<String> fileList = new ArrayList<String>();
+		// form태그-input/file태그의 이름 정보 모두를 가져오기
+		Iterator<String> fileNames = multiRequest.getFileNames();
+		while (fileNames.hasNext()) {
+			// form태그-input/file태그의 이름 정보
+			String fileName = fileNames.next();
+			logger.debug(" fileName : " + fileName);
+
+			// 업로드한 파일을 임시 저장
+			MultipartFile mFile = multiRequest.getFile(fileName);
+			// 임시저장된 파일의 원본이름을 리스트에 저장
+			String oFileName = mFile.getOriginalFilename();
+			fileList.add(oFileName);
+
+			// 업로드 저장경로 생성 /WEB-INF/upload (가상경로)
+			// 임시저장된 파일을 생성하기 위한 준비 (실제파일 생성)
+			File file = new File(multiRequest.getRealPath("\\upload") + "\\" + fileName);
+			logger.debug(" realPath : " + multiRequest.getRealPath("\\upload"));
+			if (mFile.getSize() != 0) { // 첨부파일(업로드한 임시파일)이 존재할때 진행
+				if (!file.exists()) { // 해당파일이 존재하는지 체크
+					// 해당경로에 파일이 없을경우,자동으로 폴더 생성후 진행
+					if (file.getParentFile().mkdirs()) {
+						file.createNewFile();
+						file.delete();
+						logger.debug(" 임시파일 생성완료-삭제 (첨부파일 폴더생성)! ");
+					}
+				}
+				// 임시로 생성된(저장된) 파일mFile -> 실제파일로 데이터 전송
+				// mFile.transferTo(new File("D:\\springupload2\\"+oFileName));
+				mFile.transferTo(new File(multiRequest.getRealPath("\\upload") + "\\" + oFileName));
+			}
+			logger.debug(" 파일 업로드 성공! ");
+
+		} // while
+
+		String joinedFilePaths = String.join(",", fileList);
+		logger.debug(" fileList : " + fileList);
+
+		logger.debug(" fileProcess() - 파일업로드 처리 끝");
+
+		return fileList;
+	} // 파일 업로드 처리 메서드
 
 } // BoardController

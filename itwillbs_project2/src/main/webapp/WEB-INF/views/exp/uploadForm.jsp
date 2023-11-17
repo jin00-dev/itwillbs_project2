@@ -10,30 +10,29 @@
 
 <style>
 .dropdown-select {
-	border: 1px solid #ced4da;
-	border-radius: 0.25rem;
-	-webkit-appearance: none;
-	-moz-appearance: none;
+	border: 1px solid #ced4da; 
+	border-radius: 0.25rem; 
+	-webkit-appearance: none; 
+	-moz-appearance: none; 
 	appearance: none; /
-	padding-right: 1.5rem;
+	padding-right: 1.5rem; 
 	background-image:
 		url('data:image/svg+xml;charset=US-ASCII,<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg"><path d="M4 4l4 4 4-4" stroke="%236c757d" stroke-width="2" fill="none" stroke-linecap="round"/></svg>');
-	background-repeat: no-repeat;
-	background-position: right 0.7rem center;
-	background-size: 12px 12px;
+	background-repeat: no-repeat; 
+	background-position: right 0.7rem center; 
+	background-size: 12px 12px; 
 }
 /* 선택 상태에서의 배경색 변경 효과 제거 */
 .dropdown-select:active, .dropdown-select:focus {
-	background-color: transparent;
-	border-color: #ced4da;
-	box-shadow: none;
+	background-color: transparent; 
+	border-color: #ced4da; 
+	box-shadow: none; 
 }
-</style>
+</style> 
 
 <div class="container mt-5">
-	<h2>클래스 등롥</h2>
-	<form action="/board/fileUpload" method="post"
-		enctype="multipart/form-data">
+	<h2>클래스 등록</h2>
+	<form action="/exp/fileUpload" method="post" enctype="multipart/form-data">
 
 		<div class="form-group">
 			<label for="exp_phone">사업자 연락처</label> <input type="text"
@@ -44,14 +43,12 @@
 
 		<div class="form-group">
 			<label for="exp_place">클래스 장소 이름</label> <input type="text"
-				class="form-control" id="exp_place" name="exp_place"
-				placeholder="가게명" required>
+				class="form-control" id="exp_place" name="exp_place" placeholder="가게명" required>
 		</div>
 
 		<div class="form-group">
 			<label for="exp_name">클래스 이름</label> <input type="text"
-				class="form-control" id="exp_name" name="exp_name"
-				placeholder="클래스명" required>
+				class="form-control" id="exp_name" name="exp_name"  placeholder="클래스명" required>
 		</div>
 
 		<div class="form-group">
@@ -77,8 +74,15 @@
 		</div>
 
 		<div class="form-group">
-			<label for="exp_region">클래스 지역</label> <input type="text"
-				class="form-control" id="exp_region" name="exp_region">
+			<label for="exp_region">클래스 지역</label> <select
+				class="form-control dropdown-select" id="exp_region"
+				name="exp_region">
+				<option value="서울/경기">서울/경기</option>
+				<option value="경상/부산">경상/부산</option>
+				<option value="충청/대전">충청/대전</option>
+				<option value="전라/강원">전라/강원</option>
+				<option value="제주">제주</option>
+			</select>
 		</div>
 
 		<div class="form-group">
@@ -91,21 +95,14 @@
 				<option value="운동">운동</option>
 			</select>
 		</div>
-		<div class="form-group">
-			<label for="exp_inout">실내외 여부</label> <select
-				class="form-control dropdown-select" id="exp_inout"
-				name="exp_inout">
-				<option value="0">실내</option>
-				<option value="1">실외</option>
-			</select>
-		</div>
 
 		<div class="form-group">
 			<label for="exp_capacity">클래스 인원</label> <input type="number"
 				class="form-control" id="exp_capacity" name="exp_capacity" min="1"
 				required>
 		</div>
-
+		
+	<form action="/exp/fileUpload" method="post" enctype="multipart/form-data" >
 		<div class="form-group">
 			<label for="exp_summary_img">요약 사진</label> <input type="file"
 				class="form-control-file" id="exp_summary_img"
@@ -114,9 +111,10 @@
 
 		<div class="form-group">
 			<label for="exp_detail_img">상세 사진</label> <input type="file"
-				class="form-control-file" id="exp_detail_img" name="exp_detail_img"
-				multiple>
+				class="form-control-file" id="exp_detail_img"
+				name="exp_detail_img" multiple> 
 		</div>
+	</form>
 
 		<button type="submit" id="btn btn" class="btn btn-primary">등록</button>
 	</form>
