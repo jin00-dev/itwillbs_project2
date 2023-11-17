@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@include file="/WEB-INF/views/include/header.jsp"%>
-
+ 
 <div class="notice-detail">
 	<h3 class="notice">자주 묻는 질문</h3>
  

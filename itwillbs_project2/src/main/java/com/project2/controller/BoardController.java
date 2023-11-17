@@ -619,7 +619,7 @@ public class BoardController {
 		logger.debug(" fileList : " + fileList);
 
 		logger.debug(" fileProcess() - 파일업로드 처리 끝");
-
+ 
 		return fileList;
 	} // 파일 업로드 처리 메서드
 
