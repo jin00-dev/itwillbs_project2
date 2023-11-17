@@ -38,8 +38,8 @@
 		<a class="navbar-brand" href="/">세모클래스</a>
 		
 		<div>
-		<form class="d-flex" id="searchbar">
-			<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+		<form class="d-flex" id="searchbar" action="/exp/searchExp">
+			<input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
 			<button class="btn btn-outline-success" type="submit">Search</button>
 		</form>
 		</div>

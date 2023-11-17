@@ -137,5 +137,11 @@ public class ExpDAOImpl {
 		logger.debug(" DAOImpl :  deleteWish() 호출");
 		return sqlSession.delete(NAMESPACE + "deleteWish", vo);
 	}
+	
+	//체험 검색
+	public List<ExpVO> searchExp(String search) throws Exception{
+		logger.debug(" DAOImpl :  deleteWish() 호출");
+		return sqlSession.selectList(NAMESPACE + "searchExp", search);
+	}
 
 }// DAOImpl

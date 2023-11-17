@@ -225,7 +225,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<!-- 이미지 -->
-								<c:if test="${review.rev_img ne null }">
+								<c:if test="${review.rev_img ne null && review.rev_img ne '' }">
 									<img src="/exp/thumbDownload?fileName=${review.rev_img}&wid=150&hei=150" alt="이미지 설명">
 									<!-- 									<img src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt="이미지 설명"> -->
 								</c:if>
@@ -669,6 +669,9 @@
 		        const text = container.find('.text-truncate');
 		        const toggleButton = container.find('.toggle-button');
 		       
+		        console.log(text[0].scrollWidth);
+		        console.log(text.innerWidth());
+		        
 		        toggleButton.hide(); // 초기에는 숨김
 		        if (text.length > 0) { // 요소가 존재하는지 확인
 		            // 텍스트가 max-width를 초과하는지 확인
