@@ -61,6 +61,11 @@
 		values(default, #{rev_num}, #{user_num}, #{report_user_num},#{report_content}, default, default,default )
 	</insert>
 	
+	<select id="repoInfo" resultType="ReportVO">
+		select * from c6d2305t2_2.user_report
+		where report_num = #{report_num}
+	</select>
+	
 	<select id="getRevUserNum" resultType="int">
 		select user_num from review where rev_num =#{rev_num}
 	</select>

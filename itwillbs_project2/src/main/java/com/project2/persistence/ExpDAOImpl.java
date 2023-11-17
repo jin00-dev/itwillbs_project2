@@ -92,6 +92,13 @@ public class ExpDAOImpl {
 		return sqlSession.insert(NAMESPACE + "insertReport", vo);
 	}
 	
+	//신고 상세 
+	public ReportVO repoInfo(Integer report_num) throws Exception{
+		logger.debug("DAOImpl : repoInfo(ReportVO vo) 호출");
+		logger.debug("@@@@@@report_num : " + report_num);
+		return sqlSession.selectOne(NAMESPACE + "repoInfo",report_num); 
+	}
+	
 	//리뷰 작성자 번호 조회
 	public int getRevUserNum(int rev_num) throws Exception{
 		logger.debug(" DAOImpl :  getRevUserNum() 호출");

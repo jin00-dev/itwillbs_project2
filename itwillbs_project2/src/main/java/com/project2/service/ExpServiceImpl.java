@@ -87,6 +87,11 @@ public class ExpServiceImpl {
 	public int insertReport(ReportVO vo) throws Exception {
 		return dao.insertReport(vo);
 	}
+	
+	//신고 상세 내역 
+	public ReportVO repoInfo (Integer report_num) throws Exception {
+		return dao.repoInfo(report_num);
+	}
 
 	// 유저 한명 정보
 	public UserVO getUserOne(int user_num) throws Exception {

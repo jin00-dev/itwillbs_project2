@@ -194,6 +194,16 @@ public class ExpController {
 		return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 	}
 	
+	//신고 상세내역
+	@RequestMapping(value = "/repoInfo", method = RequestMethod.GET)
+	public String RepoInfo(Integer report_num, Model model,HttpSession session) throws Exception {
+		logger.debug("@@@@@ 신고 상세내역 이동");
+		ReportVO repoNum = service.repoInfo(report_num);
+		model.addAttribute("vo", repoNum);
+		
+		return "/report/repoInfo";
+	}
+	
 	// 리뷰 삭제
 	@GetMapping("/revDel")
 	public String deleteReview(RevVO vo, HttpSession session, RedirectAttributes re) {
