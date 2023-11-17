@@ -8,7 +8,6 @@
 	rel="stylesheet">
 
 <%@include file="/WEB-INF/views/include/header.jsp"%>
- S
 <div class="container mt-5">
 	<div class="card">
 		<h3 class="card-header">1:1 문의사항 상세 정보</h3>
