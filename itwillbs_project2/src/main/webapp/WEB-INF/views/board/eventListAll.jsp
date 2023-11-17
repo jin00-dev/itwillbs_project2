@@ -34,9 +34,11 @@
 <h1 class="text-center mb-4">이벤트 게시판</h1>
 
 <div class="container abx">
+<c:if test="${user_type eq 2}">
  <div class="text-right mb-3">
       <a href="/board/eventInsert" class="btn btn-primary">글쓰기</a>
     </div>
+</c:if>
   <!-- <c:if test="${sessionScope.user_id != null && sessionScope.user_id.equals('admin')}"> 
     <div class="text-right mb-3">
       <a href="/board/eventInsert" class="btn btn-primary">글쓰기</a>

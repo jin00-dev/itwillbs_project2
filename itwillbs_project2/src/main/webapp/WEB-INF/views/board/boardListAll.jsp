@@ -32,7 +32,9 @@
 
 		<div class="col-md-9">
 			<h2 class="mb-4">공지사항</h2>
+			<c:if test="${uer_type eq 2}">
 			<a href="/board/insert" class="btn btn-primary mb-3">글쓰기</a>
+			</c:if>
 			
 			<!-- 검색 바 -->
 			<form class="form-inline my-2 my-lg-0" action="/board/boardSearch"
