@@ -39,11 +39,6 @@
       <a href="/board/eventInsert" class="btn btn-primary">글쓰기</a>
     </div>
 </c:if>
-  <!-- <c:if test="${sessionScope.user_id != null && sessionScope.user_id.equals('admin')}"> 
-    <div class="text-right mb-3">
-      <a href="/board/eventInsert" class="btn btn-primary">글쓰기</a>
-    </div>
-   </c:if> -->
 
   <div class="row">
   <c:forEach var="item" items="${eventListAll}">
