@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">회원가입을 원한다면? <a href="/user/join">회원가입</a></p>
-                      <p class="small mb-0">아이디나 비밀번호를 잊었습니까? <a href="/user/findId">아이디 찾기</a><a href="/user/findPassword">비밀번호 찾기</a></p>
+                      <p class="small mb-0">아이디나 비밀번호를 잊었습니까? <a href="/user/findId">아이디,비밀번호 찾기</a></p>
                     </div>
                   </form>
 

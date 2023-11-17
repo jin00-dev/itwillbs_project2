@@ -14,6 +14,7 @@
 	<div class="row">
           <div class="card">
               <!-- 회원정보 확인 -->
+              <h3>${user_name }님의 마이페이지 입니다. </h3>
             <div class="card-body pt-3">
               <ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
 				

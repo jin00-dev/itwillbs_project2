@@ -356,7 +356,6 @@
 </script>
 
 <div class="container">
-	<!-- action="" 인경우 자기자신의 경로 호출 -->
 	<div class="card mb-3">
 	<div class="card-body">
 	  <div class="pt-4 pb-2">

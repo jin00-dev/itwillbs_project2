@@ -183,6 +183,6 @@ public class UserDAOImpl implements UserDAO {
 		Map<String, String> params = new HashMap<>();
 		params.put("userId", userId);
 		params.put("newPassword", newPassword);
-		sqlSession.update("updateUserPassword", params);
+		sqlSession.update(".changePassword", params);
 	}
 }

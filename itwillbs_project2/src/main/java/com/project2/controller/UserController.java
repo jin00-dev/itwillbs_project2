@@ -457,7 +457,6 @@ public class UserController {
 
 	// 새비번
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-		
 		    public String changePassword(
 		            @RequestParam("user_name") String userName,
 		            @RequestParam("user_id") String userId,
@@ -478,8 +477,8 @@ public class UserController {
 		            model.addAttribute("error", "비밀번호가 일치하지 않습니다. 다시 시도해주세요.");
 		        }
 
-		        // 결과 페이지로 이동
-		        return "/user/changePasswordResult";
+		        // 로그인페이지로 이동
+		        return "redirect:/user/login";
 		    }
 
 }

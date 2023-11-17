@@ -77,7 +77,7 @@
 
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary" id="userUpdate">정보수정하기</button>
-                      <button type="button" class="btn btn-primary">회원탈퇴</button>
+                      <button type="button" class="btn btn-primary" onclick= "location.href='/user/deleteUser';" >회원탈퇴</button>
                     </div>
                   </form>
                 </div>
