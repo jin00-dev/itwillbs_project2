@@ -30,9 +30,8 @@ public class MailSendServiceImpl {
 		int checkNum = r.nextInt(888888)+111111;
 		logger.debug("인증 번호 : " + checkNum);
 		authNum = checkNum;
-	}// makeAuthNumber
+	}// makeAuthNumberl
 	
-	@Async
 	public String joinEmail(String email) {
 		makeAuthNumber();
 		String setForm = "parkyeojin1995@gmail.com"; // 보내는 이메일 
@@ -43,15 +42,12 @@ public class MailSendServiceImpl {
 						+ "인증번호는 " + authNum + "입니다."
 						+ "<br>"
 						+ "해당 인증번호를 입력란에 기입하여주십시오</h2>"; // 이메일 내용
-		logger.debug("@@@@@ toMail : " + toMail);
-		logger.debug("@@@@@ content : " + content);
 		
 		mailSend(setForm, toMail, title, content);
 		return Integer.toString(authNum);
 	}// joinEmail(String email)
 	
 	// 이메일 전송 메서드 
-	@Async
 	public void mailSend(String setForm, String toMail, String title, String content) {
 		MimeMessage message = mailSender.createMimeMessage();
 		
