@@ -30,7 +30,6 @@ public class ExpVO {
 	private double rev_avgStar;
 	//exp_price;
 	
-	
 	// get/set메서드
 	// toString메서드	
 	

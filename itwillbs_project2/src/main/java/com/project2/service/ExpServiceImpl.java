@@ -1,30 +1,22 @@
 package com.project2.service;
 
 import java.io.File;
-import java.io.OutputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project2.domain.ExpVO;
-import com.project2.domain.OrderVO;
 import com.project2.domain.PaymentVO;
 import com.project2.domain.ReportVO;
 import com.project2.domain.RevVO;
 import com.project2.domain.UserVO;
 import com.project2.persistence.ExpDAOImpl;
-
-import net.coobird.thumbnailator.Thumbnails;
 
 @Service(value = "expService")
 public class ExpServiceImpl {
@@ -156,15 +148,20 @@ public class ExpServiceImpl {
 	public int getWishCnt(ExpVO vo) throws Exception {
 		return dao.getWishCnt(vo);
 	}
-	
+
 	// 찜 추가
 	public int insertWish(ExpVO vo) throws Exception {
 		return dao.insertWish(vo);
 	}
-	
+
 	// 찜 삭제
 	public int deleteCnt(ExpVO vo) throws Exception {
 		return dao.deleteWish(vo);
+	}
+
+	// 체험 검색
+	public List<ExpVO> searchExp(String search) throws Exception {
+		return dao.searchExp(search);
 	}
 
 }///////

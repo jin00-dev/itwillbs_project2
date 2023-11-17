@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
+import com.project2.domain.Criteria;
 import com.project2.domain.ExpVO;
 import com.project2.domain.PaymentVO;
 import com.project2.domain.ReportVO;
@@ -50,16 +51,15 @@ public class ExpController {
 		if (vo.getExp_num() == 0 || vo == null) {
 			return "redirect:/";
 		}
-		
-		int user_num = 0; 
+
+		int user_num = 0;
 		int wish = 0;
-		
-		if(session.getAttribute("user_num") != null) {
-			user_num = Integer.parseInt( String.valueOf(session.getAttribute("user_num")));
+
+		if (session.getAttribute("user_num") != null) {
+			user_num = Integer.parseInt(String.valueOf(session.getAttribute("user_num")));
 			vo.setUser_num(user_num);
 		}
-		
-		
+
 		try {
 			wish = service.getWishCnt(vo);
 			UserVO userVO = service.getUserOne(user_num);
@@ -92,10 +92,11 @@ public class ExpController {
 					break;
 				}
 			}
-			
-			if(userVO == null) userVO =new UserVO();
-			
-			model.addAttribute("wish",wish);
+
+			if (userVO == null)
+				userVO = new UserVO();
+
+			model.addAttribute("wish", wish);
 			model.addAttribute(userVO);
 			model.addAttribute(expOne);
 			model.addAttribute("rList", rList);
@@ -121,7 +122,7 @@ public class ExpController {
 			return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 		}
 
-		vo.setUser_num(Integer.parseInt((String) session.getAttribute("user_num")));
+		vo.setUser_num(Integer.parseInt(String.valueOf(session.getAttribute("user_num"))));
 
 		try {
 			String fileName = service.revFileUpload(file, req);
@@ -148,7 +149,7 @@ public class ExpController {
 			return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 		}
 
-		vo.setUser_num(Integer.parseInt((String) session.getAttribute("user_num")));
+		vo.setUser_num(Integer.parseInt(String.valueOf(session.getAttribute("user_num"))));
 
 		try {
 			int result = service.updateReview(vo);
@@ -173,7 +174,7 @@ public class ExpController {
 		}
 
 		// 신고자
-		vo.setReport_user_num(Integer.parseInt((String) session.getAttribute("user_num")));
+		vo.setReport_user_num(Integer.parseInt(String.valueOf(session.getAttribute("user_num"))));
 
 		try {
 			// 신고 당하는 사람
@@ -213,7 +214,7 @@ public class ExpController {
 			return "redirect:/exp/info?exp_num=" + vo.getExp_num();
 		}
 
-		vo.setUser_num(Integer.parseInt((String) session.getAttribute("user_num")));
+		vo.setUser_num(Integer.parseInt(String.valueOf(session.getAttribute("user_num"))));
 
 		try {
 			int result = service.deleteReview(vo);
@@ -283,11 +284,13 @@ public class ExpController {
 		// 다운로드할 파일을 준비
 		File file = new File(downFile);
 
-		// 업로드했던(다운로드할) 파일의 확장자 확인
-		// "itwill.jpg"
-		int lastIdx = fileName.lastIndexOf(".");
-		// 파일의 확장자를 제외한 이름을 저장
-		String thumbName = fileName.substring(0, lastIdx);
+//		// 업로드했던(다운로드할) 파일의 확장자 확인
+//		// "itwill.jpg"
+//		int lastIdx = fileName.lastIndexOf(".");
+//		// 파일의 확장자를 제외한 이름을 저장
+//		if(lastIdx > 0) {
+//			String thumbName = fileName.substring(0, lastIdx);
+//		}
 
 		// 파일명이 한글일때 인코딩문제 해결
 		// thumbName = URLEncoder.encode(thumbName,"UTF-8");
@@ -326,69 +329,74 @@ public class ExpController {
 	@GetMapping("/wishList")
 	public String wishList(HttpSession session, Model model) {
 		logger.debug("찜목록 호출");
-		
-		String user_id = (String)session.getAttribute("user_id");
-		int user_num=0;
-		
-		if(user_id == null) {
+
+		String user_id = (String) session.getAttribute("user_id");
+		int user_num = 0;
+
+		if (user_id == null) {
 			return "redirect:/user/login";
 		}
-		
-		if(session.getAttribute("user_num") != null)
-			user_num = 
-				Integer.parseInt(String.valueOf( session.getAttribute("user_num")));
-		
+
+		if (session.getAttribute("user_num") != null)
+			user_num = Integer.parseInt(String.valueOf(session.getAttribute("user_num")));
+
 		try {
 			model.addAttribute("list", service.getWishList(user_num));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return "/exp/wishList";
 	}
-	
-	//찜 등록 삭제
-	 @PostMapping("/chooseWishBtn")
-	 @ResponseBody
-	 public String choose(@RequestParam("exp_num") int exp_num, HttpSession session) {
-		 logger.debug("찜버튼 클릭");
-		 
-		 int user_num = 0;
-		 int result = -1;
-		 
-		 if(session.getAttribute("user_num") != null) {
-			 user_num=
-					 Integer.parseInt(String.valueOf( session.getAttribute("user_num")));
-		 }
-		 
-		 ExpVO vo = new ExpVO();
-		 
-		 logger.debug("유저번호 : "+user_num);
-		 logger.debug("체험번호 : "+exp_num);
-		 
-		 vo.setUser_num(user_num);
-		 vo.setExp_num(exp_num);
-		 
-		 try {
+
+	// 찜 등록 삭제
+	@PostMapping("/chooseWishBtn")
+	@ResponseBody
+	public String choose(@RequestParam("exp_num") int exp_num, HttpSession session) {
+		logger.debug("찜버튼 클릭");
+
+		int user_num = 0;
+		int result = -1;
+
+		if (session.getAttribute("user_num") != null) {
+			user_num = Integer.parseInt(String.valueOf(session.getAttribute("user_num")));
+		}
+
+		ExpVO vo = new ExpVO();
+
+		logger.debug("유저번호 : " + user_num);
+		logger.debug("체험번호 : " + exp_num);
+
+		vo.setUser_num(user_num);
+		vo.setExp_num(exp_num);
+
+		try {
 			result = service.getWishCnt(vo);
-			logger.debug("리절트 : "+result);
-			if(result ==0 && user_num != 0) {
-				//찜 안함(insert)
+			logger.debug("리절트 : " + result);
+			if (result == 0 && user_num != 0) {
+				// 찜 안함(insert)
 				service.insertWish(vo);
-			}else if(result !=0 && user_num != 0) {
-				//찜 했음(delete)
+			} else if (result != 0 && user_num != 0) {
+				// 찜 했음(delete)
 				service.deleteCnt(vo);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "error";
 		}
-		 
-		 return "success";
-	 }
-	
-	
-	
+
+		return "success";
+	}
+
+	// 체험 검색
+	@GetMapping("/searchExp")
+	public String searchExp(String search, Model model) throws Exception {
+
+		logger.debug("체험 검색 호출");
+
+		model.addAttribute("list", service.searchExp(search));
+		return "/exp/searchPage";
+	}
 
 }// controller
