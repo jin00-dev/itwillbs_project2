@@ -17,7 +17,7 @@
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
  
-<div class="container mt-5">
+<div class="container mt-5 abx">
     <div class="row">
         <!-- 고객센터 메뉴 섹션 -->
         <div class="col-md-3">
@@ -25,8 +25,8 @@
 				<h5 class="list-group-item list-group-item-action active" aria-current="true">고객지원</h5>
 				<a href="/board/boardListAll" class="list-group-item list-group-item-action">공지사항</a> 
 <!-- 				<a href="/board/" class="list-group-item list-group-item-action">챗봇상담</a>  삭제 -->
+				<a href="/board/faqListAll" class="list-group-item list-group-item-action">자주 묻는 질문</a>
 				<a href="/qna/qnaCreate" class="list-group-item list-group-item-action">1:1 문의</a>
-				<a href="#" class="list-group-item list-group-item-action">자주 묻는 질문</a>
             </div>
         </div>
 
