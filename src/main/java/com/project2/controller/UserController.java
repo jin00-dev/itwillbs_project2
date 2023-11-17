@@ -55,6 +55,12 @@ public class UserController {
 	@Autowired
 	private MailSendServiceImpl mss;
 
+	// 회원가입 약관 페이지로 이동
+		@RequestMapping(value="/clouse")
+		public String clouse() throws Exception{
+			return "user/clouse";
+		}
+		
 	// http://localhost:8088/user/join
 	// 회원가입 페이지 이동
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
