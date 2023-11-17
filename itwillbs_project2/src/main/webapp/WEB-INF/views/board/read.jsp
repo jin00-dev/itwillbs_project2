@@ -39,12 +39,6 @@
 		<button id="btnUpdate">수정</button>
 		<button id="btnDelete">삭제</button>
 
-		<!-- <c:if
-			test="${sessionScope.user_id != null && sessionScope.user_id.equals('admin')}">
-			<button id="btnUpdate">수정</button>
-			<button id="btnDelete">삭제</button>
-		</c:if> -->
-
 	</div>
 </div>
 

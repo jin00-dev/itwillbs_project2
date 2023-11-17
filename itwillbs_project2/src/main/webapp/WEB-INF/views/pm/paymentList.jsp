@@ -30,9 +30,7 @@
 						</li>
 					</c:if>
 					<li class="nav-item" role="presentation">
-						<button class="nav-link" data-bs-toggle="tab"
-							onclick="location.href='/qna/qnaListAll';" aria-selected="false"
-							role="tab" tabindex="-1">1:1문의</button>
+						<button class="nav-link" data-bs-toggle="tab" onclick="location.href='/qna/qnaListAll';" aria-selected="false" role="tab" tabindex="-1">1:1문의</button>
 					</li>
 				</ul>
 
@@ -61,7 +59,7 @@
 							<td><button class="btn1"
 									onclick="location.href='/class/paymentInfo?user_id=${user_id}&order_num=${i.order_num }'">상세내역</button></td>
 							<td><c:if test="${i.status eq 'paid'}">
-									<button class="btn2" onclick="cancelPay('${i.order_num}')">환불</button>
+									<button class="btn2" onclick="cancelPayCheck('${i.order_num}')">환불</button>
 								</c:if> <c:if test="${i.status eq 'cancelled'}">
 									환불완료
 								</c:if></td>
@@ -72,7 +70,7 @@
 
 				<nav aria-label="Page navigation">
 					<ul class="pagination justify-content-center">
-						<c:if test="${pageVO.prev }">
+						<c:if test="${pageVO.preview }">
 							<li class="page-item"><a class="page-link"
 								href="/class/paymentList?page=${pageVO.startPage - 1 }"
 								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>

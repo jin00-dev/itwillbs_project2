@@ -15,6 +15,9 @@
 
 <!-- Vue.js 스크립트 불러오기 -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+
+ <!-- FontAwesome -->
+  <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
 <!-- Section-->
 <section class="py-5">
 	<!-- 상단 전체 박스 -->
@@ -62,8 +65,20 @@
 								총 결제금액 <span id="totalPrice"><fmt:formatNumber>${expVO.exp_price}</fmt:formatNumber>원</span>
 							</p>
 						</div>
-						<div class="p-2 d-grid gap-2 col-6 mx-auto">
-							<a class="btn btn-danger btn-lg" onclick="requestPay()">결제하기</a>
+						<div class="p-2 d-flex text-center">
+							<div onclick="clickWishBtn()" class="col-2">
+								<c:choose>
+									<c:when test="${!empty wish && wish eq 0 }">
+										<i class="far fa-3x fa-heart" style="cursor: pointer; background: transparent;"></i>
+									</c:when>
+									<c:otherwise>
+										<i class="far fa-3x fa-heart" style="cursor: pointer; color: red;"></i>
+									</c:otherwise>
+								</c:choose>
+							</div>
+							<div class="col-10">
+								<a class="btn btn-danger btn-lg" style="width: 90%" onclick="requestPay()">결제하기</a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -212,7 +227,7 @@
 								<!-- 이미지 -->
 								<c:if test="${review.rev_img ne null }">
 									<img src="/exp/thumbDownload?fileName=${review.rev_img}&wid=150&hei=150" alt="이미지 설명">
-<!-- 									<img src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt="이미지 설명"> -->
+									<!-- 									<img src="https://dummyimage.com/100x100/dee2e6/6c757d.jpg" alt="이미지 설명"> -->
 								</c:if>
 							</div>
 						</div>
@@ -221,7 +236,7 @@
 			</div>
 			<div class="tab-pane text-center p-3" id="bnm3">
 				<div class="search">
-					<input id="address" type="hidden" value="${expVO.exp_region }"> 
+					<input id="address" type="hidden" value="${expVO.exp_region }">
 				</div>
 				<!-- 장소-------------------------------------------- -->
 				<div id="map" style="width: 100%; height: 400px;"></div>
@@ -502,7 +517,11 @@
 	function requestPay() {
 		if($('#selectedDateResult').val() === "null"){
 			alert('날짜를 선택해 주세요');
+<<<<<<< HEAD
 		}else if(${empty user_id }){
+=======
+		}else if(${empty user_id}){
+>>>>>>> 8e6b17ad91161d862ecc9bf20106fec37bb1abd1
 			alert('로그인을 해주세요');
 			location.href = "/user/login";
 		}else{
@@ -749,5 +768,28 @@
         $("#show-more-button").hide();
     });
 
+    //찜 버튼 -----------------------------------------------------------
+    function clickWishBtn(){
+    	let exp_num = '${param.exp_num}';
+    	
+    	if(${!empty user_num}){
+	    	$.ajax({
+	    		type: 'post',
+	    		url : '/exp/chooseWishBtn?exp_num='+exp_num,
+	    		success : function(resp){
+	    			if(resp === "success"){
+	    				console.log(resp);
+	    				location.reload();
+	    			}
+	    		},
+	    		error : function(error){
+		    		console.log(error);
+	    		}
+	    	});
+    	}else{
+    		alert('로그인 해주세요');
+    	}
+    	
+    }
 
 </script>

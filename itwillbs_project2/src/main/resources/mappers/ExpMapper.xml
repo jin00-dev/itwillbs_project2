@@ -34,7 +34,7 @@
         order by ${exp_ad_state};
 	</select>
 	
-	<select id="expOne" resultType="expVO">
+	<select id="expOne" resultType="ExpVO">
 		select * from experience 
 		where exp_num= #{exp_num} 
 	</select>
@@ -105,5 +105,31 @@
       </choose>
 	where order_num=#{order_num}
 	</update>
+	
+	<!-- 찜목록 불러오기 -->
+	<select id="selectWishList" resultType="ExpVO">
+		select * 
+		from experience 
+		where exp_num in (select exp_num from wishlist where user_num = #{user_num})
+	</select>
+	
+	<!-- 찜 갯수 -->
+	<select id="getWishCnt" resultType="int">
+		select count(*) 
+		from wishlist 
+		where user_num = #{user_num} and exp_num = #{exp_num} 
+	</select>
+	
+	<!-- 찜 추가 -->
+	<insert id="insertWish">
+		insert into wishlist values(#{user_num},#{exp_num}) 
+	</insert>
+	
+	<!-- 찜 삭제 -->
+	<delete id="deleteWish">
+		delete from wishlist 
+		where user_num = #{user_num} and exp_num = #{exp_num} 
+	</delete>
+	
 	
 </mapper>

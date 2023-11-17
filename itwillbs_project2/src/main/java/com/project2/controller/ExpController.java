@@ -47,13 +47,22 @@ public class ExpController {
 	@GetMapping("/exp/info")
 	public String infoGET(ExpVO vo, Model model, HttpSession session, HttpServletRequest req) {
 
-		if (vo.getExp_num() == 0) {
+		if (vo.getExp_num() == 0 || vo == null) {
 			return "redirect:/";
 		}
-		int user_num = Integer.parseInt(String.valueOf(session.getAttribute("user_num")));
+		
+		int user_num = 0; 
+		int wish = 0;
+		
+		if(session.getAttribute("user_num") != null) {
+			user_num = Integer.parseInt( String.valueOf(session.getAttribute("user_num")));
+			vo.setUser_num(user_num);
+		}
+		
+		
 		try {
+			wish = service.getWishCnt(vo);
 			UserVO userVO = service.getUserOne(user_num);
-			
 			ExpVO expOne = service.getExpOne(vo.getExp_num());
 			List<RevVO> rList = service.getExpRevList(vo.getExp_num());
 			double avgStar = service.getExpRevAvg(vo.getExp_num());
@@ -83,6 +92,10 @@ public class ExpController {
 					break;
 				}
 			}
+			
+			if(userVO == null) userVO =new UserVO();
+			
+			model.addAttribute("wish",wish);
 			model.addAttribute(userVO);
 			model.addAttribute(expOne);
 			model.addAttribute("rList", rList);
@@ -247,44 +260,44 @@ public class ExpController {
 	}
 
 	// 파일(썸네일) 다운로드 처리
-		@RequestMapping(value = "/thumbDownload", method = RequestMethod.GET)
-		public void fileThumbDownloadGET(@RequestParam("fileName") String fileName, @RequestParam("wid") int wid,
-				@RequestParam("hei") int hei, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value = "/thumbDownload", method = RequestMethod.GET)
+	public void fileThumbDownloadGET(@RequestParam("fileName") String fileName, @RequestParam("wid") int wid,
+			@RequestParam("hei") int hei, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-			logger.debug(" fileThumbDownloadGET() 호출 ");
+		logger.debug(" fileThumbDownloadGET() 호출 ");
 
-			// 다운로드할 폴더 (= 업로드한 폴더)에 있는 파일정보
-			String downFile = request.getRealPath("\\upload\\rev") + "\\" + fileName;
-			logger.debug(" 다운로드할 파일 : " + downFile);
+		// 다운로드할 폴더 (= 업로드한 폴더)에 있는 파일정보
+		String downFile = request.getRealPath("\\upload\\rev") + "\\" + fileName;
+		logger.debug(" 다운로드할 파일 : " + downFile);
 
-			// 다운로드할 파일을 준비
-			File file = new File(downFile);
+		// 다운로드할 파일을 준비
+		File file = new File(downFile);
 
-			// 업로드했던(다운로드할) 파일의 확장자 확인
-			// "itwill.jpg"
-			int lastIdx = fileName.lastIndexOf(".");
-			// 파일의 확장자를 제외한 이름을 저장
-			String thumbName = fileName.substring(0, lastIdx);
+		// 업로드했던(다운로드할) 파일의 확장자 확인
+		// "itwill.jpg"
+		int lastIdx = fileName.lastIndexOf(".");
+		// 파일의 확장자를 제외한 이름을 저장
+		String thumbName = fileName.substring(0, lastIdx);
 
-			// 파일명이 한글일때 인코딩문제 해결
-			// thumbName = URLEncoder.encode(thumbName,"UTF-8");
-			// 출력객체
-			OutputStream out = response.getOutputStream();
+		// 파일명이 한글일때 인코딩문제 해결
+		// thumbName = URLEncoder.encode(thumbName,"UTF-8");
+		// 출력객체
+		OutputStream out = response.getOutputStream();
 
-			// File thumbNail = new File(request.getRealPath("\\upload\\rev") +
-			// "\\thumbnail\\" + thumbName + ".png");
+		// File thumbNail = new File(request.getRealPath("\\upload\\rev") +
+		// "\\thumbnail\\" + thumbName + ".png");
 
-			if (file.exists()) {
-				// 썸네일 폴더 생성
-				// thumbNail.getParentFile().mkdirs();
-				// 썸네일 파일 생성
-				// Thumbnails.of(file).size(50, 50).outputFormat("png").toFile(thumbNail);
-				Thumbnails.of(file).size(wid, hei).outputFormat("png").toOutputStream(out);
-			}
+		if (file.exists()) {
+			// 썸네일 폴더 생성
+			// thumbNail.getParentFile().mkdirs();
+			// 썸네일 파일 생성
+			// Thumbnails.of(file).size(50, 50).outputFormat("png").toFile(thumbNail);
+			Thumbnails.of(file).size(wid, hei).outputFormat("png").toOutputStream(out);
+		}
 
-			// 파일 전송(썸네일 이미지 출력)
+		// 파일 전송(썸네일 이미지 출력)
 
-			// 파일 읽기 객체
+		// 파일 읽기 객체
 //				FileInputStream fis = new FileInputStream(thumbNail);
 //				
 //				byte[] buffer = new byte[1024*8];
@@ -293,10 +306,79 @@ public class ExpController {
 //					out.write(buffer,0,data);
 //				}
 
-			// 자원해제
-			out.close();
+		// 자원해제
+		out.close();
 //				fis.close();
 
+	}
+
+	// 찜목록
+	@GetMapping("/wishList")
+	public String wishList(HttpSession session, Model model) {
+		logger.debug("찜목록 호출");
+		
+		String user_id = (String)session.getAttribute("user_id");
+		int user_num=0;
+		
+		if(user_id == null) {
+			return "redirect:/user/login";
 		}
+		
+		if(session.getAttribute("user_num") != null)
+			user_num = 
+				Integer.parseInt(String.valueOf( session.getAttribute("user_num")));
+		
+		try {
+			model.addAttribute("list", service.getWishList(user_num));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "/exp/wishList";
+	}
+	
+	//찜 등록 삭제
+	 @PostMapping("/chooseWishBtn")
+	 @ResponseBody
+	 public String choose(@RequestParam("exp_num") int exp_num, HttpSession session) {
+		 logger.debug("찜버튼 클릭");
+		 
+		 int user_num = 0;
+		 int result = -1;
+		 
+		 if(session.getAttribute("user_num") != null) {
+			 user_num=
+					 Integer.parseInt(String.valueOf( session.getAttribute("user_num")));
+		 }
+		 
+		 ExpVO vo = new ExpVO();
+		 
+		 logger.debug("유저번호 : "+user_num);
+		 logger.debug("체험번호 : "+exp_num);
+		 
+		 vo.setUser_num(user_num);
+		 vo.setExp_num(exp_num);
+		 
+		 try {
+			result = service.getWishCnt(vo);
+			logger.debug("리절트 : "+result);
+			if(result ==0 && user_num != 0) {
+				//찜 안함(insert)
+				service.insertWish(vo);
+			}else if(result !=0 && user_num != 0) {
+				//찜 했음(delete)
+				service.deleteCnt(vo);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+		 
+		 return "success";
+	 }
+	
+	
+	
 
 }// controller

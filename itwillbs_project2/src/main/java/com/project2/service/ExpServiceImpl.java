@@ -142,6 +142,24 @@ public class ExpServiceImpl {
 		return oFileName;
 	}
 
+	// 찜목록 가저오기
+	public List<ExpVO> getWishList(Integer user_num) throws Exception {
+		return dao.getWishList(user_num);
+	}
+
+	// 찜목록 갯수
+	public int getWishCnt(ExpVO vo) throws Exception {
+		return dao.getWishCnt(vo);
+	}
 	
+	// 찜 추가
+	public int insertWish(ExpVO vo) throws Exception {
+		return dao.insertWish(vo);
+	}
+	
+	// 찜 삭제
+	public int deleteCnt(ExpVO vo) throws Exception {
+		return dao.deleteWish(vo);
+	}
 
 }///////

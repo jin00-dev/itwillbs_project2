@@ -173,7 +173,7 @@ public class UserController {
 		// session.removeAttribute("login");
 		// 메인페이지로 이동(패턴2-주소바뀜)
 
-		return "redirect:/user/userMain";
+		return "redirect:/";
 	}
 
 	// 회원정보 수정GET

@@ -37,6 +37,7 @@ public class PaymentController {
 		try {
 			PageVO pageVO = new PageVO();
 			pageVO.setCri(cri);
+			// pageVO.setTotalCount(518);
 			String id = (String) session.getAttribute("user_id");
 			cri.setUser_id(id);
 			pageVO.setTotalCount(pService.paymentListCount(cri.getUser_id()));

@@ -44,7 +44,6 @@
         </div>
     </div>
 </div>
-
 <!-- footer -->
 <%@include file="/WEB-INF/views/include/footer.jsp"%>
 

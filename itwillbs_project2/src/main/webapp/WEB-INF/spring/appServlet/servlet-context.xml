@@ -25,6 +25,19 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<!-- messageSource -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<beans:property name="basename" value="src/main/resources/messages/*"/>
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+		<beans:property name="cacheSeconds" value="60"/>
+	
+	</beans:bean>
+	
+	<beans:bean id="messageSourceAccessor" class="org.springframework.context.support.MessageSourceAccessor">
+		<beans:constructor-arg ref="messageSource" />
+	 </beans:bean>
+	
+	
 	<context:component-scan base-package="com.project2.controller" />
 	
 	<!-- 파일 업로드 설정 -->

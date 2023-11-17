@@ -10,10 +10,14 @@ public class ExpVO {
 	private int exp_num;
 	private int user_num;
 	private int exp_price;
+	private int exp_inout;
 	
+	private String exp_phone;
+	private String exp_place;
 	private String exp_name;
 	private String exp_region;
 	private String exp_category;
+	private String exp_capacity;
 	private String exp_ad_state;
 	private String exp_summary_img;
 	private String exp_detail_img;

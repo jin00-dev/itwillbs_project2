@@ -115,5 +115,27 @@ public class ExpDAOImpl {
 		logger.debug(" DAOImpl :  paymentInsert() 호출");
 		return sqlSession.insert(NAMESPACE + "insertOrderBoard", vo);
 	}
+	
+	//찜목록 가저오기
+	public List<ExpVO> getWishList(Integer user_num) throws Exception{
+		logger.debug(" DAOImpl :  getWishList() 호출");
+		return sqlSession.selectList(NAMESPACE + "selectWishList", user_num);
+	}
+	
+	//찜목록 가저오기
+	public int getWishCnt(ExpVO vo) throws Exception{
+		logger.debug(" DAOImpl :  getWishCnt() 호출");
+		return sqlSession.selectOne(NAMESPACE + "getWishCnt", vo);
+	}
+	//찜 추가
+	public int insertWish(ExpVO vo) throws Exception{
+		logger.debug(" DAOImpl :  insertWish() 호출");
+		return sqlSession.insert(NAMESPACE + "insertWish", vo);
+	}
+	//찜 삭제
+	public int deleteWish(ExpVO vo) throws Exception{
+		logger.debug(" DAOImpl :  deleteWish() 호출");
+		return sqlSession.delete(NAMESPACE + "deleteWish", vo);
+	}
 
 }// DAOImpl

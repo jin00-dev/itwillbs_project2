@@ -3,13 +3,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<style>
+.abx{
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 180px;
+}	
+</style>
+
 <!-- 부트스트랩 CSS 추가 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 
-<div class="container mt-5">
+<div class="container mt-5 abx">
     <div class="row">
         <!-- 고객센터 메뉴 섹션 -->
         <div class="col-md-3">

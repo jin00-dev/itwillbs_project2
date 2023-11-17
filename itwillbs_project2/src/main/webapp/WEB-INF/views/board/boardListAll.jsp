@@ -3,6 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<style>
+.abx{
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 180px;
+}	
+</style>
+
 <!-- 부트스트랩 CSS 추가 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
@@ -10,7 +18,7 @@
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 
 
-<div class="container mt-5">
+<div class="container mt-5 abx">
 	<div class="row">
 		<div class="col-md-3">
 			<div class="list-group mb-4 h-100">
@@ -82,7 +90,7 @@
 			<nav aria-label="Page navigation">
 				<c:if test="${!empty boardListAll && boardListAll.size() > 1}">
 					<ul class="pagination justify-content-center">
-						<c:if test="${pageVO.prev}">
+						<c:if test="${pageVO.preview}">
 							<li class="page-item"><a class="page-link"
 								href="/board/boardListAll?page=${pageVO.startPage - 1}"
 								aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
