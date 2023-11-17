@@ -8,7 +8,7 @@
 
 <div class="notice-detail">
 	<h3 class="notice">자주 묻는 질문</h3>
-
+ 
  
 	<div class="title-date">
 		<h6 class="enf_title">${faqList.enf_title}</h6>

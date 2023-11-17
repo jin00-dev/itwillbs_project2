@@ -8,7 +8,7 @@
 
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
- 
+  
 <div class="container">
 	<div class="row justify-content-center">
 		<div class="col-md-8">
