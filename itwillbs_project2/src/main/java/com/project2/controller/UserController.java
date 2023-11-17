@@ -12,6 +12,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -76,18 +77,11 @@ public class UserController {
 	// 이메일 인증
 	@GetMapping("/mailCheck")
 	@ResponseBody
-	public void mailCheck(String email) throws Exception {
+	public String mailCheck(String email) throws Exception{
 		logger.debug("이메일 인증 요청 들어옴 @@@@@");
-		logger.debug("인증 이메일 : " + email);
+		logger.debug("인증 이메일 : " + email );
 
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				mss.joinEmail(email);
-
-			}
-		}).start();
+		return mss.joinEmail(email); 
 	}
 
 //	http://localhost:8088/user/login
@@ -344,6 +338,7 @@ public class UserController {
 		return "/user/findIdResult"; // 아이디 찾기 결과 뷰 페이지로 이동
 	}
 
+	//리뷰 신고 리스트
 	@RequestMapping(value = "/reportList", method = RequestMethod.GET)
 	public String reportList(Criteria cri, HttpSession session, Model model) throws Exception {
 		logger.debug("reportList() 호출 ");
