@@ -7,84 +7,69 @@
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
+<style>
+.abx{
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 180px;
+}	
+</style>
+
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
  
  
-<div class="container mt-5">
+<div class="container mt-5 abx">
 	<div class="row">
 		<div class="col-md-3">
 			<div class="list-group mb-4 h-100">
 				<h5 class="list-group-item list-group-item-action active"
 					aria-current="true">고객지원</h5>
 				<a href="/board/boardListAll"
-					class="list-group-item list-group-item-action">공지사항</a> <a
-					href="/board/" class="list-group-item list-group-item-action">챗봇
-					상담</a> <a href="/board/" class="list-group-item list-group-item-action">1:1
-					문의</a>
+					class="list-group-item list-group-item-action">공지사항</a> 
+				<a href="/board/faqListAll" class="list-group-item list-group-item-action">자주 묻는 질문</a> 
+				<a href="/qna/qnaCreate" class="list-group-item list-group-item-action">1:1문의</a>
 			</div>
 		</div>
 
 		<div class="col-md-9">
 			<h2 class="mb-4">자주 묻는 질문</h2>
-			<a href="/board/faqInsert" class="btn btn-primary mb-3">글쓰기</a>
+			<c:if test="${uer_type eq 2}">
+			<a href="/board/insert" class="btn btn-primary mb-3">글쓰기</a>
+			</c:if>
 
 			<!-- <c:if
 				test="${sessionScope.user_id != null && sessionScope.user_id.equals('admin')}">
 				<a href="/board/insert" class="btn btn-primary mb-3">글쓰기</a>
 			</c:if> -->
+<div class="card">
+            <div class="card-body">
 
-			<table class="table">
-				<thead class="thead-light">
-					<tr>
-						<th scope="col">번호</th>
-						<th scope="col">제목</th>
-						<th scope="col">작성일</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="faq" items="${faqList}" varStatus="status">
-						<c:if test="${faq.enf_category == 2}">
-							<tr>
-								<td>${pageVO.totalCount - (pageVO.cri.page - 1) * pageVO.cri.pageSize - status.index}
-								</td>
-								<td><a href="/board/faqRead?enf_faq_num=${faq.enf_faq_num}">${faq.enf_title}</a></td>
-								<td><fmt:formatDate value="${faq.enf_regdate}"
-										pattern="yy-MM-dd" /></td>
-							</tr>
-						</c:if>
-					</c:forEach>
-				</tbody>
-			</table>
+              <div class="accordion accordion-flush" id="faq-group-1">
 
-			<nav aria-label="Page navigation">
-				<c:if test="${!empty faqListAll && faqListAll.size() > 1}">
-					<ul class="pagination justify-content-center">
-						<c:if test="${pageVO.prev}">
-							<li class="page-item"><a class="page-link"
-								href="/board/faqListAll?page=${pageVO.startPage - 1}"
-								aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-						</c:if>
-
-						<c:forEach var="i" begin="${pageVO.startPage}"
-							end="${pageVO.endPage}" step="1">
-							<li class="page-item ${pageVO.cri.page == i? 'active':''}"><a
-								class="page-link" href="/board/faqListAll?page=${i}">${i}</a></li>
-						</c:forEach>
-
-						<c:if test="${pageVO.next}">
-							<li class="page-item"><a class="page-link"
-								href="/board/faqListAll?page=${pageVO.endPage + 1}"
-								aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
-						</c:if>
-					</ul>
+				<c:forEach var="faq" items="${faqList}" varStatus="status">
+				<c:if test="${faq.enf_category == 2}">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" data-bs-target="#faqsOne-${faq.enf_faq_num }" type="button" data-bs-toggle="collapse" aria-expanded="false">
+                      ${faq.enf_title}
+                    </button>
+                  </h2>
+                  <div id="faqsOne-${faq.enf_faq_num }" class="accordion-collapse collapse" data-bs-parent="#faq-group-1" style="">
+                    <div class="accordion-body">
+                      ${faq.enf_content}
+                    </div>
+                  </div>
+                </div>
 				</c:if>
-			</nav>
-		</div>
+				</c:forEach>
+              </div>
 
+            </div>
+          </div>
 	</div>
 </div>
-
+</div>
 <!-- footer -->
 <%@include file="/WEB-INF/views/include/footer.jsp"%>
 
