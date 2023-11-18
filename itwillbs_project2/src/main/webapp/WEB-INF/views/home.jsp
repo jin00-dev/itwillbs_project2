@@ -6,6 +6,7 @@
 
 <!-- header-->
 <%@include file="./include/header.jsp"%>
+
 	<div>
 		<ul class="nav nav-underline justify-content-center">
 			<li class="nav-item"><a class="nav-link ${param.category == '공예' || param.category == null || param.category == '' ? 'active' : ''}" href="/?category=공예" id="clicked1" >공예</a></li>
@@ -40,13 +41,14 @@
 <section class="py-5">
 	<!-- 게시물 없음 -->
 	<c:if test="${empty list}">
-		<h1 class="text-center">
+		<h2 class="text-center">
 			조건을 만족하는 클래스가 없어요...
-		</h1>
+		</h2>
 	</c:if>
 	<!-- 광고 게시물 --------------------------------------- -->
 		<c:if test="${!empty list}">
-			<div class="container px-4 px-lg-5 mt-5 border-bottom">
+			<div class="container border-bottom">
+					<h3>오늘의 추천 클래스</h3>
 				<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 					<!---------------------------------------------  -->
 						<c:forEach var="list" items="${list }">

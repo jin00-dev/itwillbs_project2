@@ -62,14 +62,26 @@ public class UserServiceImpl implements UserService {
 		// return mdao.getMember(id);;
 	}
 
-	// 회원정보 수정(내정보변경)
-	@Override
-	public void userUpdate(UserVO updateVO) {
-		logger.debug(" userUpdate(updateVO) 호출 ");
-
-		udao.updateUser(updateVO);
-
-	}
+	//회원정보 수정(내정보변경)
+		@Override
+		public Integer userUpdate(UserVO updateVO) {
+			logger.debug(" userUpdate(updateVO) 호출 ");
+			logger.debug(" @@@@@"+updateVO);
+			udao.updateUser(updateVO);
+			 if (updateVO != null) {
+			        logger.debug("DAO의 처리 결과: {}", updateVO.toString());
+			    } else {
+			        logger.debug("DAO의 처리 결과는 null입니다.");
+			    }
+				logger.debug(" DAO의 처리 결과를 컨트롤러로 전달하겠다.");
+				return udao.updateUser(updateVO);
+			}
+		
+		// 비밀번호 조회
+		@Override
+		public String pwCheck(String user_id){
+		return udao.pwCheck(user_id);
+		}
 
 	// 회원등급변경
 	@Override

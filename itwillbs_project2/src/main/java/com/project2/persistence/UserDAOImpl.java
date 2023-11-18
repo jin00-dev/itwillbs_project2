@@ -62,7 +62,6 @@ public class UserDAOImpl implements UserDAO {
 		System.out.println(" DAOImpl : 해당 SQL 구문 실행");
 
 		UserVO resultVO = sqlSession.selectOne(NAMESPACE + ".loginUser", loginVO);
-
 		System.out.println(" DAOImpl : 결과 " + resultVO);
 		return resultVO;
 	}
@@ -73,16 +72,27 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.selectOne(NAMESPACE + ".getUser", sessionUserid);
 	}
 
-	@Override
-	public void updateUser(UserVO updateVO) {
+	@Override  
+	public Integer updateUser(UserVO updateVO) {
 		System.out.println(" DAOImpl : updateUser(UserVO updateVO) 호출");
-
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_name", updateVO.getUser_name());
+		map.put("user_phone", updateVO.getUser_phone());
+		map.put("user_id", updateVO.getUser_id());
+		
+		
 		// SQL구문 호출
-		sqlSession.update(NAMESPACE + ".updateUser", updateVO);
-
-		System.out.println(" DAOImpl : 수정완료! ");
-
+		return sqlSession.update(NAMESPACE + ".updateUser", map);
 	}
+	
+	// 현재 로그인한 회원의 암호화된 비밀번호 조회
+			@Override
+			public String pwCheck(String user_id)  {
+			System.out.println(" 현재 비밀번호 조회");
+
+			return sqlSession.selectOne(NAMESPACE + ".pwCheck", user_id);
+			}
+	
 
 	// 회원탈퇴
 	@Override

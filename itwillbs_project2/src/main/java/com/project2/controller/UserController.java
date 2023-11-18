@@ -1,19 +1,16 @@
 package com.project2.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.project2.domain.Criteria;
 import com.project2.domain.PageVO;
@@ -35,18 +33,27 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @RequestMapping(value = "/user/*")
-@EnableAsync
 public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Inject
 	private UserService uService;
-
+	
 	// 메일 관련 서비스 주입
 	@Autowired
-	private MailSendServiceImpl mss;
-
+	private MailSendServiceImpl mss; 
+	
+	@Autowired
+    private BCryptPasswordEncoder passEncoder;
+	
+	
+	// 회원가입 약관 페이지로 이동
+		@RequestMapping(value="/clouse")
+		public String clouse() throws Exception{
+			return "user/clouse";
+		}
+		
 	// http://localhost:8088/user/join
 	// 회원가입 페이지 이동
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
@@ -73,21 +80,20 @@ public class UserController {
 		return "redirect:/user/login";
 		// return "redirect:../";
 	}
-
-	// 이메일 인증
+	
+	//이메일 인증
 	@GetMapping("/mailCheck")
 	@ResponseBody
 	public String mailCheck(String email) throws Exception{
 		logger.debug("이메일 인증 요청 들어옴 @@@@@");
 		logger.debug("인증 이메일 : " + email );
-
+		
 		return mss.joinEmail(email); 
 	}
 
 //	http://localhost:8088/user/login
 
 	// 로그인 동작 메서드 생성 - 입력받는거 / 받은 거 처리
-
 	// 로그인 GET (사용자가 정보를 입력받을 수 있게 만드는 페이지 생성)
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginGET() {
@@ -98,46 +104,58 @@ public class UserController {
 	}
 
 	// 로그인 POST (받은 거 가져가서 DB에서 확인하는 것)
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String loginPOST(UserVO vo, HttpSession session, HttpServletResponse response) throws IOException {
-		logger.debug(" loginPOST() 호출 ");
-		logger.debug(" 연결된 뷰페이지로 이동 ");
-		// 전달정보 저장
-		logger.debug(" vo : " + vo);
-
-		// 서비스 -> DAO (DB직접호출X)
-		UserVO resultVO = uService.userLogin(vo);
-
-		logger.debug(" resultVO : " + resultVO);
-
-		// 로그인 처리 결과에 따른 페이지 이동
-		if (resultVO == null) {
-			// 로그인 실패 -> 로그인 페이지로 이동
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script> alert('아이디 또는 비밀번호가 틀립니다.');");
-			out.println("history.go(-1); </script>");
-			out.close();
-			return "redirect:/user/login";
-		}
-
-		// 로그인 성공
-		// 세션에 로그인 아이디를 저장
-		// 세션에 유저 번호, 권한, 이름 저장
-		session.setAttribute("user_id", resultVO.getUser_id());
-		session.setAttribute("user_num", resultVO.getUser_num());
-		session.setAttribute("user_type", resultVO.getUser_type());
-		session.setAttribute("user_name", resultVO.getUser_name());
-
-//		return "redirect:/user/userMain";
-		// 로그인 후 메인페이지 이동 - Y
-		return "redirect:/";
-	}
+    @RequestMapping(value="/login", method=RequestMethod.POST)
+    public String loginPOST(UserVO vo,
+                      HttpServletRequest req,
+                      HttpSession session,
+                      RedirectAttributes ra,
+                      Model model) throws Exception{
+       logger.debug(" loginPOST() 호출 ");
+       BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
+       session = req.getSession();
+       
+       // 서비스 -> DAO (DB직접호출X)
+       UserVO resultVO = uService.userLogin(vo);
+       model.addAttribute("resultVO",resultVO);
+       boolean isMatches = passEncoder.matches(vo.getUser_pw(),resultVO.getUser_pw());
+       
+       if (resultVO != null) { // 일치하는 아이디 존재시
+    	   session.setAttribute("vo", resultVO);
+       
+          logger.debug("isMatches : "+isMatches);
+          
+          if (isMatches == true) {  // 비밀번호 비교(입력값, 암호화값) 성공하면 로그인
+             // if (passEncoder.matches(inputPass, resultVO.getUser_pw())) { // 비밀번호 일치 여부 판단
+             // resultVO.setUser_pw(""); // 인코딩된 비번 정보 지움
+             logger.debug("비밀번호 일치. 로그인 성공.");
+          
+             session.setAttribute("vo", resultVO); // sesison에 사용자 정보 저장
+             session.setAttribute("user_id", resultVO.getUser_id());
+             session.setAttribute("user_name", resultVO.getUser_name());
+             session.setAttribute("user_num", resultVO.getUser_num());
+             session.setAttribute("user_type", resultVO.getUser_type());
+             session.setMaxInactiveInterval(60 * 30); //세션 만료시간 설정(초단위)
+             return "redirect:/";
+          } else {   //비밀번호 틀렸을 때
+             logger.debug("비밀번호 불일치. 로그인 실패.");
+             session.setAttribute("vo", null);
+             req.setAttribute("url","/user/login");
+             req.setAttribute("msg", " 비밀번호가 일치하지 않습니다.");
+             //ra.addFlashAttribute("msg", false);
+             return "user/userAlert";
+          }
+       } // 일치하는 아이디 존재하지 않을 시
+          session.setAttribute("vo", null);
+          req.setAttribute("url","/user/login");
+          req.setAttribute("msg", " 일치하는 회원정보가 없습니다.");
+          ra.addFlashAttribute("msg", false);
+          return "user/userAlert";
+    }
+      
 
 	// 정보조회, 정보입력받는 페이지의 대부분의 방식은 GET
 	// 메인페이지 호출 - 내가 전달할 세션아이디를 출력
-	// 회원 마이페이지 - Y
+    // update쪽으로 데이터 옮김 
 	@RequestMapping(value = "/userMain", method = RequestMethod.GET)
 	public String mainGET(HttpSession session, Model model) {
 		logger.debug(" mainGET() 호출 ");
@@ -171,6 +189,7 @@ public class UserController {
 	}
 
 	// 회원정보 수정GET
+	//마이페이지 첫화면 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String updateGET(HttpSession session, Model model) {
 		logger.debug(" updateGET() 호출 ");
@@ -191,34 +210,34 @@ public class UserController {
 	}
 
 	// 회원정보 수정POST
-	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String updatePOST(UserVO vo, HttpServletResponse response, HttpSession session) throws Exception{
+	@RequestMapping(value = "/update",method = RequestMethod.POST)
+	public String updatePOST(UserVO vo,Model model,HttpServletRequest req,RedirectAttributes ra,HttpSession session) {
+		
 		logger.debug(" updatePOST() 호출 ");
+		String id = vo.getUser_id();
+		UserVO resultVO = null;
+		session = req.getSession();
+		// 여기서 user_pw는 암호화된 비번을 말한다.
+		String user_pw = uService.pwCheck(vo.getUser_id());
+		
+	if (!passEncoder.matches(vo.getUser_pw(), user_pw)) {
 		// 수정할 정보를 저장(파라메터)
 		logger.debug(" vo " + vo);
-
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
+		logger.debug("수정 실패");
 		
+		ra.addAttribute("msg", "0");
+		return "redirect:/user/update";
+		
+	}
 		// 서비스 -> DAO 회원정보 수정
-		uService.userUpdate(vo);
+		int result = uService.userUpdate(vo);
 		
-		// 세션에 유저 번호, 권한, 이름 저장
-		session.setAttribute("user_name", vo.getUser_name());
-		 
-//		if (vo == null) {
-//			// 회원정보수정 실패 -> 로그인 페이지로 이동
-//			out.println("<script> alert('회원정보 수정에 실패했습니다.');");
-//			out.println("history.go(-1); </script>");
-//			out.close();
-//			return "redirect:/user/update";
-//		}else {
-//			out.println("<script> alert('회원정보 수정을 성공했습니다.');");
-//			out.println("history.go(-1); </script>");
-//			out.close();
-//			// 메인페이지로 이동
-//		}
+		if(result == 1) {
+			 resultVO = uService.userInfo(id);
+			 
+		}
+		// 페이지로 이동
+		model.addAttribute("vo", resultVO);
 		return "redirect:/user/update";
 	}
 
@@ -254,15 +273,17 @@ public class UserController {
 
 	// 회원목록 조회GET
 	@RequestMapping(value = "/adminMain", method = RequestMethod.GET)
-	public String listGET(Criteria cri, HttpSession session, Model model) throws Exception {
-		logger.debug(" listGET() 호출 ");
+	public String listGET(HttpSession session, Model model, Criteria cri) throws Exception {
+		logger.debug(" listGET() ");
 		// 관리자가 아닌경우 로그인페이지로 이동
+
 		String id = (String) session.getAttribute("user_id");
 
 		if (id == null || !id.equals("admin1")) {
 			return "redirect:/";
 		}
-
+		
+		//페이징 처리 
 		PageVO pageVO = new PageVO();
 		pageVO.setCri(cri);
 		pageVO.setTotalCount(uService.getUserCount());
@@ -274,14 +295,10 @@ public class UserController {
 			// 잘못된 페이지 정보 입력
 			cri.setPage((pageVO.getEndPage()));
 		}
-
+		
 		// 서비스 -> DAO 회원목록 조회
 		List<UserVO> userList = uService.userList(cri);
-		// memberList.add(dto); 리턴의 결과를 수정할 수 있다.
-		// List로 전달된 회원정보를 view 페이지로 전달 출력
-		// => Model 객체
-		logger.debug("회원 수 : " + userList.size());
-
+		
 		model.addAttribute("userList", userList);
 		// model.addAllAttributes(attributeValues)
 		// model.addAttribute("memberList", mService.memberList());
@@ -337,8 +354,8 @@ public class UserController {
 
 		return "/user/findIdResult"; // 아이디 찾기 결과 뷰 페이지로 이동
 	}
-
-	//리뷰 신고 리스트
+	
+	//신고 리스트 
 	@RequestMapping(value = "/reportList", method = RequestMethod.GET)
 	public String reportList(Criteria cri, HttpSession session, Model model) throws Exception {
 		logger.debug("reportList() 호출 ");
@@ -457,6 +474,7 @@ public class UserController {
 
 	// 새비번
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+		
 		    public String changePassword(
 		            @RequestParam("user_name") String userName,
 		            @RequestParam("user_id") String userId,
@@ -477,8 +495,8 @@ public class UserController {
 		            model.addAttribute("error", "비밀번호가 일치하지 않습니다. 다시 시도해주세요.");
 		        }
 
-		        // 로그인페이지로 이동
-		        return "redirect:/user/login";
+		        // 결과 페이지로 이동
+		        return "/user/changePasswordResult";
 		    }
 
 }
