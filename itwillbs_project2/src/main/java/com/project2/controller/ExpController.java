@@ -278,7 +278,7 @@ public class ExpController {
 		logger.debug(" fileThumbDownloadGET() 호출 ");
 
 		// 다운로드할 폴더 (= 업로드한 폴더)에 있는 파일정보
-		String downFile = request.getRealPath("\\upload\\rev") + "\\" + fileName;
+		String downFile = request.getRealPath("\\upload") + "\\" + fileName;
 		logger.debug(" 다운로드할 파일 : " + downFile);
 
 		// 다운로드할 파일을 준비

@@ -2,6 +2,7 @@ package com.project2.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.project2.domain.Criteria;
 import com.project2.domain.ExpVO;
@@ -29,8 +32,9 @@ public class MainController {
 	@GetMapping("/")
 	public String mainGET(Model model,
 			String category,String region1,String region2, String sort, Criteria cri,
-			HttpSession session) throws Exception{
+			HttpSession session,HttpServletRequest req) throws Exception{
 		
+		logger.debug("@@@@@@@@@@@"+ req.getRealPath("\\upload"));
 		ExpVO vo = new ExpVO();
 		
 		//category exp_category

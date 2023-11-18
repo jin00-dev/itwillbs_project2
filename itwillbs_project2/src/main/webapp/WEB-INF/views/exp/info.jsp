@@ -111,7 +111,8 @@
 			<div class="tab-pane active" id="bnm1">
 				<div class="container">
 					<div class="text-center" id="image-container" style="overflow: hidden; max-height: 1000px; margin: 0 auto">
-						<img class="img-fluid " src="https://dummyimage.com/800x5000/dee2e6/6c757d.jpg" class="card-img-left" alt="...">
+<!-- 						<img class="img-fluid " src="https://dummyimage.com/800x5000/dee2e6/6c757d.jpg" class="card-img-left" alt="..."> -->
+							<img src="/exp/thumbDownload?fileName=${expVO.exp_detail_img}&wid=150&hei=150" alt="이미지 설명">
 					</div>
 					<div class="d-flex justify-content-center">
 						<button id="show-more-button" class="btn btn-light">더 보기</button>
