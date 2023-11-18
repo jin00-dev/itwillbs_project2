@@ -30,7 +30,7 @@
                         <div class="container" style="min-width: 300px">
                             <div class="col-md-6 m-3">
 <!--                                 <img class="img-fluid" src="https://dummyimage.com/700x1000/dee2e6/6c757d.jpg" alt="..."> -->
-									<img src="/exp/thumbDownload?fileName=${expVO.exp_summary_img}&wid=150&hei=150" alt="이미지 설명">
+									<img src="/exp/thumbDownload?fileName=${expVO.exp_summary_img}&wid=300&hei=300" alt="이미지 설명">
                             </div>
                             <div class="col-md-6 m-3">
                                 <div class="row p-3">
@@ -110,7 +110,7 @@
 				<div class="container">
 					<div class="text-center" id="image-container" style="overflow: hidden; max-height: 1000px; margin: 0 auto">
 <!-- 						<img class="img-fluid " src="https://dummyimage.com/800x5000/dee2e6/6c757d.jpg" class="card-img-left" alt="..."> -->
-							<img src="/exp/thumbDownload?fileName=${expVO.exp_detail_img}&wid=150&hei=150" alt="이미지 설명">
+							<img src="/exp/thumbDownload?fileName=${expVO.exp_detail_img}&wid=800&hei=5000" alt="이미지 설명">
 					</div>
 					<div class="d-flex justify-content-center">
 						<button id="show-more-button" class="btn btn-light">더 보기</button>
@@ -192,7 +192,7 @@
 				<!-- review 하나 -->
 				<c:set var="revNum" value="0" />
 				<c:forEach var="review" items="${rList }">
-					<div class="border-top p-1">
+					<div class="border-top">
 						<div class="row">
 							<div class="col-md-3">
 								<!-- 별점 -->
@@ -209,7 +209,7 @@
 						</div>
 						<div class="row">
 							<div class="container1">
-								<span class="d-inline-block text-truncate" style="max-width: 90%;"> ${review.rev_content } </span> <span class="text-info toggle-button" style="cursor: pointer;"> 더보기 </span>
+								<span class="d-inline-block text-truncate" style="max-width: 80%;"> ${review.rev_content } </span> <span class="text-info toggle-button" style="cursor: pointer;"> 더보기 </span>
 							</div>
 							<div class="text-end m-2">
 								<c:if test="${sessionScope.user_num eq review.user_num }">
@@ -669,13 +669,13 @@
 		        const text = container.find('.text-truncate');
 		        const toggleButton = container.find('.toggle-button');
 		       
-		        console.log(text[0].scrollWidth);
-		        console.log(text.innerWidth());
+		        console.log(text.get(0).scrollWidth);
+		        console.log(text.outerWidth(true)+0.5);
 		        
 		        toggleButton.hide(); // 초기에는 숨김
 		        if (text.length > 0) { // 요소가 존재하는지 확인
 		            // 텍스트가 max-width를 초과하는지 확인
-		            if (text[0].scrollWidth > text.innerWidth()) {
+		            if (text.get(0).scrollWidth > text.outerWidth(true)+0.5) {
 		                toggleButton.show(); // 초과하면 "더보기" 버튼 보이기
 		            }
 		            // "더보기" 버튼 클릭 시

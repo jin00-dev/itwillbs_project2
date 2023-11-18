@@ -49,7 +49,7 @@
 <!-- footer -->
 <%@include file="../include/footer.jsp"%>
 <!-- script  -->
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=efx8eq0ugv&submodules=geocoder"></script>
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=nea2z52ky0&submodules=geocoder"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script type="text/javascript">
 	//네이버 지도 api ---------------------------------------------------------
@@ -150,12 +150,12 @@
 	                let end = await getNaverMapCoordinates(i.exp_region);
 
 				    var href= "onclick=location.href='/exp/info?exp_num=" + i.exp_num + "';";
-				    var findHref = "https://map.naver.com/p/directions/" + start.x + "," + start.y + "/" + end.x + "," + end.y + "/-/transit?c=13.00,0,0,0,dh";
+				    var findHref = "https://map.naver.com/p/directions/" + start.x + "," + start.y + "/" + end.x + "," + end.y + "/-/transit?c=15.00,0,0,0,dh";
 				    
 				    expList += '<div class="container-fluid border" style="min-width: 300px" >';
 					expList += '    <div class="row justify-content-center" style="cursor:pointer;" >';
 					expList += '        <div class="col-6 m-3" '+href+'>';
-					expList += '            <img class="img-fluid" src="https://dummyimage.com/150x150/dee2e6/6c757d.jpg" class="card-img-left" alt="...">';
+					expList += '            <img class="card-img-top" src="/exp/thumbDownload?fileName='+i.exp_summary_img+'&wid=150&hei=100" style="height: 200px;" alt="이미지 설명">';
 					expList += '        </div>';
 					expList += '        <div class="col-6 m-3" '+href+' >';
 					expList += '            <div class="p-3 text-center">';

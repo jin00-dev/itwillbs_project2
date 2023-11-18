@@ -24,7 +24,8 @@
 							<div class="col mb-5" style="cursor:pointer;" onclick="location.href='/exp/info?exp_num=${list.exp_num}';">
 								<div class="card h-100">
 									<!-- Product image-->
-									<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+<!-- 									<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /> -->
+										<img class="card-img-top" src="/exp/thumbDownload?fileName=${list.exp_summary_img}&wid=150&hei=150" alt="이미지 설명">
 									<!-- Product details-->
 									<div class="card-body p-4">
 										<div class="text-center">

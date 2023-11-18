@@ -80,7 +80,7 @@
 
 	<!-- 이벤트 사진과 내용 -->
 	<div class="event-content mb-4">
-		<img src="/resources/event_img/${resultVO.enf_img}"
+		<img src="/exp/thumbDownload?fileName=${resultVO.enf_img}&wid=643&hei=1353"
 			class="img-fluid responsive-img" alt="이벤트 사진"
 			style="max-width: 50%; height: auto;">
 		<div class="content-center">
@@ -97,9 +97,13 @@
 		
 		<div class="text-center">
 			<button id="btnList" class="btn btn-danger">목록</button>
+			<c:if test="${user_type eq 2}">
 			<button id="btnUpdate" class="btn btn-danger">수정</button>
 			<button id="btnDelete" class="btn btn-danger">삭제</button>
+			</c:if>
 		</div>
+		
+		
  
 
 		<!-- <c:if test="${sessionScope.user_id != null && sessionScope.user_id.equals('admin')}">

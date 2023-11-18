@@ -6,6 +6,7 @@
 
 <!-- header-->
 <%@include file="./include/header.jsp"%>
+
 	<div>
 		<ul class="nav nav-underline justify-content-center">
 			<li class="nav-item"><a class="nav-link ${param.category == '공예' || param.category == null || param.category == '' ? 'active' : ''}" href="/?category=공예" id="clicked1" >공예</a></li>
@@ -40,13 +41,14 @@
 <section class="py-5">
 	<!-- 게시물 없음 -->
 	<c:if test="${empty list}">
-		<h1 class="text-center">
+		<h2 class="text-center">
 			조건을 만족하는 클래스가 없어요...
-		</h1>
+		</h2>
 	</c:if>
 	<!-- 광고 게시물 --------------------------------------- -->
 		<c:if test="${!empty list}">
-			<div class="container px-4 px-lg-5 mt-5 border-bottom">
+			<div class="container border-bottom">
+					<h3>오늘의 추천 클래스</h3>
 				<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 					<!---------------------------------------------  -->
 						<c:forEach var="list" items="${list }">
@@ -54,7 +56,8 @@
 								<div class="col mb-5" style="cursor:pointer;" onclick="location.href='/exp/info?exp_num=${list.exp_num}';">
 									<div class="card h-100">
 										<!-- Product image-->
-										<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+											<img class="card-img-top" src="/exp/thumbDownload?fileName=${list.exp_summary_img}&wid=150&hei=100" style="height: 200px;" alt="이미지 설명">
+<!-- 										<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /> -->
 										<!-- Product details-->
 										<div class="card-body p-4">
 											<div class="text-center">
@@ -94,7 +97,8 @@
 							<div class="col mb-5" style="cursor:pointer;" onclick="location.href='/exp/info?exp_num=${list.exp_num}';">
 								<div class="card h-100">
 									<!-- Product image-->
-									<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+<!-- 									<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /> -->
+										<img class="card-img-top" src="/exp/thumbDownload?fileName=${list.exp_summary_img}&wid=150&hei=100" style="height: 200px;" alt="이미지 설명">
 									<!-- Product details-->
 									<div class="card-body p-4">
 										<div class="text-center">

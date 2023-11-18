@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
 
@@ -13,7 +14,7 @@
 	<td>체험번호</td><td>${testVO.exp_num }</td><td>체험이름</td><td>${testVO.exp_name }</td>
 	</tr>
 	<tr>
-	<td>주문날짜</td><td>${testVO.custom_data}</td><td>예매 상태</td>
+	<td>주문날짜</td><td>${testVO.custom_data.substring(0,10)}</td><td>예매 상태</td>
 	<td>
 	<c:choose>
 	<c:when test="${testVO.status eq 'paid' }">결제완료</c:when>

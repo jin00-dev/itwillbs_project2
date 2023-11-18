@@ -117,8 +117,8 @@ public class ExpServiceImpl {
 		// 업로드 저장경로 생성 /WEB-INF/upload (가상경로)
 		// 임시저장된 파일을 생성하기 위한 준비 (실제파일 생성)
 		// File file = new File("D:\\springupload2\\"+fileName);
-		File file = new File(req.getRealPath("\\upload\\rev") + "\\" + fileName);
-		logger.debug(" realPath : " + req.getRealPath("\\upload\\rev"));
+		File file = new File(req.getRealPath("/upload") +"/" + fileName);
+		logger.debug(" realPath : " + req.getRealPath("/upload"));
 		if (mFile.getSize() != 0) { // 첨부파일(업로드한 임시파일)이 존재할때 진행
 			if (!file.exists()) { // 해당파일이 존재하는지 체크
 				// 해당경로에 파일이 없을경우,자동으로 폴더 생성후 진행
@@ -130,7 +130,7 @@ public class ExpServiceImpl {
 			}
 			// 임시로 생성된(저장된) 파일mFile -> 실제파일로 데이터 전송
 			// mFile.transferTo(new File("D:\\springupload2\\"+oFileName));
-			mFile.transferTo(new File(req.getRealPath("\\upload\\rev") + "\\" + oFileName));
+			mFile.transferTo(new File(req.getRealPath("/upload") +"/" + oFileName));
 		}
 		logger.debug(" 파일 업로드 성공! ");
 

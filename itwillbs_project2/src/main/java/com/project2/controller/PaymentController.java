@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +40,7 @@ public class PaymentController {
 			pageVO.setCri(cri);
 			// pageVO.setTotalCount(518);
 			String id = (String) session.getAttribute("user_id");
+			logger.debug("id : "+ id);
 			cri.setUser_id(id);
 			pageVO.setTotalCount(pService.paymentListCount(cri.getUser_id()));
 
@@ -164,10 +166,18 @@ public class PaymentController {
 	@ResponseBody
 	public String cancelPayCheck(@RequestBody UserVO vo) {
 		logger.debug("vo"+vo);
+		
+		 BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();
+		
 		try {
 		UserVO result =  pService.pwCheck(vo);
-	
-			if(result != null) {
+		boolean isMatches = false;
+		
+		if(result != null) {
+			isMatches = passEncoder.matches(vo.getUser_pw(), result.getUser_pw());
+		}
+		
+			if(isMatches == true ) {
 				return "true";
 			}
 		} catch (Exception e) {

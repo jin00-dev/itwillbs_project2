@@ -15,25 +15,28 @@
 	<script type="text/javascript">
 		function cancelPayCheck (order_num){
 			var inputPw = prompt("비밀번호를 입력해주세요", "");
-			console.log(inputPw);
-			jQuery.ajax({
-				url : "/class/cancelPayCheck",
-				type : "POST",
-				contentType : "application/json",
-				data : JSON.stringify({"user_id": "${user_id}", "user_pw": inputPw}),
-				success : function(data) {
-					// refund ajax 실행 후 작업 수행
-					if(data == "true"){
-						cancelPay(order_num);
-					} else {
-						alert('비밀번호를 다시 입력해주세요');
+			
+			if(inputPw != null){
+				console.log(inputPw);
+				jQuery.ajax({
+					url : "/class/cancelPayCheck",
+					type : "POST",
+					contentType : "application/json",
+					data : JSON.stringify({"user_id": "${user_id}", "user_pw": inputPw}),
+					success : function(data) {
+						// refund ajax 실행 후 작업 수행
+						if(data == "true"){
+							cancelPay(order_num);
+						} else {
+							alert('비밀번호를 다시 입력해주세요');
+						}
+		
+					},
+					error : function(error) {
+						// refund ajax 실행 중 에러 발생 시 처리
 					}
-	
-				},
-				error : function(error) {
-					// refund ajax 실행 중 에러 발생 시 처리
-				}
-			}); // refund ajax
+				}); // refund ajax
+			}
 		}
      
      

@@ -46,7 +46,7 @@
       <div class="col-md-4 mb-4">
         <div class="card h-100">
           <a href="/board/eventRead?enf_event_num=${item.enf_event_num}">
-            <img class="card-img-top" src="/resources/event_img/${item.enf_img}" alt="이벤트 이미지">
+            <img class="card-img-top" src="/exp/thumbDownload?fileName=${item.enf_img}&wid=400&hei=200" alt="이벤트 이미지">
           </a>
           <div class="card-body">
             <h5 class="card-title">

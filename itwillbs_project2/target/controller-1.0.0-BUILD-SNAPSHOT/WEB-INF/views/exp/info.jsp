@@ -20,72 +20,70 @@
   <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
 <!-- Section-->
 <section class="py-5">
-	<!-- 상단 전체 박스 -->
-	<div class="border-top p-5 col-md-8 mx-auto">
-		<!-- 요약정보 및 결제 -->
-		<div class="container-fluid">
-			<div class="row justify-content-center">
-				<div class="col-6">
-					<!-- 왼쪽 ------------------------>
-					<div class="container border" style="min-width: 300px">
-						<div class="col-md-6 m-3">
-							<img class="img-fluid" src="https://dummyimage.com/700x1000/dee2e6/6c757d.jpg" class="card-img-left" alt="...">
-						</div>
-						<div class="col-md-6 m-3">
-							<div class="row p-3">
-								<span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">${expVO.exp_region.substring(0,2) }</span> <span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">${expVO.exp_category }</span>
-								<h4 class="mx-1 my-1">${expVO.exp_name }</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-6">
-					<!-- 오른쪽 ------------->
-					<div class="container border" style="min-width: 300px">
-						<!-- 달력 -->
-						<div class="m-3" id="calendar" style="position: relative;"></div>
-						<!-- <div id="selectedDateResult"></div> -->
-						<input type="hidden" value="null" id="selectedDateResult"> <input type="hidden" value="null" id="totalQuantityValue">
-						<div id="totalQuantityResult"></div>
-						<div id="totalPriceResult"></div>
-						<div class="p-2">
-							<h5 class="">수량 선택</h5>
-							<p>
-								가격:
-								<fmt:formatNumber>${expVO.exp_price}</fmt:formatNumber>
-								원
-							</p>
-							<div class="quantity">
-								<button class="btn btn-secondary" id="decrease">-</button>
-								<span id="quantity">1</span>
-								<button class="btn btn-secondary" id="increase">+</button>
-							</div>
-							<input type="hidden" id="totalPriceValue" value="${expVO.exp_price}">
-							<p class="border-bottom p-2 fw-bolder fs-3">
-								총 결제금액 <span id="totalPrice"><fmt:formatNumber>${expVO.exp_price}</fmt:formatNumber>원</span>
-							</p>
-						</div>
-						<div class="p-2 d-flex text-center">
-							<div onclick="clickWishBtn()" class="col-2">
-								<c:choose>
-									<c:when test="${!empty wish && wish eq 0 }">
-										<i class="far fa-3x fa-heart" style="cursor: pointer; background: transparent;"></i>
-									</c:when>
-									<c:otherwise>
-										<i class="far fa-3x fa-heart" style="cursor: pointer; color: red;"></i>
-									</c:otherwise>
-								</c:choose>
-							</div>
-							<div class="col-10">
-								<a class="btn btn-danger btn-lg" style="width: 90%" onclick="requestPay()">결제하기</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+        <!-- 상단 전체 박스 -->
+        <div class="border-top p-5 col-md-8 mx-auto">
+            <!-- 요약정보 및 결제 -->
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <!-- 왼쪽 컨테이너 -->
+                    <div class="col-md-6 col-12">
+                        <div class="container" style="min-width: 300px">
+                            <div class="col-md-6 m-3">
+<!--                                 <img class="img-fluid" src="https://dummyimage.com/700x1000/dee2e6/6c757d.jpg" alt="..."> -->
+									<img src="/exp/thumbDownload?fileName=${expVO.exp_summary_img}&wid=300&hei=300" alt="이미지 설명">
+                            </div>
+                            <div class="col-md-6 m-3">
+                                <div class="row p-3">
+                                    <span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">${expVO.exp_region.substring(0,2)}</span>
+                                    <span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">${expVO.exp_category}</span>
+                                    <h4 class="mx-1 my-1">${expVO.exp_name}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 오른쪽 컨테이너 -->
+                    <div class="col-md-6 col-12">
+                        <div class="container" style="min-width: 300px">
+                            <!-- 달력 -->
+                            <div class="m-3" id="calendar" style="position: relative; width: 90%;"></div>
+                            <input type="hidden" value="null" id="selectedDateResult">
+                            <input type="hidden" value="null" id="totalQuantityValue">
+                            <div id="totalQuantityResult"></div>
+                            <div id="totalPriceResult"></div>
+                            <div class="p-2">
+                                <h5>수량 선택</h5>
+                                <p>가격: <fmt:formatNumber>${expVO.exp_price}</fmt:formatNumber>원</p>
+                                <div class="quantity">
+                                    <button class="btn btn-secondary" id="decrease">-</button>
+                                    <span id="quantity">1</span>
+                                    <button class="btn btn-secondary" id="increase">+</button>
+                                </div>
+                                <input type="hidden" id="totalPriceValue" value="${expVO.exp_price}">
+                                <p class="border-bottom p-2 fw-bolder fs-3">
+                                    총 결제금액 <span id="totalPrice"><fmt:formatNumber>${expVO.exp_price}</fmt:formatNumber>원</span>
+                                </p>
+                            </div>
+                            <div class="p-2 d-flex text-center">
+                                <div onclick="clickWishBtn()" class="col-2">
+                                    <c:choose>
+                                        <c:when test="${!empty wish && wish eq 0}">
+                                            <i class="far fa-3x fa-heart" style="cursor: pointer; background: transparent;"></i>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <i class="far fa-3x fa-heart" style="cursor: pointer; color: red;"></i>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <div class="col-10">
+                                    <a class="btn btn-danger btn-lg" style="width: 90%" onclick="requestPay()">결제하기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 <!-- 하단메뉴 전체 섹션 -->
 <section class="">
 	<div class="col-md-8 mx-auto p-5 border ">
@@ -111,7 +109,8 @@
 			<div class="tab-pane active" id="bnm1">
 				<div class="container">
 					<div class="text-center" id="image-container" style="overflow: hidden; max-height: 1000px; margin: 0 auto">
-						<img class="img-fluid " src="https://dummyimage.com/800x5000/dee2e6/6c757d.jpg" class="card-img-left" alt="...">
+<!-- 						<img class="img-fluid " src="https://dummyimage.com/800x5000/dee2e6/6c757d.jpg" class="card-img-left" alt="..."> -->
+							<img src="/exp/thumbDownload?fileName=${expVO.exp_detail_img}&wid=800&hei=5000" alt="이미지 설명">
 					</div>
 					<div class="d-flex justify-content-center">
 						<button id="show-more-button" class="btn btn-light">더 보기</button>
@@ -193,7 +192,7 @@
 				<!-- review 하나 -->
 				<c:set var="revNum" value="0" />
 				<c:forEach var="review" items="${rList }">
-					<div class="border-top p-1">
+					<div class="border-top">
 						<div class="row">
 							<div class="col-md-3">
 								<!-- 별점 -->
@@ -210,7 +209,7 @@
 						</div>
 						<div class="row">
 							<div class="container1">
-								<span class="d-inline-block text-truncate" style="max-width: 90%;"> ${review.rev_content } </span> <span class="text-info toggle-button" style="cursor: pointer;"> 더보기 </span>
+								<span class="d-inline-block text-truncate" style="max-width: 80%;"> ${review.rev_content } </span> <span class="text-info toggle-button" style="cursor: pointer;"> 더보기 </span>
 							</div>
 							<div class="text-end m-2">
 								<c:if test="${sessionScope.user_num eq review.user_num }">
@@ -422,7 +421,7 @@
 -->
 </style>
 <!-- script  -->
-<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=efx8eq0ugv&submodules=geocoder"></script>
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=nea2z52ky0&submodules=geocoder"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 <script type="text/javascript">
 	//네이버 지도 api ---------------------------------------------------------
@@ -670,13 +669,13 @@
 		        const text = container.find('.text-truncate');
 		        const toggleButton = container.find('.toggle-button');
 		       
-		        console.log(text[0].scrollWidth);
-		        console.log(text.innerWidth());
+		        console.log(text.get(0).scrollWidth);
+		        console.log(text.outerWidth(true)+0.5);
 		        
 		        toggleButton.hide(); // 초기에는 숨김
 		        if (text.length > 0) { // 요소가 존재하는지 확인
 		            // 텍스트가 max-width를 초과하는지 확인
-		            if (text[0].scrollWidth > text.innerWidth()) {
+		            if (text.get(0).scrollWidth > text.outerWidth(true)+0.5) {
 		                toggleButton.show(); // 초과하면 "더보기" 버튼 보이기
 		            }
 		            // "더보기" 버튼 클릭 시

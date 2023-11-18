@@ -80,7 +80,7 @@
 
 	<!-- 이벤트 사진과 내용 -->
 	<div class="event-content mb-4">
-		<img src="/resources/event_img/${resultVO.enf_img}"
+		<img src="/exp/thumbDownload?fileName=${resultVO.enf_img}&wid=643&hei=1353"
 			class="img-fluid responsive-img" alt="이벤트 사진"
 			style="max-width: 50%; height: auto;">
 		<div class="content-center">
