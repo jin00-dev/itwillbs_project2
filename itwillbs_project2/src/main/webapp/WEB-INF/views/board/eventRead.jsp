@@ -97,9 +97,13 @@
 		
 		<div class="text-center">
 			<button id="btnList" class="btn btn-danger">목록</button>
+			<c:if test="${user_type eq 2}">
 			<button id="btnUpdate" class="btn btn-danger">수정</button>
 			<button id="btnDelete" class="btn btn-danger">삭제</button>
+			</c:if>
 		</div>
+		
+		
  
 
 		<!-- <c:if test="${sessionScope.user_id != null && sessionScope.user_id.equals('admin')}">

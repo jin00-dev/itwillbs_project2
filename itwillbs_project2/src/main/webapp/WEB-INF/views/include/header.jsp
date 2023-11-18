@@ -4,18 +4,25 @@
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Do+Hyeon&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
   .navbar-brand{
   	font-family : 'Bagel Fat One', swap;
   }
   .nav-item{
 	font-family : 'Do Hyeon', swap; 
   }
+  h1,h2,h3,h4,h5,h6,label,.btn,.text-center
+  {
+  	font-family: 'Roboto', sans-serif;
+  }
   #searchbar{
-  width : 130%;
-  margin : auto;
+  width : 70%;
+  margin-left : 16em;
   margin-top : 5%;
   }
-  
+  .navbar-brand{
+  margin-left : 2% 
+  }
 </style>
 
 <head>
@@ -43,7 +50,7 @@
 		<div>
 		<form class="d-flex" id="searchbar" action="/exp/searchExp">
 			<input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
-			<button class="btn btn-outline-success" type="submit">Search</button>
+			<button class="btn btn-outline-primary" type="submit">Search</button>
 		</form>
 		</div>
 		
@@ -51,13 +58,13 @@
 			<ul class="navbar-nav me-2 mb-2 mb-lg-0">
 				<c:choose>
 					<c:when test="${empty user_id }">
-						<li class="nav-item"><a class="nav-link" href="/user/join">회원가입</a></li>
+						<li class="nav-item"><a class="nav-link" href="/user/clouse">회원가입</a></li>
 						<li class="nav-item"><a class="nav-link" href="/user/login">로그인</a></li>
 					</c:when>
 					<c:when test="${user_type eq 0 }">
 						<li class="nav-item"><a class="nav-link" >${user_name }님 환영합니다</a></li>
 						<li class="nav-item"><a class="nav-link" href="/user/update">마이페이지</a></li>
-						<li class="nav-item"><a class="nav-link" href="#!">찜목록</a></li>
+						<li class="nav-item"><a class="nav-link" href="/exp/wishList">찜목록</a></li>
 						<li class="nav-item"><a class="nav-link" href="/user/logout">로그아웃</a></li>
 					</c:when>
 					<c:when test="${user_type eq 1 }">

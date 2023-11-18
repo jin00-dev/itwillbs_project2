@@ -13,6 +13,10 @@
 		<org.springframework-version>4.3.8.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
+<<<<<<< HEAD
+		<security-version>4.1.2.RELEASE</security-version>
+=======
+>>>>>>> 90697a88ffa989a442c9314133157cc56b076476
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -272,6 +276,8 @@
 			<version>2.8.5</version>
 		</dependency>
 
+<<<<<<< HEAD
+=======
 		<!-- 쪽지기능 웹소켓 -->
 
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
@@ -291,12 +297,49 @@
 
 		<!-- 쪽지기능 웹소켓 -->
 
+>>>>>>> 90697a88ffa989a442c9314133157cc56b076476
 		<!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
 		<dependency>
 			<groupId>net.coobird</groupId>
 			<artifactId>thumbnailator</artifactId>
 			<version>0.4.8</version>
 		</dependency>
+<<<<<<< HEAD
+		
+		<!-- Security -->
+		      <dependency>
+		         <groupId>org.springframework.security</groupId>
+		         <artifactId>spring-security-core</artifactId>
+		         <version>${security-version}</version>
+		      </dependency>
+		      
+		      <dependency>
+		         <groupId>org.springframework.security</groupId>
+		         <artifactId>spring-security-web</artifactId>
+		         <version>${security-version}</version>
+		      </dependency>
+		      
+		      <dependency>
+		         <groupId>org.springframework.security</groupId>
+		         <artifactId>spring-security-config</artifactId>
+		         <version>${security-version}</version>
+		      </dependency>
+		      
+		      <dependency>
+		         <groupId>org.springframework.security</groupId>
+		         <artifactId>spring-security-taglibs</artifactId>
+		         <version>${security-version}</version>
+		      </dependency>
+		      
+		      <dependency>
+		         <groupId>org.springframework.security</groupId>
+		         <artifactId>spring-security-test</artifactId>
+		         <version>${security-version}</version>
+		      </dependency>
+		   <!-- security -->
+
+=======
+>>>>>>> 90697a88ffa989a442c9314133157cc56b076476
 
 
 		<!-- @@@@@@@@@@@@ 외부 라이브러리 추가@@@@@@@@@@@@ -->

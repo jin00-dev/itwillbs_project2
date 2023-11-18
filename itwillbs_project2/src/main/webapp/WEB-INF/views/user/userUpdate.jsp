@@ -10,6 +10,106 @@
   padding-bottom: 180px;
 }	
 </style>
+<script type="text/javascript">
+
+   $(document).ready(function() {
+      
+      //모든 공백 체크 정규식
+      var empJ = /\s/g;
+      
+      // 휴대폰 번호 정규식
+      var phoneJ = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+      
+      var phoneCheck = false;
+      
+      // 핸드폰 번호 유효성 검사
+      $("#phone").keyup(function() {
+         phoneCheck = false;
+         var phone = $(this).val();
+         // 공백 문자 처리
+         phone = $.trim(콜);
+         $("#phone").val(콜);
+      
+         
+         // 11자 미만 처리
+         if (phone.length < 11) {
+            $("#phoneCheckDiv").removeClass("alert-success");
+            $("#phoneCheckDiv").addClass("alert-danger");
+            $("#phoneCheckDiv").text("핸드폰번호는 12자 이상 이여야 합니다.");
+            return;
+         }
+
+         // 14자 초과
+         if (phone.length > 14) {
+            $("#phoneCheckDiv").removeClass("alert-success");
+            $("#phoneCheckDiv").addClass("alert-danger");
+            $("#phoneCheckDiv").text("핸드폰번호는 13자 이내 숫자여야 합니다.");
+            return;
+         }
+         
+            if(!phoneJ.test($("#phone").val())){
+              
+              $("#phoneCheckDiv").val("");
+              $("#phoneCheckDiv").text("핸드폰 번호 양식에 맞게 적어주세요");
+              //$("#phoneCheckDiv").focus();
+              
+              return ;
+            }else{
+               
+             
+               
+               $.ajax({    
+                     type : 'post',           // 타입 (get, post, put 등등)    
+                  url : '/user/phoneCheck?phone='+phone, 
+                  success : function(result) { // 결과 성공 콜백함수        
+                     console.log(result);   
+                     $("#phoneCheckDiv").removeClass("alert-success alert-danger");
+                      if (result == 0) {
+                         $("#phoneCheckDiv").addClass("alert-success");
+                          $("#phoneCheckDiv").text("사용할 수 있는 번호입니다");
+                         phoneCheck = true;
+                      } else {
+                         $("#phoneCheckDiv").addClass("alert-danger");
+                          $("#phoneCheckDiv").text("사용할 수 없는 번호 입니다");
+                         phoneCheck = false;
+                      }
+                  },error : function(request, status, error) { 
+                     // 결과 에러 콜백함수       
+                     console.log(error)    
+                     }
+                  })
+               }
+            
+            
+         }); //$("#phone).keyup 이벤트끝
+
+   }); // $(function(){})의 끝
+
+        let openWin;
+
+           function openChild() {
+               // window.name = "부모창 이름"; 
+               window.name = "parentForm";
+               
+               // window.open("open할 window", "자식창 이름", "팝업창 옵션");
+               openWin = window.open("child", "childForm", "width=570, height=350, resizable = no, scrollbars = no");    
+           }
+
+           function setChildText(){
+               openWin.document.getElementById("cInput").value = document.getElementById("pInput").value;
+               // 전달하고자 하는 값
+           }
+   
+   </script>
+   
+   <c:if test="${param.msg == '0' }">
+   <script>
+   window.onload = function() {
+        alert("비밀번호가 틀렸습니다! 다시 확인해주세요!")
+    };
+   </script>
+</c:if>   
+
 
     <!-- 로그인 정보가 없으면 로그인 페이지로 이동 -->
     <c:if test="${empty user_id}">
@@ -22,8 +122,8 @@
 	<div class="row">
           <div class="card">
               <!-- 회원정보 확인 -->
-               <h3>${vo.user_name }님의 마이페이지 입니다. </h3>
             <div class="card-body pt-3">
+               <h3>${vo.user_name }님의 마이페이지 입니다. </h3>
               <ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
 				
                 <li class="nav-item" role="presentation">
@@ -34,7 +134,7 @@
 		        </li>
 				<c:if test="${user_type eq 1 }">
 					<li class="nav-item" role="presentation">
-		                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password" aria-selected="false" role="tab" tabindex="-1">사업자 클래스 관리</button>
+		                <button class="nav-link" data-bs-toggle="tab" onclick= "location.href='/board/uploadForm';" aria-selected="false" role="tab" tabindex="-1">사업자 클래스 등록</button>
 		            </li>
 				</c:if>
                 <li class="nav-item" role="presentation">
@@ -45,26 +145,26 @@
              <!-- 회원정보 수정 -->
                 <div class="tab-pane fade profile-edit pt-3" >
 
-                  <form action="" method="post">
+                  <form action="/user/update" method="post">
                   
                   	<div class="row mb-3">
                       <label for="user_id" class="col-md-4 col-lg-3 col-form-label">아이디 : </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="user_id" type="text" class="form-control" id="user_id" value="${vo.user_id }" readonly>
+                        <input name="user_id" type="email" required="required" class="form-control" id="id" value="${vo.user_id }" readonly>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="user_name" class="col-md-4 col-lg-3 col-form-label">이름 : </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="user_name" type="text" class="form-control" id="user_name" value="${vo.user_name } ">
+                        <input name="user_name" type="text" maxlength="5" pattern="[가-힣]{2,10}" placeholder="이름 입력" class="form-control" id="name" value="${vo.user_name } ">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="user_phone" class="col-md-4 col-lg-3 col-form-label">휴대폰 번호 : </label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="user_phone" type="text" class="form-control" id="user_phone" value="${vo.user_phone }">
+                        <input name="user_phone" type="text" class="form-control" placeholder="000-0000-0000" id="phone" required="required" value="${vo.user_phone }">
                       </div>
                     </div>
 

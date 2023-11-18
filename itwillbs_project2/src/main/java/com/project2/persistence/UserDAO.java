@@ -20,7 +20,10 @@ public interface UserDAO {
 		public UserVO getUser(String sessionUserid);
 		
 		// 회원정보 수정
-		public void updateUser(UserVO updateVO);
+		public Integer updateUser(UserVO updateVO);
+		
+		// 현재 로그인한 회원의 암호화된 비밀번호 조회 
+		public String pwCheck(String user_id);
 		
 		// 회원정보 삭제
 		public int deleteUser(UserVO delVO);	

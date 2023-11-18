@@ -20,7 +20,10 @@ public interface UserService {
 	public UserVO userInfo(String id);
 
 	// 회원정보 수정 동작
-	public void userUpdate(UserVO updateVO);
+	public Integer userUpdate(UserVO updateVO);
+	
+	// 현재 로그인한 회원의 암호화된 비밀번호 조회 
+	public String pwCheck(String user_id);
 
 	// 회원정보 삭제 동작
 	public int userDelete(UserVO deleteVO);

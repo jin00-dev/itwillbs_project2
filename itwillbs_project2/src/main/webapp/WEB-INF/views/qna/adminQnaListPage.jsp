@@ -23,7 +23,7 @@
      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="profile" aria-selected="false" tabindex="-1" onclick = "location.href = '/user/reportList';">신고관리</button>
      </li>
      <li class="nav-item" role="presentation">
-     <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1" onclick = "location.href = '/qna/qnaListAll';">1:1 문의 관리</button>
+     <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" type="button" role="tab" aria-controls="contact" aria-selected="false" tabindex="-1" onclick = "location.href = '/qna/adminQnaListPage';">1:1 문의 관리</button>
      </li>
      </ul>
 

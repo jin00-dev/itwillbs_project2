@@ -47,7 +47,7 @@
 		<c:forEach var="vo" items="${reportList }" varStatus="status">
 			<tr>
 				<th>${vo.report_num }</th>
-				<td><button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#basicModal">${vo.report_content }</button></td>
+				<td><a class="btn data-bs-toggle="modal" data-bs-target="#basicModal_${vo.report_num }">${vo.report_content }</a></td>
 				<td>${vo.report_regdate }</td>
 				<td>${vo.report_updatedate }</td>
 				<c:choose>
@@ -60,10 +60,8 @@
 				</c:choose>
 			</tr>
 		</tbody>
-		</c:forEach>
-	</table>
-			<!-- 가라로 만든 모달 -->
-	  		<div class="modal fade" id="basicModal" tabindex="-1">
+			<!-- Start Basic Modal -->
+	  		<div class="modal fade" id="basicModal_${vo.report_num }" tabindex="-1">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -71,8 +69,9 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                     <p>신고 날짜 : 2023.11.17</p><br>
-                     <p>신고 내용 : 어쩌구 저쩌구 </p>
+                     <p>신고번호 : ${vo.report_num }</p><br>
+                     <p>신고 날짜 : ${vo.report_updatedate }</p><br>
+                     <p>신고내용 : ${vo.report_content } </p>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -81,6 +80,8 @@
                   </div>
                 </div>
               </div><!-- End Basic Modal-->
+		</c:forEach>
+	</table>
 	
 	
 </div>

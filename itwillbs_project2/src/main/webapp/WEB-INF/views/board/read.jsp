@@ -36,9 +36,10 @@
 
 	<div>
 		<button id="btnList">목록</button>
+		<c:if test="${user_type eq 2}">
 		<button id="btnUpdate">수정</button>
 		<button id="btnDelete">삭제</button>
-
+		</c:if>
 	</div>
 </div>
 

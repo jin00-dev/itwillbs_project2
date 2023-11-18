@@ -12,7 +12,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;import lombok.val;
+import org.springframework.stereotype.Service;
+import lombok.val;
 
 @Component
 @Service(value = "mailService")
@@ -32,6 +33,7 @@ public class MailSendServiceImpl {
 		authNum = checkNum;
 	}// makeAuthNumberl
 	
+	@Async
 	public String joinEmail(String email) {
 		makeAuthNumber();
 		String setForm = "parkyeojin1995@gmail.com"; // 보내는 이메일 
@@ -44,6 +46,7 @@ public class MailSendServiceImpl {
 						+ "해당 인증번호를 입력란에 기입하여주십시오</h2>"; // 이메일 내용
 		
 		mailSend(setForm, toMail, title, content);
+		
 		return Integer.toString(authNum);
 	}// joinEmail(String email)
 	
