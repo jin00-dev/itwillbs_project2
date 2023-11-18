@@ -20,72 +20,70 @@
   <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet">
 <!-- Section-->
 <section class="py-5">
-	<!-- 상단 전체 박스 -->
-	<div class="border-top p-5 col-md-8 mx-auto">
-		<!-- 요약정보 및 결제 -->
-		<div class="container-fluid">
-			<div class="row justify-content-center">
-				<div class="col-6">
-					<!-- 왼쪽 ------------------------>
-					<div class="container border" style="min-width: 300px">
-						<div class="col-md-6 m-3">
-							<img class="img-fluid" src="https://dummyimage.com/700x1000/dee2e6/6c757d.jpg" class="card-img-left" alt="...">
-						</div>
-						<div class="col-md-6 m-3">
-							<div class="row p-3">
-								<span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">${expVO.exp_region.substring(0,2) }</span> <span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">${expVO.exp_category }</span>
-								<h4 class="mx-1 my-1">${expVO.exp_name }</h4>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-6">
-					<!-- 오른쪽 ------------->
-					<div class="container border" style="min-width: 300px">
-						<!-- 달력 -->
-						<div class="m-3" id="calendar" style="position: relative;"></div>
-						<!-- <div id="selectedDateResult"></div> -->
-						<input type="hidden" value="null" id="selectedDateResult"> <input type="hidden" value="null" id="totalQuantityValue">
-						<div id="totalQuantityResult"></div>
-						<div id="totalPriceResult"></div>
-						<div class="p-2">
-							<h5 class="">수량 선택</h5>
-							<p>
-								가격:
-								<fmt:formatNumber>${expVO.exp_price}</fmt:formatNumber>
-								원
-							</p>
-							<div class="quantity">
-								<button class="btn btn-secondary" id="decrease">-</button>
-								<span id="quantity">1</span>
-								<button class="btn btn-secondary" id="increase">+</button>
-							</div>
-							<input type="hidden" id="totalPriceValue" value="${expVO.exp_price}">
-							<p class="border-bottom p-2 fw-bolder fs-3">
-								총 결제금액 <span id="totalPrice"><fmt:formatNumber>${expVO.exp_price}</fmt:formatNumber>원</span>
-							</p>
-						</div>
-						<div class="p-2 d-flex text-center">
-							<div onclick="clickWishBtn()" class="col-2">
-								<c:choose>
-									<c:when test="${!empty wish && wish eq 0 }">
-										<i class="far fa-3x fa-heart" style="cursor: pointer; background: transparent;"></i>
-									</c:when>
-									<c:otherwise>
-										<i class="far fa-3x fa-heart" style="cursor: pointer; color: red;"></i>
-									</c:otherwise>
-								</c:choose>
-							</div>
-							<div class="col-10">
-								<a class="btn btn-danger btn-lg" style="width: 90%" onclick="requestPay()">결제하기</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+        <!-- 상단 전체 박스 -->
+        <div class="border-top p-5 col-md-8 mx-auto">
+            <!-- 요약정보 및 결제 -->
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <!-- 왼쪽 컨테이너 -->
+                    <div class="col-md-6 col-12">
+                        <div class="container" style="min-width: 300px">
+                            <div class="col-md-6 m-3">
+<!--                                 <img class="img-fluid" src="https://dummyimage.com/700x1000/dee2e6/6c757d.jpg" alt="..."> -->
+									<img src="/exp/thumbDownload?fileName=${expVO.exp_summary_img}&wid=150&hei=150" alt="이미지 설명">
+                            </div>
+                            <div class="col-md-6 m-3">
+                                <div class="row p-3">
+                                    <span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">${expVO.exp_region.substring(0,2)}</span>
+                                    <span class="bg-secondary text-dark d-inline mx-1 my-1" style="width: 65px;">${expVO.exp_category}</span>
+                                    <h4 class="mx-1 my-1">${expVO.exp_name}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 오른쪽 컨테이너 -->
+                    <div class="col-md-6 col-12">
+                        <div class="container" style="min-width: 300px">
+                            <!-- 달력 -->
+                            <div class="m-3" id="calendar" style="position: relative; width: 90%;"></div>
+                            <input type="hidden" value="null" id="selectedDateResult">
+                            <input type="hidden" value="null" id="totalQuantityValue">
+                            <div id="totalQuantityResult"></div>
+                            <div id="totalPriceResult"></div>
+                            <div class="p-2">
+                                <h5>수량 선택</h5>
+                                <p>가격: <fmt:formatNumber>${expVO.exp_price}</fmt:formatNumber>원</p>
+                                <div class="quantity">
+                                    <button class="btn btn-secondary" id="decrease">-</button>
+                                    <span id="quantity">1</span>
+                                    <button class="btn btn-secondary" id="increase">+</button>
+                                </div>
+                                <input type="hidden" id="totalPriceValue" value="${expVO.exp_price}">
+                                <p class="border-bottom p-2 fw-bolder fs-3">
+                                    총 결제금액 <span id="totalPrice"><fmt:formatNumber>${expVO.exp_price}</fmt:formatNumber>원</span>
+                                </p>
+                            </div>
+                            <div class="p-2 d-flex text-center">
+                                <div onclick="clickWishBtn()" class="col-2">
+                                    <c:choose>
+                                        <c:when test="${!empty wish && wish eq 0}">
+                                            <i class="far fa-3x fa-heart" style="cursor: pointer; background: transparent;"></i>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <i class="far fa-3x fa-heart" style="cursor: pointer; color: red;"></i>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                                <div class="col-10">
+                                    <a class="btn btn-danger btn-lg" style="width: 90%" onclick="requestPay()">결제하기</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 <!-- 하단메뉴 전체 섹션 -->
 <section class="">
 	<div class="col-md-8 mx-auto p-5 border ">
