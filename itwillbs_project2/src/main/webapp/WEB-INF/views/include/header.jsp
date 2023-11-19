@@ -23,6 +23,7 @@
   .navbar-brand{
   margin-left : 2% 
   }
+
 </style>
 
 <head>

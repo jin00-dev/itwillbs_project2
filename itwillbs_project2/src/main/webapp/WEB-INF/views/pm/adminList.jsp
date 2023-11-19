@@ -52,7 +52,7 @@
 						<td>${i.payment_date }</td>
 						<td><c:choose>
 								<c:when test="${i.status eq 'paid' }">
-									<button class="btn2" onclick="cancelPay('${i.order_num}')">환불</button>
+									결제완료
 								</c:when>
 								<c:when test="${i.status eq 'cancelled' }">환불완료</c:when>
 							</c:choose></td>

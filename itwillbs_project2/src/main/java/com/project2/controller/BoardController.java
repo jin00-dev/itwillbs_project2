@@ -193,8 +193,8 @@ public class BoardController {
 	@RequestMapping(value = "/boardSearch", method = RequestMethod.GET)
 	public String search(@RequestParam("searchTerm") String searchTerm, Model model) {
 		List<BoardVO> searchResults = bService.searchByTitle(searchTerm);
-		model.addAttribute("boardListAll", searchResults);
-		return "board/boardListAll"; // 검색 결과를 표시하는 뷰
+		model.addAttribute("boardList", searchResults);
+		return "/board/boardListAll"; // 검색 결과를 표시하는 뷰
 	}
 
 	// 게시판 목록조회(페이징처리)

@@ -5,8 +5,7 @@
 
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 <style>
 .dropdown-select {
@@ -28,9 +27,18 @@
 	border-color: #ced4da;
 	box-shadow: none;
 }
+
+.container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+    max-width: 800px;
+}
+
 </style>
 
-<div class="container mt-5">
+
+<div class="container">
+	<div class="card mb-3">
+	<div class="card-body">
+	  <div class="pt-4 pb-2">
 	<h2>클래스 등록</h2>
 	<form action="/board/fileUpload" method="post"
 		enctype="multipart/form-data">
@@ -117,10 +125,15 @@
 				class="form-control-file" id="exp_detail_img" name="exp_detail_img"
 				multiple>
 		</div>
-
-		<button type="submit" id="btn btn" class="btn btn-primary">등록</button>
+		<div class="d-grid gap-2 mt-3">
+		<button type="submit" id="btn" class="btn btn-primary">등록</button>
+		</div>
 	</form>
 </div>
+</div>
+</div>
+</div>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script

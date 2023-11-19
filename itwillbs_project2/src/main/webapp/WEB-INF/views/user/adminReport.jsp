@@ -6,6 +6,14 @@
 <!-- 부트스트랩 CSS 추가 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
+<style>
+ .text {
+  color: inherit;
+  text-decoration: none;
+  }
+
+</style>
+
 <%@include file="../include/header.jsp"%>
 
 <hr>
@@ -49,7 +57,7 @@
 					<c:forEach var="vo" items="${reportList }" varStatus="status">
 						<tr>
 							<th>${vo.report_num }</th>
-							<td><a class="btn data-bs-toggle=" modal" data-bs-target="#basicModal_${vo.report_num }">${vo.report_content }</a></td>
+							<td><a class="text" data-bs-toggle="modal" data-bs-target="#basicModal_${vo.report_num }">${vo.report_content }</a></td>
 							<td>${vo.report_regdate }</td>
 							<td>${vo.report_updatedate }</td>
 							<c:choose>

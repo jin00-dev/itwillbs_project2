@@ -8,6 +8,14 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <!-- header-->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
+<style>
+
+.text {
+  color: inherit;
+  text-decoration: none;
+  }
+
+</style>
 
 <hr>
 <div class="container mt-5">
@@ -43,9 +51,9 @@
 				<c:forEach var="qna" items="${QnaList}" varStatus="status">
 					<tr>
 						<%-- <td>${fn:length(qnaListAll) - status.index}</td> --%>
-						<td>${qna.qna_num}</td>
+						<td>${qna.qna_num}<input type="hidden" name = "qna_state" value="${qna.qna_state }"></td>
 						<!-- 역순 번호 계산 -->
-						<td><a href="/qna/qnaRead?qna_num=${qna.qna_num}">${qna.qna_title}</a></td>
+						<td><a class="text" href="/qna/qnaRead?qna_num=${qna.qna_num}">${qna.qna_title}</a></td>
 						<td><fmt:formatDate value="${qna.qna_regdate}" pattern="yyyy-MM-dd hh:mm:ss" /></td>
 						<td><c:choose>
 								<c:when test="${qna.qna_state == 0}">

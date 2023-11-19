@@ -35,9 +35,9 @@
 								<tr>
 									<th scope="col">예약 클래스 이름</th>
 									<th scope="col">예약날짜</th>
-									<th scope="col">예매자 이름</th>
-									<th scope="col">예매자 전화 번호</th>
-									<th scope="col">주문 수</th>
+									<th scope="col">이름</th>
+									<th scope="col">휴대폰 번호</th>
+									<th scope="col">인원</th>
 									<th scope="col">결제 가격</th>
 									<th scope="col">결제 상태</th>
 								</tr>

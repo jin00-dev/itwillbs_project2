@@ -10,7 +10,7 @@
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 <div class="container mt-5">
 	<div class="card">
-		<h3 class="card-header">1:1 문의사항 상세 정보</h3>
+		<h3 class="card-header">1:1 문의사항 상세</h3>
 		<div class="card-body">
 			<div class="row mb-3 pb-2 border-bottom">
 				<div class="col-8">
@@ -60,8 +60,8 @@
 				</c:otherwise>
 			</c:choose>
 
-			<%-- 관리자 답변 입력 폼, 실제 조건에 맞게 주석을 해제하여 사용하세요 --%>
-			<%-- <c:when test="${sessionScope.user_id == 'admin'}"> --%>
+			<c:if test="${user_type == '2' and resultVO.qna_state == 0}">
+			
 			<div>
 				<h5>답변 작성</h5>
 				<form action="/qna/qnaAnswer" method="post">
@@ -72,7 +72,7 @@
 					<button type="submit" class="btn btn-primary">답변 등록</button>
 				</form>
 			</div>
-			<%-- </c:when> --%>
+			</c:if>
 
 			<form id="actionForm" method="POST">
 				<input type="hidden" name="qna_num" value="${resultVO.qna_num}">
@@ -83,7 +83,9 @@
 				<button id="btnList" class="btn btn-secondary">목록</button>
 				<button id="btnUpdate" class="btn btn-secondary">수정</button>
 				<button id="btnDelete" class="btn btn-secondary">삭제</button>
+				<c:if test="${user_type == '2' }">
 				<button id="bbtnDelete" class="btn btn-secondary">답변 삭제</button>
+				</c:if>
 			</div>
 		</div>
 		<%-- <c:if
@@ -103,7 +105,7 @@
 	$(document).ready(function() {
 		// 목록 버튼 클릭 이벤트
 		$('#btnList').click(function() {
-			location.href = 'qnaListAll';
+			location.href = '/qna/adminQnaListPage';
 		});
 
 		// 수정 버튼 클릭 이벤트

@@ -95,10 +95,10 @@ public class qnaController {
 
 		// 전달정보 저장(bno)
 		logger.debug(" enf_notice_num : " + qna_num);
-
+		
 		// 서비스 -> DAO -> 특정 글정보를 조회하는 메서드
 		QnaVO resultVO = qService.getQna(qna_num);
-
+		session.getAttribute("qna_state");
 		// 리턴받은 특정 글정보를 연결된 뷰페이지에 출력 (Model)
 		model.addAttribute("resultVO", resultVO);
 
@@ -183,7 +183,7 @@ public class qnaController {
 
 		logger.debug(" 연결된 ((/board/qnaRead.jsp)페이지로 이동 ");
 
-		return "redirect:/qna/noAnswer";
+		return "redirect:/qna/adminQnaListPage";
 	}
 
 	// 관리자 답변 삭제
@@ -208,7 +208,7 @@ public class qnaController {
 		logger.debug("결과 리스트 크기 : " + qnaListAll.size());
 
 		model.addAttribute("qnaListAll", qnaListAll);
-
+			
 		// View 이동 후 출력
 
 	}
@@ -243,7 +243,7 @@ public class qnaController {
 
 		// Model 객체에 리스트 정보를 저장
 		model.addAttribute("QnaList", QnaList);
-
+		logger.debug("@@@@ qnaList : " + QnaList );
 		// 페이지 이동(/board/listPage.jsp)
 	}
 

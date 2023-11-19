@@ -9,6 +9,11 @@
   min-height: 100%;
   padding-bottom: 180px;
 }	
+ .text {
+  color: inherit;
+  text-decoration: none;
+  }
+
 </style>
 
 <!-- 부트스트랩 CSS 추가 -->
@@ -46,7 +51,7 @@
 			</form>
 
 			<c:if
-				test="${sessionScope.user_id != null && sessionScope.user_id.equals('admin')}">
+				test="${sessionScope.user_id != null and sessionScope.user_type.equals(2)}">
 				<a href="/board/insert" class="btn btn-primary mb-3">글쓰기</a>
 			</c:if>
 
@@ -66,7 +71,7 @@
 							test="${vo.enf_category == 1 && pinnedNotices.contains(vo.enf_notice_num)}">
 							<tr class="font-weight-bold">
 								<td>📌</td>
-								<td><a
+								<td><a class="text"
 									href="/board/read?enf_notice_num=${vo.enf_notice_num}">
 										${vo.enf_title}</a></td>
 								<td><fmt:formatDate value="${vo.enf_regdate}"
@@ -77,13 +82,21 @@
 					</c:forEach>
 
 					<!-- 일반 공지사항 -->
-					<c:forEach var="vo" items="${boardList}" varStatus="status">
+						<c:forEach items="${boardList}" var="vo" varStatus="status">
 						<c:if
 							test="${vo.enf_category == 1 && !pinnedNotices.contains(vo.enf_notice_num)}">
 							<tr>
-								<!-- 수정된 번호 계산 로직 -->
-								<td>${pageVO.totalCount - (pageVO.cri.page - 1) * pageVO.cri.pageSize - status.index - pinnedNotices.size()}</td>
-								<td><a
+								<td><c:choose>
+										<c:when test="${empty searchTerm}">
+											<!-- 검색하지 않았을 때: 역순 번호 -->
+                        ${pageVO.totalCount - (pageVO.cri.page - 1) * pageVO.cri.pageSize - status.index - pinnedNotices.size()}
+                    </c:when>
+										<c:otherwise>
+											<!-- 검색 했을 때: 1부터 시작하는 순차적 번호 -->
+                        ${status.count}
+                    </c:otherwise>
+									</c:choose></td>
+								<td><a class = "text"
 									href="/board/read?enf_notice_num=${vo.enf_notice_num}">${vo.enf_title}</a></td>
 								<td><fmt:formatDate value="${vo.enf_regdate}"
 										pattern="yy-MM-dd" /></td>

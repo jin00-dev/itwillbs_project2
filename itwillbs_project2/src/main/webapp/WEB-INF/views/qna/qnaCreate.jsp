@@ -36,13 +36,14 @@
                 <div class="card-body">
                     <h2 class="card-title">1대1 문의사항 쓰기</h2>
                     <form method="post" role="form">
+                    	<input type="hidden" name="user_num" id="user_num" value="${user_num}">
                         <div class="form-group">
                             <label for="title">제목</label>
-                            <input type="text" class="form-control" id="title" name="qna_title" required>
+                            <input type="text" class="form-control" id="title" name="qna_title">
                         </div>
                         <div class="form-group">
                             <label for="content">내용</label>
-                            <textarea class="form-control" id="content" name="qna_content" rows="4" required></textarea>
+                            <textarea class="form-control" id="content" name="qna_content" rows="4" ></textarea>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">확인</button>

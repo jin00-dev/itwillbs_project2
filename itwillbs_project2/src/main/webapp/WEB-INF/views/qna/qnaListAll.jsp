@@ -7,6 +7,14 @@
 <!-- 부트스트랩 CSS 추가 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+<style>
+  .text {
+  color: inherit;
+  text-decoration: none;
+  }
+
+</style>
+
 <!-- header -->
 <%@include file="/WEB-INF/views/include/header.jsp"%> 
 
@@ -50,7 +58,7 @@
                     <c:forEach var="qna" items="${qnaListAll}" varStatus="status">
                         <tr>
                             <td>${fn:length(qnaListAll) - status.index}</td> <!-- 역순 번호 계산 -->
-                            <td><a href="/qna/qnaRead?qna_num=${qna.qna_num}">${qna.qna_title}</a></td>
+                            <td><a class="text" href="/qna/qnaRead?qna_num=${qna.qna_num}">${qna.qna_title}</a></td>
                             <td><fmt:formatDate value="${qna.qna_regdate}" pattern="yyyy-MM-dd"/></td>
                             <td>
                                 <c:choose>

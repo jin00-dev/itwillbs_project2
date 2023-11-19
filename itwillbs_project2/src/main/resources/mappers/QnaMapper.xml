@@ -17,10 +17,8 @@
 	<!-- 글쓰기 -->
 	<insert id="createQna" parameterType="com.project2.domain.QnaVO">
 		INSERT INTO qna_board
-		(user_num, qna_title, qna_content, qna_regdate,
-		qna_state)
-		VALUES (1,
-		#{qna_title}, #{qna_content}, NOW(), 0)
+		(user_num, qna_title, qna_content)
+		VALUES (#{user_num}, #{qna_title}, #{qna_content})
 	</insert>
 
 	<!-- 글쓰기 -->
@@ -108,8 +106,8 @@
 	<!-- 게시판에 저장된 총 글의 개수 조회 -->
 	<select id="QnaCount" resultType="int">
  		<![CDATA[ 
- 		select count(*) from event_notice_faq_board
- 		where enf_notice_num > 0
+ 		select count(*) from qna_board
+ 		where qna_num > 0
  		]]>
 	</select>
 	<!-- 게시판에 저장된 총 글의 개수 조회 -->
