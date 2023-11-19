@@ -25,7 +25,7 @@
                     <h4 class="card-title text-center pb-0 fs-4">아이디 찾기 결과 </h4>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate="" action="" method="post">
+                  <form class="row g-3 needs-validation" action="" method="post">
 
                     <div class="col-12">
                       <h5 class="form-label text-center">회원님의 아이디는 <span>${userId}</span> 입니다.</h5>

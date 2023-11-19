@@ -96,12 +96,12 @@ public class UserDAOImpl implements UserDAO {
 
 	// 회원탈퇴
 	@Override
-	public int deleteUser(UserVO delVO) {
-		System.out.println(" DAOImpl : 삭제 시작 ");
-
-		// 정상적으로 삭제 1, 삭제실패 0
-		// SQL구문 호출
-		return sqlSession.delete(NAMESPACE + ".deleteUser", delVO);
+	public Integer updateState(UserVO userVO) {
+	System.out.println(" DAOImpl : 회원 탈퇴 시작 ");
+		
+	// 정상적으로 삭제 1, 삭제실패 0
+	// SQL구문 호출		
+	return sqlSession.update(NAMESPACE + ".updateState",userVO);
 	}
 
 	@Override
@@ -178,6 +178,21 @@ public class UserDAOImpl implements UserDAO {
 		return sqlSession.delete(NAMESPACE + ".userDeleteById", user_id);
 	}
 
+	// 회원 비번 변경
+	@Override
+	public int pwUpdate(String user_id, String hashedPw)  {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		map.put("user_pw", hashedPw);
+		
+		System.out.println(" DAOImpl : pwUpdate() 호출");
+		
+		// SQL구문 호출
+		return sqlSession.update(NAMESPACE + ".pwUpdate", map);
+	}
+	
+	
+	
 	// 비벚찾기
 	@Override
 	public UserVO findUserByNameAndId(String user_name, String user_id) {
@@ -193,6 +208,13 @@ public class UserDAOImpl implements UserDAO {
 		Map<String, String> params = new HashMap<>();
 		params.put("userId", userId);
 		params.put("newPassword", newPassword);
-		sqlSession.update(".changePassword", params);
+		sqlSession.update(NAMESPACE + ".changePassword", params);
+	}
+
+	// 비밀번호 변경 페이지 이동 전
+	@Override
+	public UserVO findPw(UserVO vo) {
+		
+		return sqlSession.selectOne(NAMESPACE + ".findUserByNameAndId", vo);
 	}
 }

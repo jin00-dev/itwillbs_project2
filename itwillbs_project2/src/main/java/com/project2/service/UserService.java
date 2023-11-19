@@ -26,7 +26,7 @@ public interface UserService {
 	public String pwCheck(String user_id);
 
 	// 회원정보 삭제 동작
-	public int userDelete(UserVO deleteVO);
+	public Integer updateState(UserVO userVO);
 
 	// 회원정보 목록조회 동작
 	public List<UserVO> userList(Criteria cri) throws Exception;
@@ -56,6 +56,10 @@ public interface UserService {
 	
 	//회원수정
 	public void updateUser(UserVO vo);
+	
+	// 회원비번 변경 동작
+	public int pwUpdate(String user_id, String hashedPw);
+		
 	//비번찾기 
 	UserVO findUserByNameAndId(String user_name, String user_id);
 	
@@ -65,4 +69,7 @@ public interface UserService {
 	// 회원정보 삭제 동작
 	//	public void deleteUser(UserVO deleteVO);
 	int userDeleteById(String user_id);
+	
+	//비밀번호 변경 전 아이디 이메일 확인
+	public UserVO findPw(UserVO vo);
 }

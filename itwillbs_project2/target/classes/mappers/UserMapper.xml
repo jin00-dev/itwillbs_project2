@@ -46,6 +46,14 @@
    		select user_pw from c6d2305t2_2.userTable
    		where user_id=#{user_id}
    </select>
+   
+   <!-- 회원 탈퇴 -->
+   <update id="updateState">
+      update c6d2305t2_2.userTable set
+      user_delete_state=1  
+      where user_num=#{user_num}   
+   </update>  
+   
 
 	<delete id="deleteUser">
 		delete from c6d2305t2_2.userTable
@@ -81,7 +89,7 @@
 	
 	<!-- 아이디찾기 -->
 	<select id="findUserByNameAndPhone"
-		resultType="com.project2.domain.UserVO">
+		resultType="UserVO">
 		SELECT user_id
 		FROM userTable
 		WHERE user_name = #{user_name}
@@ -114,7 +122,17 @@
 	<delete id="userDeleteById">
 		delete from userTable where user_id=#{user_id}
 	</delete>
-	<!-- 비번찾기 -->
+
+
+  <!-- 회원 비번 변경 -->
+   <update id="pwUpdate" >
+      update c6d2305t2_2.userTable set 
+      user_pw=#{user_pw}
+     where user_id=#{user_id}      
+   </update>
+
+
+
 	<!-- 비밀번호 찾기 기능 -->
 	<select id="findUserByNameAndId"
 		resultType="com.project2.domain.UserVO">

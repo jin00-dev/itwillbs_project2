@@ -5,7 +5,12 @@
 <script>
     var msg = "<c:out value='${msg}'/>";
     var url = "<c:out value='${url}'/>";
-    alert(msg);
+    if(msg != null){
+	    alert(msg);
+    }
+    if(url != null){
     location.href = url;
+    	
+    }
 </script>
 </html>

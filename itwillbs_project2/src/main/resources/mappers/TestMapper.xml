@@ -55,7 +55,7 @@
 	
 	<insert id="insertReport">
 		insert into user_report 
-		values(default, #{rev_num}, #{user_num}, #{report_user_num},#{report_content}, default, default,default )
+		values(default, #{rev_num}, #{user_num}, #{report_user_num},#{report_content}, default, default,default)
 	</insert>
 	
 	<select id="getRevUserNum" resultType="int">

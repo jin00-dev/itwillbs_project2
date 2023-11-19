@@ -102,6 +102,13 @@ public class UserServiceImpl implements UserService {
 	public int phoneCheck(String phone) {
 		return 0;
 	}
+	
+	//회원비번 변경
+		@Override                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+		public int pwUpdate(String user_id, String hashedPw){
+			return udao.pwUpdate(user_id, hashedPw);
+		}
+	
 
 	// 비밀번호 찾기
 	@Override
@@ -116,15 +123,20 @@ public class UserServiceImpl implements UserService {
 		userDAO.updateUserPassword(userId, newPassword);
 	}
 
-	// 회원정보 탈퇴
+	// 회원정보 탈퇴상태로 변경
 	@Override
-	public int userDelete(UserVO deleteVO) {
-		logger.debug(" userDelete(deleteVO) 호출 ");
-
-		int result = udao.deleteUser(deleteVO);
-
-		return result;
+	public Integer updateState(UserVO updateVO) {
+		logger.debug(" updateState 호출 ");
+		logger.debug("@@@@@vo :"+updateVO);
+		
+		if(updateVO.getUser_delete_state() == 0) {
+			UserVO currentUser = userDAO.getUser(updateVO.getUser_id());
+			updateVO.setUser_delete_state(currentUser.getUser_delete_state());
+		}
+		
+		return userDAO.updateState(updateVO);
 	}
+
 
 	// 회원목록 + 페이징 처리
 	@Override
@@ -189,6 +201,13 @@ public class UserServiceImpl implements UserService {
 	public int userDeleteById(String user_id) {
 		logger.debug("userDeleteById() 호출");
 		return userDAO.userDeleteById(user_id);
+	}
+
+	// 비밀번호 변경 전 아이디 이름 확인 
+	@Override
+	public UserVO findPw(UserVO vo) {
+		logger.debug("findPw(vo) 호출");
+		return userDAO.findPw(vo);
 	}
 
 }

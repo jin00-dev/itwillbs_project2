@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../include/header.jsp"%>
-
 
 <div class="row justify-content-center">
 	<div
@@ -43,24 +42,23 @@
 					<h5 class="card-title text-center pb-0 fs-4">비밀번호 찾기</h5>
 				</div>
 
-				<form class="row g-3 needs-validation" action="/user/findPassword" method="post">
+				<form class="row g-3 needs-validation" action="/user/findPw" method="post">
 
 					<div class="col-12">
 						<label for="yourUsername" class="form-label">이름</label>
 						<div class="input-group has-validation">
-							<input type="text" name="user_name" id="name" class="form-control" required="" placeholder="이름을 입력해주세요.">
+							<input type="text" name="user_name" id="name" class="form-control" placeholder="이름을 입력해주세요.">
 						</div>
 					</div>
 
 					<div class="col-12">
-						<label for="yourPassword" class="form-label">아이디</label> 
-						<input type="text" name="user_id" id="user_id" class="form-control" required="" placeholder="이메일 아이디를 입력해주세요.">
+						<label for="user_id" class="form-label">아이디</label> 
+						<input type="text" name="user_id" id="user_id" class="form-control" placeholder="이메일 아이디를 입력해주세요.">
 					</div>
 
 					<div class="col-12">
 						<button class="btn btn-primary w-100" type="submit">비밀번호 찾기</button>
 					</div>
-					<div class="col-12"></div>
 				</form>
 			</div>
 		</div>

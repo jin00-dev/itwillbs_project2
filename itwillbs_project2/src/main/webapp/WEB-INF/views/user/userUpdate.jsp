@@ -10,6 +10,7 @@
   padding-bottom: 180px;
 }	
 </style>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="text/javascript">
 
    $(document).ready(function() {
@@ -82,10 +83,17 @@
             
             
          }); //$("#phone).keyup 이벤트끝
+         
+      $("#userDelete").click(function(){
+     	 var userPW = $("#user_pw").val();
+       	 if(userPW == ""){
+       		 alert("비밀번호를 입력해주세요");
+       		 $("#user_pw").focus();
+       	 } 
+       		 $("#userDelete").attr("onclick", "location.href='/user/delete';");
+        });
 
    }); // $(function(){})의 끝
-
-        let openWin;
 
            function openChild() {
                // window.name = "부모창 이름"; 
@@ -102,10 +110,17 @@
    
    </script>
    
-   <c:if test="${param.msg == '0' }">
+<c:if test="${param.msg == '0' }">
    <script>
    window.onload = function() {
-        alert("비밀번호가 틀렸습니다! 다시 확인해주세요!")
+        alert("비밀번호가 틀렸습니다! 다시 확인해주세요.");
+    };
+   </script>
+</c:if>   
+<c:if test="${param.msg == '1' }">
+   <script>
+   window.onload = function() {
+        alert("회원정보 수정이 완료되었습니다.");
     };
    </script>
 </c:if>   
@@ -176,8 +191,8 @@
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary" id="userUpdate">정보수정하기</button>
-                      <button type="button" class="btn btn-primary" onclick= "location.href='/user/deleteUser';" >회원탈퇴</button>
+                      <button type="submit" class="btn btn-primary" id ="userUpdate">정보수정하기</button>
+                      <button type="button" class="btn btn-secondary" id ="userDelete" onclick= "">회원탈퇴</button>
                     </div>
                   </form>
                 </div>

@@ -231,10 +231,15 @@ public class UserController {
 	}
 		// 서비스 -> DAO 회원정보 수정
 		int result = uService.userUpdate(vo);
-		
+		ra.addAttribute("msg", "1");
 		if(result == 1) {
 			 resultVO = uService.userInfo(id);
-			 
+			 session.setAttribute("vo", resultVO); // sesison에 사용자 정보 저장
+             session.setAttribute("user_id", resultVO.getUser_id());
+             session.setAttribute("user_name", resultVO.getUser_name());
+             session.setAttribute("user_num", resultVO.getUser_num());
+             session.setAttribute("user_type", resultVO.getUser_type());
+             session.setMaxInactiveInterval(60 * 30); //세션 만료시간 설정(초단위)
 		}
 		// 페이지로 이동
 		model.addAttribute("vo", resultVO);
@@ -257,18 +262,20 @@ public class UserController {
 		// 로그인 제어(생략)
 		// 전달정보 저장(아이디,비밀번호)
 		logger.debug(" vo : " + vo);
-
+		UserVO updateVO = uService.userInfo(vo.getUser_id());
 		// 서비스 -> DAO 회원정보 탈퇴 메서드
-		int result = uService.userDelete(vo);
-
-		// 페이지 이동(결과에 따른 이동)
-		if (result == 1) { // 삭제 성공
-			// 회원의 로그인 세션제거
-			session.invalidate();
-			return "redirect:/user/userMain";
+		int result = 0;
+		if (passEncoder.matches(vo.getUser_pw(), updateVO.getUser_pw())) {
+			result = uService.updateState(updateVO);
+		} else { 
+			//회원탈퇴 실패
+			return "redirect:/user/update";
 		}
-		// 삭제 실패(result == 0)
-		return "redirect:/user/delete";
+		// 회원의 로그인 세션제거
+		if (result == 1) {
+			session.invalidate();
+		}
+		return "redirect:/";
 	}
 
 	// 회원목록 조회GET
@@ -343,16 +350,21 @@ public class UserController {
 
 	@RequestMapping(value = "/findId", method = RequestMethod.POST)
 	public String findUserId(@RequestParam("user_name") String user_name, @RequestParam("user_phone") String user_phone,
-			Model model, HttpSession session) {
+			Model model, HttpSession session, HttpServletRequest req) {
 		UserVO user = uService.findUserByNameAndPhone(user_name, user_phone);
 
 		if (user != null) {
 			model.addAttribute("userId", user.getUser_id());
+			logger.debug("@@@@ 회원정보 일치, userId : " + user.getUser_id());
+			return "/user/findIdResult"; // 아이디 찾기 결과 뷰 페이지로 이동
 		} else {
-			model.addAttribute("message", "일치하는 아이디를 찾을 수 없습니다.");
+			req.setAttribute("msg", "일치하는 정보를 찾을 수 없습니다.");
+			req.setAttribute("url", "/user/findId");
+			logger.debug("@@@@ 회원정보 불일치 ");
+			return "/user/userAlert";
 		}
 
-		return "/user/findIdResult"; // 아이디 찾기 결과 뷰 페이지로 이동
+		
 	}
 	
 	//신고 리스트 
@@ -437,6 +449,64 @@ public class UserController {
 	    return "redirect:/user/userDetail";
 	}
 
+	////////////////////////////////////////////////// 비밀번호 변경 업데이트 
+	
+	// 비밀번호 변경 전 아이디, 이름 확인
+	@RequestMapping(value = "/findPw", method = RequestMethod.POST)
+	public String findPw(UserVO vo, HttpServletRequest req, String user_id, HttpSession session) {
+		logger.debug("findPw(vo) 호출");
+		logger.debug("user_id : " + vo.getUser_id());
+		logger.debug("user_name : " + vo.getUser_name());
+		
+		UserVO result = uService.findPw(vo);
+		user_id = vo.getUser_id(); 
+		logger.debug("result : " + result);
+		
+		if(result != null) {
+			// 아이디 이름 확인 완료
+			session.setAttribute("user_id", user_id);
+			return "/user/changePw";
+		}
+			// 아이디 이름 일치하지 않음 
+			req.setAttribute("url", "/user/findId");
+			req.setAttribute("msg", "정보가 일치하지 않습니다.");
+			return "/user/userAlert";
+	}
+	
+	
+	// 비밀번호 변경
+	
+			@RequestMapping(value="/pwUpdate" , method=RequestMethod.POST)
+			public String pwUpdate(UserVO vo,
+									HttpServletRequest req,
+									String user_id,
+									String user_pw2,
+									HttpSession session
+									)throws Exception{
+				String hashedPw = passEncoder.encode(user_pw2);
+				logger.debug("@@@@user_id : "+ user_id);
+				logger.debug("@@@@ user_pw : "+user_pw2);
+				int result = uService.pwUpdate(user_id, hashedPw);
+
+				if(result == 1) {
+					logger.debug("비밀번호 변경 성공");
+					req.setAttribute("url", "/user/login");
+					req.setAttribute("msg", "비밀번호가 변경되었습니다.");
+					session.invalidate();
+					return "/user/userAlert";
+				}
+					logger.debug("비밀번호 변경 실패");
+					req.setAttribute("url", "/user/findId");
+					req.setAttribute("msg", "비밀번호 변경에 실패했습니다.");
+					session.invalidate();
+				
+				return "user/userAlert";
+			}
+	
+	
+	
+	////////////////////////////////////////////////// 비밀번호 변경 업데이트 
+	
 	// 비번찾기
 	@RequestMapping(value = "/findPassword")
 	public String showFindPwPage() {
@@ -446,7 +516,7 @@ public class UserController {
 	// 비밀번호 찾기 기능
 	@RequestMapping(value = "/findPassword", method = RequestMethod.POST)
 	public String findPassword(@RequestParam("user_name") String user_name, @RequestParam("user_id") String user_id,
-			Model model) {
+			Model model, HttpServletRequest req) {
 		// 이름과 아이디로 사용자 정보 조회
 		UserVO user = uService.findUserByNameAndId(user_name, user_id);
 
@@ -455,15 +525,15 @@ public class UserController {
 			String newPassword = generateRandomPassword();
 			String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
 			user.setUser_pw(hashedPassword);
-			uService.userUpdate(user);
 
 			// 생성된 비밀번호를 사용자에게 전송하거나, 다른 방법으로 제공할 수 있음
 			model.addAttribute("newPassword", newPassword);
 			return "/user/changePw"; // 비밀번호 표시 페이지로 이동
 		} else {
 			// 사용자 정보가 일치하지 않으면 에러 메시지 등을 처리할 수 있도록 하세요.
-			model.addAttribute("error", "일치하는 정보를 찾을 수 없습니다.");
-			return "/user/PwX";
+			req.setAttribute("msg", "일치하는 정보를 찾을 수 없습니다.");
+			req.setAttribute("url", "/user/findId");
+			return "/user/userAlert";
 		}
 	}
 
@@ -474,19 +544,18 @@ public class UserController {
 
 	// 새비번
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-		
 		    public String changePassword(
 		            @RequestParam("user_name") String userName,
-		            @RequestParam("user_id") String userId,
-		            @RequestParam("new_password") String newPassword,
+		            @RequestParam("user_id") String user_id,
+		            @RequestParam("new_password") String user_pw,
 		            @RequestParam("confirm_password") String confirmPassword,
 		            Model model) {
 
 		        // 비밀번호 유효성 검사 등을 수행할 수 있습니다.
 
-		        if (newPassword.equals(confirmPassword)) {
+		        if (user_pw.equals(confirmPassword)) {
 		            // 비밀번호가 일치하면 비밀번호 변경 수행
-		            uService.changePassword(userId, newPassword);
+		            uService.changePassword(user_id, user_pw);
 
 		            // 변경 성공 메시지를 모델에 추가
 		            model.addAttribute("success", "비밀번호가 성공적으로 변경되었습니다.");
