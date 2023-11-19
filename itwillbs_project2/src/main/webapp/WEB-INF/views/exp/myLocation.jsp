@@ -155,7 +155,7 @@
 				    expList += '<div class="container-fluid border" style="min-width: 300px" >';
 					expList += '    <div class="row justify-content-center" style="cursor:pointer;" >';
 					expList += '        <div class="col-6 m-3" '+href+'>';
-					expList += '            <img class="card-img-top" src="/exp/thumbDownload?fileName='+i.exp_summary_img+'&wid=150&hei=100" style="height: 200px;" alt="이미지 설명">';
+					expList += '            <img class="card-img-top" src="/exp/thumbDownload?fileName='+i.exp_summary_img+'&wid=268&hei=200" style="height: 200px;" alt="이미지 설명">';
 					expList += '        </div>';
 					expList += '        <div class="col-6 m-3" '+href+' >';
 					expList += '            <div class="p-3 text-center">';

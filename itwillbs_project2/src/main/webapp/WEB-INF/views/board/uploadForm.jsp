@@ -31,7 +31,7 @@
 </style>
 
 <div class="container mt-5">
-	<h2>클래스 등롥</h2>
+	<h2>클래스 등록</h2>
 	<form action="/board/fileUpload" method="post"
 		enctype="multipart/form-data">
 

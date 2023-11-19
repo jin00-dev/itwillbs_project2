@@ -36,6 +36,33 @@
 		group by e.exp_num
 		order by ${exp_ad_state};
 	</select>
+	
+	<select id="expListAllCategory" resultType="ExpVO">
+		select e.exp_num,
+		e.user_num,e.exp_name,e.exp_start_date,exp_end_date,
+		e.exp_price,e.exp_region,e.exp_category,e.exp_capacity,
+		e.exp_ad_state,e.exp_summary_img,e.exp_detail_img,
+		e.exp_ad_state,avg(r.rev_star) "rev_avgStar"
+		from experience e
+		left join review r
+		on e.exp_num = r.exp_num
+		where substr(e.exp_region,1,2) in (#{exp_region},#{exp_name})
+		group by e.exp_num
+		order by ${exp_ad_state};
+	</select>
+	
+	<select id="expListAllMain" resultType="ExpVO">
+		select e.exp_num,
+		e.user_num,e.exp_name,e.exp_start_date,exp_end_date,
+		e.exp_price,e.exp_region,e.exp_category,e.exp_capacity,
+		e.exp_ad_state,e.exp_summary_img,e.exp_detail_img,
+		e.exp_ad_state,avg(r.rev_star) "rev_avgStar"
+		from experience e
+		left join review r
+		on e.exp_num = r.exp_num
+		group by e.exp_num
+		order by ${exp_ad_state};
+	</select>
 
 	<select id="expOne" resultType="ExpVO">
 		select * from experience

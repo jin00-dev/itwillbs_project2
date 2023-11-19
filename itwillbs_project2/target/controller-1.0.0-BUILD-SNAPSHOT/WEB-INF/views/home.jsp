@@ -9,7 +9,8 @@
 
 	<div>
 		<ul class="nav nav-underline justify-content-center">
-			<li class="nav-item"><a class="nav-link ${param.category == '공예' || param.category == null || param.category == '' ? 'active' : ''}" href="/?category=공예" id="clicked1" >공예</a></li>
+			<li class="nav-item"><a class="nav-link ${param.category == '전체' || param.category == null || param.category == '' ? 'active' : ''}" href="/?category=전체" id="clicked1" >전체</a></li>
+			<li class="nav-item"><a class="nav-link ${param.category == '공예' ? 'active' : ''}" href="/?category=공예" >공예</a></li>
 			<li class="nav-item"><a class="nav-link ${param.category == '운동' ? 'active' : ''}" href="/?category=운동">운동</a></li>
 			<li class="nav-item"><a class="nav-link ${param.category == '쿠킹' ? 'active' : ''}" href="/?category=쿠킹">쿠킹</a></li>
 			<li class="nav-item"><a class="nav-link ${param.category == '뷰티' ? 'active' : ''}" href="/?category=뷰티">뷰티</a></li>
@@ -56,7 +57,7 @@
 								<div class="col mb-5" style="cursor:pointer;" onclick="location.href='/exp/info?exp_num=${list.exp_num}';">
 									<div class="card h-100">
 										<!-- Product image-->
-											<img class="card-img-top" src="/exp/thumbDownload?fileName=${list.exp_summary_img}&wid=150&hei=100" style="height: 200px;" alt="이미지 설명">
+											<img class="card-img-top" src="/exp/thumbDownload?fileName=${list.exp_summary_img}&wid=268&hei=200" style="height: 200px;" alt="이미지 설명">
 <!-- 										<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /> -->
 										<!-- Product details-->
 										<div class="card-body p-4">
@@ -98,7 +99,7 @@
 								<div class="card h-100">
 									<!-- Product image-->
 <!-- 									<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /> -->
-										<img class="card-img-top" src="/exp/thumbDownload?fileName=${list.exp_summary_img}&wid=150&hei=100" style="height: 200px;" alt="이미지 설명">
+										<img class="card-img-top" src="/exp/thumbDownload?fileName=${list.exp_summary_img}&wid=268&hei=200" style="height: 200px;" alt="이미지 설명">
 									<!-- Product details-->
 									<div class="card-body p-4">
 										<div class="text-center">
@@ -132,37 +133,3 @@
 </section>
 <!-- footer -->
 <%@include file="./include/footer.jsp"%>
-<!-- script  -->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript">
-
-//클래스 세부 카테고리 동작----------------------------------------------------
-/*$('#category a[class="nav-link"]').hover(function(){
-	$(this).css('font-weight','900');
-},function(){
-	 // 마우스를 뗐을 때, 클릭된 링크는 빨간색을 유지하고 나머지는 파란색으로 변경
-    $('#category a[class="nav-link"]').not('#clicked1').css('font-weight','100');
-});
-//클래스 세부 내역 클릭시
-$('#category a[class="nav-link"]').click(function(){
-	// 모든 링크의 아이디를 "clicked"로 변경
-	$('#category a[class="nav-link"]').removeAttr('id','clicked1');
-	$(this).attr('id','clicked1');
-});
-
-//지역 선택창 동작---------------------------------------------------------------
-$('#region a[class="nav-link"]').hover(function() {
-        $(this).css('color', 'red');
-    }, function() {
-        // 마우스를 뗐을 때, 클릭된 링크는 빨간색을 유지하고 나머지는 파란색으로 변경
-        $('#region a[class="nav-link"]').not('#clicked2').css('color', 'blue');
-    });
-
-// 클릭 이벤트 핸들러
-$('#region a[class="nav-link"]').click(function() {
-    // 모든 링크의 아이디를 "clicked"로 변경
-    $('#region a[class="nav-link"]').removeAttr('id','clicked2');
-    $(this).attr('id','clicked2');
-});
-*/
-</script>
