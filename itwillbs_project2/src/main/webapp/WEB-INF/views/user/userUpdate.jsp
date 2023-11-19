@@ -12,12 +12,33 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
 
-						//모든 공백 체크 정규식
-						var empJ = /\s/g;
+   $(document).ready(function() {
+      
+      //모든 공백 체크 정규식
+      var empJ = /\s/g;
+      
+      // 휴대폰 번호 정규식
+      var phoneJ = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+      
+      var phoneCheck = false;
+      
+      // 핸드폰 번호 유효성 검사
+      $("#phone").keyup(function() {
+         phoneCheck = false;
+         var phone = $(this).val();
+         // 공백 문자 처리
+         phone = $.trim(콜);
+         $("#phone").val(콜);
+      
+         
+         // 11자 미만 처리
+         if (phone.length < 11) {
+            $("#phoneCheckDiv").removeClass("alert-success");
+            $("#phoneCheckDiv").addClass("alert-danger");
+            $("#phoneCheckDiv").text("핸드폰번호는 12자 이상 이여야 합니다.");
+            return;
+         }
 
          // 14자 초과
          if (phone.length > 14) {
@@ -71,7 +92,8 @@
        	 } 
        		 $("#userDelete").attr("onclick", "location.href='/user/delete';");
         });
-						var phoneCheck = false;
+
+   }); // $(function(){})의 끝
 
            function openChild() {
                // window.name = "부모창 이름"; 
@@ -102,6 +124,7 @@
     };
    </script>
 </c:if>   
+ 
 
 
 <!-- 로그인 정보가 없으면 로그인 페이지로 이동 -->
@@ -170,7 +193,7 @@
 
 						<div class="text-center">
 							<button type="submit" class="btn btn-primary" id="userUpdate">정보수정하기</button>
-							<button type="button" class="btn btn-primary" onclick="location.href='/user/deleteUser';">회원탈퇴</button>
+							<button type="button" class="btn btn-primary" id="userDelete" onclick="">회원탈퇴</button>
 						</div>
 					</form>
 				</div>
