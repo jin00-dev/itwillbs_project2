@@ -421,7 +421,7 @@
 				<button type="submit" class="btn btn-primary infoModBtn pull-right"
 					id="joinButton">회원가입</button>
 				<a type="button" class="btn btn-primary infoModBtn pull-right"
-					href="../user/userMain">취소</a>
+					href="../">취소</a>
 			</div>
 		</div>
 	</form>
