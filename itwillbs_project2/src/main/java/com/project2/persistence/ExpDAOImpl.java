@@ -43,6 +43,12 @@ public class ExpDAOImpl {
 	public List<ExpVO> getExpList(ExpVO vo) throws Exception {
 		logger.debug(" DAOImpl : getExpList(조건) 호출");
 		
+		if(vo.getExp_category().equals("전체") && vo.getExp_region().equals("전체")) {
+			return sqlSession.selectList(NAMESPACE + "expListAllMain", vo);
+		}
+		if(vo.getExp_category().equals("전체")) {
+			return sqlSession.selectList(NAMESPACE + "expListAllCategory", vo);
+		}
 		if(vo.getExp_region().equals("전체")) {
 			return sqlSession.selectList(NAMESPACE + "expListAllRegion", vo);
 		}

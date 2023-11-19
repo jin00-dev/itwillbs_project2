@@ -34,7 +34,6 @@ public class MainController {
 			String category,String region1,String region2, String sort, Criteria cri,
 			HttpSession session,HttpServletRequest req) throws Exception{
 		
-		logger.debug("@@@@@@@@@@@"+ req.getRealPath("\\upload"));
 		ExpVO vo = new ExpVO();
 		
 		//category exp_category
@@ -42,7 +41,7 @@ public class MainController {
 		//sort exp_ad_state 1(cnt), 2(star), 3(price desc), 4(price asc)
 		
 		if(category == null || category == "") {
-			vo.setExp_category("공예");
+			vo.setExp_category("전체");
 		}else {
 			vo.setExp_category(category);
 		}

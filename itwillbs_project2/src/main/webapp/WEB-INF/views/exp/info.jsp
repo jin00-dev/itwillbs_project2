@@ -533,7 +533,9 @@
 				quantity : $('totalQuantityValue').val(),
 	            buyer_email : '${userVO.user_id}',
 	            buyer_name : '${userVO.user_name}',
-	            buyer_tel : '${userVO.user_phone}'
+	            buyer_tel : '${userVO.user_phone}',
+	            //m_redirect_url : 'http://c6d2305t2.itwillbs.com/exp/info?exp_num=${param.exp_num}',
+	            app_scheme : 'http://c6d2305t2.itwillbs.com/exp/info?exp_num=${param.exp_num}'	
 	            //buyer_addr : '서울특별시 강남구 삼성동',
 	            //buyer_postcode : '123-456'
 	        }, function (rsp) { // callback
