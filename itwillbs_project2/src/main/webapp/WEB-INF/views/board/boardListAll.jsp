@@ -42,14 +42,6 @@
 			<a href="/board/insert" class="btn btn-primary mb-3">글쓰기</a>
 			</c:if>
 			
-			<!-- 검색 바 -->
-			<form class="form-inline my-2 my-lg-0" action="/board/boardSearch"
-				method="get">
-				<input class="form-control mr-sm-2" type="search" placeholder="검색"
-					aria-label="Search" name="searchTerm">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-			</form>
-
 			<c:if
 				test="${sessionScope.user_id != null and sessionScope.user_type.equals(2)}">
 				<a href="/board/insert" class="btn btn-primary mb-3">글쓰기</a>

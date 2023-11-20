@@ -17,7 +17,7 @@
   }
   #searchbar{
   width : 70%;
-  margin-left : 16em;
+  margin-left : 30em;
   margin-top : 5%;
   }
   .navbar-brand{

@@ -4,44 +4,59 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
-.notice-detail{background:#fff;padding:20px;margin:20px auto;max-width:800px;border:1px solid #ddd;border-radius:5px;box-shadow:0 0 10px rgba(0,0,0,.1)}.notice-detail h3{border-bottom:2px solid #e65c00;color:#555;padding-bottom:10px;margin-bottom:20px}.notice-detail div,.notice-detail h5,.notice-detail hr{margin-bottom:10px}.notice-detail h5{color:#333}.notice-detail button{background:#f76b1c;color:#fff;border:0;padding:3px 6px;margin-right:10px;border-radius:5px;cursor:pointer}.notice-detail button:hover{background:#e65c00}.notice-detail form{display:inline}.notice-detail .title-date{display:flex;justify-content:space-between;align-items:center}.notice-detail .title-date h5{margin:0}.notice-detail hr{border:0;height:1px;background-color:#333;margin-top:10px}.notice-detail .content{padding-top:10px}.enf_title{font-weight:600;font-size:18px}.notice{font-weight:700}
+.notice-detail h3.notice{color:#495057;border-bottom:2px solid #007bff;padding-bottom:.5rem}.title-date{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}.title-date h6{margin-bottom:0;font-size:1.25rem;font-weight:500;color:#007bff}.title-date span{font-size:.875rem;color:#6c757d}hr{margin-top:0;margin-bottom:1rem}.content{white-space:pre-wrap;background:#f8f9fa;border:1px solid #e9ecef;padding:1rem;border-radius:.25rem;margin-bottom:1rem}.content pre{margin-bottom:0}.notice-detail button{font-size:.875rem;border:none;transition:background-color .15s ease-in-out}#btnList{background-color:#6c757d;color:#fff}#btnDelete,#btnUpdate{background-color:#007bff;color:#fff}.notice-detail button:hover{filter:brightness(90%)}.notice-detail button:not(:disabled):not(.disabled):hover{box-shadow:0 .5rem 1rem rgba(0,0,0,.15)}
+.shift-left{margin-left:-10px}
 </style>
+
+
+
 
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 
-<div class="notice-detail">
-	<h3 class="notice">공지사항</h3>
+<div class="container mt-5">
+	<div class="row">
+		<!-- 사이드바 -->
+		<div class="col-md-3 shift-left">
+			<div class="list-group mb-4 h-100">
+				<h5 class="list-group-item list-group-item-action active"
+					aria-current="true">고객지원</h5>
+				<a href="/board/boardListAll"
+					class="list-group-item list-group-item-action">공지사항</a> <a
+					href="/board/faqListAll"
+					class="list-group-item list-group-item-action">자주 묻는 질문</a> <a
+					href="/board/" class="list-group-item list-group-item-action">1:1문의</a>
+			</div>
+		</div>
 
-
-	<div class="title-date">
-		<h6 class="enf_title">${resultVO.enf_title}</h6>
-
-		<span>작성일: <fmt:formatDate value="${resultVO.enf_regdate}"
-				pattern="yyyy-MM-dd" /></span>
-	</div>
-	<hr>
-
-
-	<div class="content">
-		<p>
-			<c:out value="${resultVO.enf_content}" />
-		</p>
-	</div>
-
-	<form id="actionForm" method="POST">
-		<input type="hidden" name="enf_notice_num"
-			value="${resultVO.enf_notice_num}">
-	</form>
-
-
-	<div>
-		<button id="btnList">목록</button>
-		<c:if test="${user_type eq 2}">
-		<button id="btnUpdate">수정</button>
-		<button id="btnDelete">삭제</button>
-		</c:if>
+		<!-- 공지사항 상세 정보 -->
+		<div class="col-md-9 shift-left">
+			<div class="notice-detail">
+				<h3 class="notice">공지사항</h3>
+				<div class="title-date">
+					<h6 class="enf_title">${resultVO.enf_title}</h6>
+					<span>작성일: <fmt:formatDate value="${resultVO.enf_regdate}"
+							pattern="yyyy-MM-dd" /></span>
+				</div>
+				<hr>
+				<div class="content">
+					<pre>
+						<c:out value="${resultVO.enf_content}" />
+					</pre>
+				</div>
+				<form id="actionForm" method="POST">
+					<input type="hidden" name="enf_notice_num"
+						value="${resultVO.enf_notice_num}">
+				</form>
+				<div>
+					<button id="btnList">목록</button>
+					<button id="btnUpdate">수정</button>
+					<button id="btnDelete">삭제</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
+
 
 <!-- footer -->
 <%@include file="/WEB-INF/views/include/footer.jsp"%>

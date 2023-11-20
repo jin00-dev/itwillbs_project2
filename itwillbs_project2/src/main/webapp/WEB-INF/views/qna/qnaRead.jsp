@@ -105,7 +105,7 @@
 	$(document).ready(function() {
 		// 목록 버튼 클릭 이벤트
 		$('#btnList').click(function() {
-			location.href = '/qna/adminQnaListPage';
+			location.href = 'qnaListAll';
 		});
 
 		// 수정 버튼 클릭 이벤트
@@ -123,13 +123,21 @@
 
 		// 답변 삭제 버튼 클릭 이벤트
 		$('#bbtnDelete').click(function() {
+			// 답변 내용을 검사
+			var answerContent = "${resultVO.qna_answer}";
+
+			// 답변 내용이 비어있는지 확인
+			if (!answerContent.trim()) {
+				alert('답변이 없습니다.');
+				return false; // 이벤트 중단
+			}
+
 			if (confirm('답변을 정말 삭제하시겠습니까?')) {
 				// form의 action을 설정하고 서버로 POST 요청을 보냄
 				$('#actionForm').attr('action', '/qna/removeAnswer').submit();
 			}
 		});
 	});
-</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.9.3/dist/umd/popper.min.js"></script>

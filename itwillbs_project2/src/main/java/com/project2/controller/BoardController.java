@@ -51,7 +51,7 @@ public class BoardController {
 		if (!file.isEmpty()) {
 			// 실제 서버의 경로 얻기
 			String realPath = request.getSession().getServletContext().getRealPath("/");
-			String uploadPath = realPath + "/upload/event_img/";
+			String uploadPath = realPath + "resources/event_img/";
 
 			// 디렉토리 생성 시도
 			File uploadDir = new File(uploadPath);
@@ -190,12 +190,23 @@ public class BoardController {
 	}
 
 	// 공지사항 검색
-	@RequestMapping(value = "/boardSearch", method = RequestMethod.GET)
-	public String search(@RequestParam("searchTerm") String searchTerm, Model model) {
-		List<BoardVO> searchResults = bService.searchByTitle(searchTerm);
-		model.addAttribute("boardList", searchResults);
-		return "/board/boardListAll"; // 검색 결과를 표시하는 뷰
-	}
+    @RequestMapping(value = "/boardSearch", method = RequestMethod.GET)
+    public String boardSearch(@RequestParam("searchTerm") String searchTerm, Model model, Criteria cri) throws Exception {
+        List<BoardVO> searchResults = bService.searchByTitle(searchTerm);
+        logger.debug("Search results: " + searchResults);
+        model.addAttribute("searchResults", searchResults);
+
+        // 전체 공지사항 목록 추가
+        List<BoardVO> boardListAll = bService.listAll();
+        model.addAttribute("boardListAll", boardListAll);
+
+        // 고정할 공지의 번호 목록
+        List<Integer> pinnedNotices = Arrays.asList(1);
+        model.addAttribute("pinnedNotices", pinnedNotices);
+
+        return "board/boardSearchList"; // 검색 결과를 표시하는 뷰
+    }
+
 
 	// 게시판 목록조회(페이징처리)
 	@RequestMapping(value = "/boardListPage", method = RequestMethod.GET)
@@ -311,7 +322,7 @@ public class BoardController {
 		if (file != null && !file.isEmpty()) {
 			// 파일이 있으면, 새로운 이미지로 교체
 			String rootPath = request.getSession().getServletContext().getRealPath("/");
-			String uploadPath = rootPath + "/upload/event_img/";
+			String uploadPath = rootPath + "resources/event_img/";
 
 			String originalFileName = file.getOriginalFilename();
 			String filePath = uploadPath + originalFileName;
@@ -505,7 +516,7 @@ public class BoardController {
 		model.addAttribute("faqList", faqList);
 
 	}
- 
+
 	/////////////////////////// 클래스 글쓰기 ////////////////////////
 
 	// http://localhost:8088/board/uploadForm
@@ -518,15 +529,15 @@ public class BoardController {
 
 	// 파일 업로드 처리
 	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
-	public String fileUploadPOST(MultipartHttpServletRequest multiRequest, 
-			HttpServletResponse response, HttpServletRequest request, Model model, HttpSession session) throws Exception {
+	public String fileUploadPOST(MultipartHttpServletRequest multiRequest, HttpServletResponse response,
+			HttpServletRequest request, Model model, HttpSession session) throws Exception {
 		logger.debug(" fileUploadPOST() 실행 ");
 
 		ExpVO vo = new ExpVO();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		MultipartFile files = multiRequest.getFile("exp_detail_img");
-		vo.setExp_detail_img((files.getOriginalFilename())); 
+		vo.setExp_detail_img((files.getOriginalFilename()));
 
 		MultipartFile files1 = multiRequest.getFile("exp_summary_img");
 		vo.setExp_summary_img((files1.getOriginalFilename()));
@@ -534,15 +545,15 @@ public class BoardController {
 		vo.setExp_phone(multiRequest.getParameter("exp_phone"));
 		vo.setExp_place(multiRequest.getParameter("exp_place"));
 		vo.setExp_name(multiRequest.getParameter("exp_name"));
-		
+
 		String startDateStr = multiRequest.getParameter("exp_start_date");
 		Date parsedDate = java.sql.Date.valueOf(startDateStr);
 		vo.setExp_start_date(new Timestamp(parsedDate.getTime()));
- 
+
 		String endDateStr = multiRequest.getParameter("exp_end_date");
 		Date parsedEndDate = java.sql.Date.valueOf(endDateStr);
 		vo.setExp_end_date(new Timestamp(parsedEndDate.getTime()));
-		
+
 		vo.setExp_inout(Integer.parseInt(multiRequest.getParameter("exp_inout")));
 		vo.setExp_price((Integer.parseInt(multiRequest.getParameter("exp_price"))));
 		vo.setExp_region(multiRequest.getParameter("exp_region"));
@@ -550,15 +561,13 @@ public class BoardController {
 		vo.setExp_capacity((Integer.parseInt(multiRequest.getParameter("exp_capacity"))));
 
 		multiRequest.setCharacterEncoding("UTF-8");
-		
+
 		// 로그인 세션
 		int userNum = Integer.parseInt(String.valueOf(session.getAttribute("user_num")));
 		vo.setUser_num(userNum);
-		
 
 		// 1. 전달정보(파라메터) 저장
 		Map paramMap = new HashMap();
-		
 
 		Enumeration enu = multiRequest.getParameterNames();
 		while (enu.hasMoreElements()) {
@@ -607,8 +616,8 @@ public class BoardController {
 
 			// 업로드 저장경로 생성 /WEB-INF/upload (가상경로)
 			// 임시저장된 파일을 생성하기 위한 준비 (실제파일 생성)
-			File file = new File(multiRequest.getRealPath("/upload") +"/" + fileName);
-			logger.debug(" realPath : " + multiRequest.getRealPath("/upload"));
+			File file = new File(multiRequest.getRealPath("\\upload") + "\\" + fileName);
+			logger.debug(" realPath : " + multiRequest.getRealPath("\\upload"));
 			if (mFile.getSize() != 0) { // 첨부파일(업로드한 임시파일)이 존재할때 진행
 				if (!file.exists()) { // 해당파일이 존재하는지 체크
 					// 해당경로에 파일이 없을경우,자동으로 폴더 생성후 진행
@@ -620,7 +629,7 @@ public class BoardController {
 				}
 				// 임시로 생성된(저장된) 파일mFile -> 실제파일로 데이터 전송
 				// mFile.transferTo(new File("D:\\springupload2\\"+oFileName));
-				mFile.transferTo(new File(multiRequest.getRealPath("/upload") +"/" + oFileName));
+				mFile.transferTo(new File(multiRequest.getRealPath("\\upload") + "\\" + oFileName));
 			}
 			logger.debug(" 파일 업로드 성공! ");
 

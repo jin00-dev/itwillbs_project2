@@ -5,7 +5,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.project2.mapper.BoardMapper">
-
+ 
 	<!-- 컬럼명과 VO객체를 매핑설정(기본값 생략) -->
 	<resultMap type="com.project2.domain.BoardVO" id="boardMap">
 		<result property="enf_notice_num" column="enf_notice_num" />
@@ -116,6 +116,7 @@
 		OR enf_content LIKE CONCAT('%', #{searchTerm}, '%'))
 		AND
 		enf_category = 1
+		ORDER BY enf_regdate DESC 
 	</select>
 
 	<select id="getMaxEnfEventNum" resultType="int">
@@ -303,9 +304,12 @@
 		exp_capacity, exp_inout, exp_summary_img,
 		exp_detail_img)
 		values
-		(default, #{user_num}, #{exp_phone}, #{exp_place}, #{exp_name},
-		#{exp_start_date}, #{exp_end_date}, #{exp_price}, #{exp_region},
-		#{exp_category},#{exp_capacity}, #{exp_inout}, #{exp_summary_img},
+		(default, #{user_num}, #{exp_phone},
+		#{exp_place}, #{exp_name},
+		#{exp_start_date}, #{exp_end_date},
+		#{exp_price}, #{exp_region},
+		#{exp_category},#{exp_capacity},
+		#{exp_inout}, #{exp_summary_img},
 		#{exp_detail_img})
 	</insert>
 	<!-- 클래스 등록 insert -->

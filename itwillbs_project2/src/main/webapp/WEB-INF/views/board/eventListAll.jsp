@@ -6,32 +6,19 @@
 <!-- Bootstrap CSS 추가 -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <style>
- /* 제목 링크의 기본 스타일 제거 */
-  .card-title a {
-    color: inherit;
-    text-decoration: none;
-  }
-  /* 모든 이미지의 크기를 통일 */
-  .card-img-top {
-    width: 100%;
-    height: 200px; /* 원하는 높이로 설정 */
-    object-fit: contain; /* 이미지를 카드 안에 맞게 조정 */
-    background-color: #f8f9fa; /* 이미지 뒷배경 색상 설정 */
-  }
-  
-  /* footer 고정  */
-  .abx{
+	@font-face{font-family:KBO-Dia-Gothic_bold;src:url(https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/KBO-Dia-Gothic_bold.woff) format('woff');font-weight:700;font-style:normal}.card-title a{color:inherit;text-decoration:none}.card-img-top{width:100%;height:200px;object-fit:contain;background-color:#f8f9fa}.eh3{font-family:KBO-Dia-Gothic_bold;margin-top:50px}
+.abx{
   height: auto;
   min-height: 100%;
   padding-bottom: 180px;
-}	
+}
 </style>
 
 <!-- header -->
 <%@include file="/WEB-INF/views/include/header.jsp"%>
 
 
-<h1 class="text-center mb-4">이벤트 게시판</h1>
+<h2 class="text-center mb-4 eh3">이벤트 게시판</h2>
 
 <div class="container abx">
 <c:if test="${user_type eq 2}">
