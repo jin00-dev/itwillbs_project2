@@ -1,5 +1,13 @@
 package com.project2.controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,7 +30,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.project2.domain.Criteria;
+import com.project2.domain.UserVO;
 import com.project2.domain.PageVO;
 import com.project2.domain.ReportVO;
 import com.project2.domain.UserVO;
@@ -37,7 +48,7 @@ public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	@Inject
+	@Autowired
 	private UserService uService;
 	
 	// 메일 관련 서비스 주입
@@ -47,6 +58,9 @@ public class UserController {
 	@Autowired
     private BCryptPasswordEncoder passEncoder;
 	
+	// HttpSession 클래스 주입.
+	@Autowired
+	private HttpSession session;
 	
 	// 회원가입 약관 페이지로 이동
 		@RequestMapping(value="/clouse")
@@ -567,5 +581,48 @@ public class UserController {
 		        // 결과 페이지로 이동
 		        return "/user/changePasswordResult";
 		    }
+	
+	// 카카오 로그인 토큰 받기
+	@RequestMapping(value="/kakaoLogin", method=RequestMethod.GET)
+	public String kakaoLogin(@RequestParam(value = "code", required = false) String code) throws Exception {
+		System.out.println("#########" + code);
+		
+			String access_Token = uService.getAccessToken(code);
+			
+			UserVO userInfo = uService.getUserInfo(access_Token);
+		System.out.println("###access_Token#### : " + access_Token);
+		System.out.println("###nickname#### : " + userInfo.getUser_name());
+		System.out.println("###email#### : " + userInfo.getUser_id());
+			
+			// 아래 코드가 추가되는 내용
+			session.invalidate();
+			// 위 코드는 session객체에 담긴 정보를 초기화 하는 코드.
+			
+			if (userInfo != null) {
+		        session.setAttribute("user_name", userInfo.getUser_name());
+		        session.setAttribute("user_id", userInfo.getUser_id());
+		        session.setAttribute("user_type", "0");
+		        return "redirect:/";
+		    }
 
+		    return "redirect:/user/login";
+		}
+			
+			
+			//session.setAttribute("user_num", userInfo.getUser_num());
+			// 위 2개의 코드는 닉네임과 이메일을 session객체에 담는 코드
+			// jsp에서 ${sessionScope.kakaoN} 이런 형식으로 사용할 수 있다.
+			
+		//return "/user/userMain"; -404페이지 뜬다..
+		//return "/user/login"; -로그인안된상태로 토큰만?주소에뜸
+		//return "redirect:/"; -로그인안된상태로 메인이동
+			//return "redirect:/user/userMain";
+    	
+	
+	// 로그인 api 용 Main
+		@RequestMapping(value="Main", method=RequestMethod.GET)
+		public String Main(){
+			return "user/userMain";
+		}
+        
 }

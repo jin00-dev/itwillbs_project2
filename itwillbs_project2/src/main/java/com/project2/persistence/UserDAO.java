@@ -1,8 +1,10 @@
 package com.project2.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.project2.domain.Criteria;
+import com.project2.domain.KakaoVO;
 import com.project2.domain.ReportVO;
 import java.util.Map;
 
@@ -73,4 +75,17 @@ public interface UserDAO {
 
 	// 새비번
 	void updateUserPassword(String userId, String newPassword);
+
+
+	 // 카카오 사용자 정보 저장
+    void kakaoInsert(HashMap<String, Object> userInfo);
+
+    // 카카오 사용자 정보 조회
+    UserVO findKakao(HashMap<String, Object> userInfo);
+//		
+
+	public UserVO kakaoNumber(UserVO userInfo);
+		
+		
+		
 }

@@ -147,5 +147,21 @@
 		SET user_pw = #{user_pw}
 		WHERE user_id = #{user_id}
 	</update>
+	
+<!-- 	카카오 정보 찾기  -->
+	<select id="findKakao" parameterType="java.util.HashMap" resultType="com.project2.domain.UserVO">
+		<![CDATA[
+		select * from c6d2305t2_2.userTable where user_name=#{user_name} and user_id=#{user_id}
+		]]>
+	</select>
+
+<!-- 	카카오 정보 저장 --> 
+	<insert id="kakaoInsert" parameterType="java.util.HashMap">
+	<![CDATA[
+		insert into c6d2305t2_2.userTable
+			values(null,#{user_id},null,#{user_name},null,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT )
+			]]>
+	</insert>
+	
 
 </mapper>

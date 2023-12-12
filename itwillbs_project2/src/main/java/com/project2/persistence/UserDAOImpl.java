@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.project2.domain.Criteria;
+import com.project2.domain.KakaoVO;
 import com.project2.domain.ReportVO;
 import com.project2.domain.UserVO;
 
@@ -217,4 +218,22 @@ public class UserDAOImpl implements UserDAO {
 		
 		return sqlSession.selectOne(NAMESPACE + ".findUserByNameAndId", vo);
 	}
+	
+	
+	// 정보 저장
+		public void kakaoInsert(HashMap<String, Object> userInfo) {
+			
+			sqlSession.insert(NAMESPACE + ".kakaoInsert",userInfo);
+		}
+
+		// 정보 확인
+		public UserVO findKakao(HashMap<String, Object> userInfo) {
+			System.out.println("RN:"+userInfo.get("nickname"));
+			System.out.println("RE:"+userInfo.get("email"));
+			return sqlSession.selectOne(NAMESPACE + ".findKakao", userInfo);
+		}
+
+		public UserVO kakaoNumber(UserVO userInfo) {
+			return sqlSession.selectOne(NAMESPACE + ".kakaoNumber",userInfo);
+		}
 }

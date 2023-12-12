@@ -37,11 +37,21 @@
                       <input type="password" name="user_pw" id="user_pw" class="form-control" required=""  placeholder="비밀번호를 입력해주세요.">
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
-
+	
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">로그인</button>
                     </div>
-                    <div class="col-12">
+                    
+					<!-- 카카오 로그인 -->
+					<a class="p-2"
+						href="https://kauth.kakao.com/oauth/authorize?
+						client_id=b7aecba0d6b45f45c2c5b8d78a55f222&
+						redirect_uri=http://localhost:8088/user/kakaoLogin&response_type=code&prompt=select_account">
+						<img src="/resources/images/kakao_login_btn.png"
+						style="height: 60px">
+					</a>
+
+					<div class="col-12">
                       <p class="small mb-0">회원가입을 원한다면? <a href="/user/join">회원가입</a></p>
                       <p class="small mb-0">아이디나 비밀번호를 잊었습니까? <a href="/user/findId">아이디,비밀번호 찾기</a></p>
                     </div>

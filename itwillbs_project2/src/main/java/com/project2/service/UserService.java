@@ -1,8 +1,15 @@
 package com.project2.service;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 
 import com.project2.domain.Criteria;
+import com.project2.domain.KakaoVO;
 import com.project2.domain.ReportVO;
 import com.project2.domain.UserVO;
 
@@ -72,4 +79,19 @@ public interface UserService {
 	
 	//비밀번호 변경 전 아이디 이메일 확인
 	public UserVO findPw(UserVO vo);
+	
+	// access_Token 요청
+	public String getAccessToken(String authorize_code);
+	
+	 // 카카오 로그인 - 액세스 토큰을 이용하여 사용자 정보를 가져오는 메서드
+    public UserVO getUserInfo(String access_Token); 
+    
+ // 카카오 사용자 정보 저장
+    public void kakaoInsert(HashMap<String, Object> userInfo);
+
+    // 카카오 사용자 정보 조회
+    public UserVO findKakao(HashMap<String, Object> userInfo);
+    
+    public UserVO kakaoNumber(UserVO userInfo);
 }
+	
